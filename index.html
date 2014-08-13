@@ -15,6 +15,9 @@
         <link href="css/bootstrap-select.css" rel="stylesheet" type="text/css" />
         <link rel="stylesheet" type="text/css" href="css/style.css">
 
+        <!-- tree view library -->
+        <script src="dighl/main.js" type="text/javascript"></script> 
+
 
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -58,7 +61,63 @@
                         </div><!-- /.col -->
                     </div>
                     <!-- /.row -->
+                    <!-- tree view interface -->
+<div class="row">
+  <section class="col-lg-6 connectedSortable"> 
+    <!-- Box (with bar chart) -->
+    <!-- Map box -->
+    <div class="box box-primary">
+      <div class="box-header">
+        <!-- tools box -->
+        <div class="pull-right box-tools">          
+          <button class="btn btn-primary btn-sm pull-right" data-widget='collapse' data-toggle="tooltip" title="Collapse" style="margin-right: 5px;"><i class="fa fa-compress"></i></button> 
+          <button class="btn btn-primary btn-sm pull-right" data-toggle="tooltip" 
+          title="Insert tree file in Newick format here." style="margin-right: 5px;"><i class="fa
+            fa-info"></i></button>  
+        </div><!-- /. tools -->
 
+        <i class="fa fa-globe"></i>
+        <h3 class="box-title">
+          NEWICK
+        </h3>
+      </div>
+      <div class="box-body" style="height: 100px;" id="newickinsert">
+        <input class="submit" type="text" placeholder="Insert NEWICK format here." value="" style="width:250px" />
+      </div>
+        <div id="newickinfo">&nbsp;</div>
+      </div><!-- /.box-body-->
+
+    </div>
+    <!-- /.box -->
+  </section><!-- /.Left col -->
+  <section class="col-lg-6 connectedSortable"> 
+    <!-- Box (with bar chart) -->
+    <!-- Map box -->
+    <div class="box box-primary">
+      <div class="box-header">
+        <!-- tools box -->
+        <div class="pull-right box-tools">          
+          <button class="btn btn-primary btn-sm pull-right" data-widget='collapse' data-toggle="tooltip" title="Collapse" style="margin-right: 5px;"><i class="fa fa-compress"></i></button> 
+          <button class="btn btn-primary btn-sm pull-right" data-toggle="tooltip" 
+          title="Explore the tree." style="margin-right: 5px;"><i class="fa
+            fa-info"></i></button>  
+        </div><!-- /. tools -->
+
+        <i class="fa fa-globe"></i>
+        <h3 class="box-title">
+          TREE
+        </h3>
+      </div>
+      <div class="box-body" id="treewindow">
+      </div>
+        <div id="treeviewinfo">&nbsp;</div>
+      </div><!-- /.box-body-->
+
+    </div>
+    <!-- /.box -->
+  </section><!-- /.Left col -->
+
+</div>
                     <!-- Main row -->
                     <div class="row">
                         <!-- Left col -->
@@ -252,11 +311,50 @@
         <script src="js/AdminLTE/dashboard.js" type="text/javascript"></script>    
 
         
-
+        
         <script src="d3/d3.min.js"></script>
         <script src="d3/topojson.js"></script> 
         <script src="js/wals.js"></script> 
-        
+       
+<script>
+var controlsb ='<div id="treeControls"> <img src="dighl/img/radial.svg" onclick="changeTreeX('+"'radial'"+')"> <img src="dighl/img/cladogram.svg"       onclick="changeTreeX('+"'cladogram'"+')"> <img src="dighl/img/rectangle.svg"       onclick="changeTreeX('+"'rectanglecladogram'"+')"> <img src="dighl/img/phylogram.svg"       onclick="changeTreeX('+"'phylogram'"+')"> <img src="dighl/img/circle.svg"          onclick="changeTreeX('+"'circle'"+')"> <img src="dighl/img/circlephylogram.svg" onclick="changeTreeX('+"'circlephylogram'"+')">       <img onclick="enlargeText()" src="dighl/img/plus.svg">     <img onclick="shrinkText()" src="dighl/img/minus.svg">  <img src="dighl/img/download.svg"        onclick="downloadSVG()"> </div>'
+
+function changeTreeX(drawing_type)
+{
+  var newick = document.getElementById('newick').innerHTML;
+  reset_newickX();
+  placeTree(newick, 'treewindow', drawing_type);
+}
+
+function placeTree(newick, where, drawing_type)
+{
+  if(typeof drawing_type == 'undefined')
+  {
+    drawing_type = 'circle';
+  }
+  if(typeof where == 'undefined')
+  {
+    where = 'treewindow';
+  }
+  
+  /* append message to specified div */
+  $('#'+where).append('<div id="message" style="display:none"></div><div id="newick" style="display:none">'+newick+'</div>'+svg_popup+'<br>'+controlsb);
+
+  /* initialize the tree */
+  draw_tree(newick, drawing_type);
+
+}
+
+function reset_newickX()
+{
+  $('#newick').remove();
+  $('#svgcontainer').remove();
+  $('#treeControls').remove();
+  document.getElementById('treewindow').innerHTML = '';
+}
+
+placeTree("(((a,b),c),((d,e),f));","treewindow");
+</script> 
 
 
     </body>
