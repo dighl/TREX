@@ -47,6 +47,9 @@ function parseTree()
         }
     }
     buildNewickNodes(newick);
+
+  /* debug for showing what format the newick is in */
+  $('#db').html(JSON.stringify(newick.branchset));
     
     $('#treewindow').append('<div id="tree"></div>');
     d3.phylogram.build("#tree", newick, {skipLabels:false,skipTicks:true,width:400,height:400,skipBranchLengthScaling: true});
@@ -55,5 +58,24 @@ function parseTree()
   {
     fakeAlert("There seems to be problems with the newick format you inserted.");
   }
+}
+
+function createObjectFromNewick(newick_string)
+{
+  var newick = Newick.parse(newick_string); 
+  var newickNodes = [];
+  function buildNewickNodes(node, callback)
+  {
+    newickNodes.push(node)
+      if(node.branchset)
+      {
+        for(var i=0; i < node.branchset.length; i++)
+        {
+          buildNewickNodes(node.branchset[i])
+        }
+      }
+  }
+  buildNewickNodes(newick);
+  return newick;
 }
 
