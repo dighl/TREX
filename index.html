@@ -61,114 +61,109 @@
                         </div><!-- /.col -->
                     </div>
                     <!-- /.row -->
-                    <!-- tree view interface -->
-<div class="row">
-  <section class="col-lg-6 connectedSortable"> 
-    <!-- Box (with bar chart) -->
-    <!-- Map box -->
-    <div class="box box-primary">
-      <div class="box-header">
-        <!-- tools box -->
-        <div class="pull-right box-tools">          
-          <button class="btn btn-primary btn-sm pull-right" data-widget='collapse' data-toggle="tooltip" title="Collapse" style="margin-right: 5px;"><i class="fa fa-compress"></i></button> 
-          <button class="btn btn-primary btn-sm pull-right" data-toggle="tooltip" 
-          title="Insert tree file in Newick format here." style="margin-right: 5px;"><i class="fa
-            fa-info"></i></button>  
-        </div><!-- /. tools -->
 
-        <i class="fa fa-globe"></i>
-        <h3 class="box-title">
-          NEWICK
-        </h3>
-      </div>
-      <div class="box-body" style="height: 100px;" id="newickinsert">
-        <input class="submit" type="text" placeholder="Insert NEWICK format here." value="" style="width:250px" />
-      </div>
-        <div id="newickinfo">&nbsp;</div>
-      </div><!-- /.box-body-->
-
-    </div>
-    <!-- /.box -->
-  </section><!-- /.Left col -->
-  <section class="col-lg-6 connectedSortable"> 
-    <!-- Box (with bar chart) -->
-    <!-- Map box -->
-    <div class="box box-primary">
-      <div class="box-header">
-        <!-- tools box -->
-        <div class="pull-right box-tools">          
-          <button class="btn btn-primary btn-sm pull-right" data-widget='collapse' data-toggle="tooltip" title="Collapse" style="margin-right: 5px;"><i class="fa fa-compress"></i></button> 
-          <button class="btn btn-primary btn-sm pull-right" data-toggle="tooltip" 
-          title="Explore the tree." style="margin-right: 5px;"><i class="fa
-            fa-info"></i></button>  
-        </div><!-- /. tools -->
-
-        <i class="fa fa-globe"></i>
-        <h3 class="box-title">
-          TREE
-        </h3>
-      </div>
-      <div class="box-body" id="treewindow">
-      </div>
-        <div id="treeviewinfo">&nbsp;</div>
-      </div><!-- /.box-body-->
-
-    </div>
-    <!-- /.box -->
-  </section><!-- /.Left col -->
-
-</div>
                     <!-- Main row -->
                     <div class="row">
-                        <!-- Left col -->
-                        <section class="col-lg-6 connectedSortable"> 
-                            <!-- Box (with bar chart) -->
-                                 
 
-                            
-                            <!-- Map box -->
-                            <div class="box box-primary">
-                                <div class="box-header">
-                                    <!-- tools box -->
-                                    <div class="pull-right box-tools">          
-                                        <button class="btn btn-primary btn-sm pull-right" data-widget='collapse' data-toggle="tooltip" title="Collapse" style="margin-right: 5px;"><i class="fa fa-compress"></i></button> 
-                                        <button class="btn btn-primary btn-sm pull-right" data-toggle="tooltip" 
-                                        title="Use mousewheel to zoom in and out. Drag map to desired position." style="margin-right: 5px;"><i class="fa fa-info"></i></button>  
-                                    </div><!-- /. tools -->
+                      <!-- Left col -->
+                      <section class="col-lg-6 connectedSortable"> 
+                        <!-- Box (with bar chart) -->
+                        <!-- Map box -->
+                        <div class="box box-primary">
+                          <div class="box-header">
+                            <!-- tools box -->
+                            <div class="pull-right box-tools">          
+                              <button class="btn btn-primary btn-sm pull-right" data-widget='collapse' data-toggle="tooltip" title="Collapse" style="margin-right: 5px;"><i class="fa fa-compress"></i></button> 
+                              <button class="btn btn-primary btn-sm pull-right" data-toggle="tooltip" 
+                              title="Insert tree file in Newick format here." style="margin-right: 5px;"><i class="fa
+                                fa-info"></i></button>  
+                            </div><!-- /. tools -->
 
-                                    <i class="fa fa-globe"></i>
-                                    <h3 class="box-title">
-                                        Map
-                                    </h3>
-                                </div>
-                                <div class="box-body" style="height: 460px;" id="mapcontainer">
-                                    
-                                    <div id="map" style="text-align: center;"></div>
+                            <i class="fa fa-globe"></i>
+                            <h3 class="box-title">
+                              NEWICK
+                            </h3>
+                          </div>
+                          <div class="box-body" style="height: 100px;" id="newickinsert">
+                            <input class="submit" type="text" placeholder="Insert NEWICK format here." value="" style="width:250px" />
+                          
+                            <div id="newickinfo">&nbsp;</div>
+                          </div><!-- /.box-body-->
 
-                                    <div class="pull-right">
-                                    
-                                        <button id="resetmap" class="btn btn-primary btn-xs">Reset map</button>
-                                        <!--<button id="movemap" class="btn btn-primary btn-sm">Move map</button>-->
-                                        <button id="biggerDots" class="btn btn-primary btn-xs" data-toggle="tooltip" title="Larger dots"><i class="fa fa-plus"></i></button>
-                                        <button id="smallerDots" class="btn btn-primary btn-xs" data-toggle="tooltip" title="Smaller dots"><i class="fa fa-minus"></i></button>
+                        </div>
+                        <!-- /.box -->
 
-                                        
+                        <!-- Map box -->
+                        <div class="box box-primary">
+                          <div class="box-header">
+                            <!-- tools box -->
+                            <div class="pull-right box-tools">          
+                              <button class="btn btn-primary btn-sm pull-right" data-widget='collapse' data-toggle="tooltip" title="Collapse" style="margin-right: 5px;"><i class="fa fa-compress"></i></button> 
+                              <button class="btn btn-primary btn-sm pull-right" data-toggle="tooltip" 
+                              title="Explore the tree." style="margin-right: 5px;"><i class="fa
+                                fa-info"></i></button>  
+                            </div><!-- /. tools -->
 
-                                    </div>
+                            <i class="fa fa-globe"></i>
+                            <h3 class="box-title">
+                              TREE
+                            </h3>
+                          </div>
+                          <div class="box-body" id="treewindow">
+                          
 
-                                    <div id="mapinfo">&nbsp;</div>
-                                </div><!-- /.box-body-->
-                                
-                            </div>
-                            <!-- /.box -->
+                            <div id="treeviewinfo"></div>
+                          </div><!-- /.box-body-->
+
+                        </div>
+                        <!-- /.box -->
 
 
-                                                
-                            
 
                         </section><!-- /.Left col -->
+
+
                         <!-- right col (We are only adding the ID to make the widgets sortable)-->
                         <section class="col-lg-6 connectedSortable">
+
+                        <!-- Map box -->
+                        <div class="box box-primary">
+                            <div class="box-header">
+                                <!-- tools box -->
+                                <div class="pull-right box-tools">          
+                                    <button class="btn btn-primary btn-sm pull-right" data-widget='collapse' data-toggle="tooltip" title="Collapse" style="margin-right: 5px;"><i class="fa fa-compress"></i></button> 
+                                    <button class="btn btn-primary btn-sm pull-right" data-toggle="tooltip" 
+                                    title="Use mousewheel to zoom in and out. Drag map to desired position." style="margin-right: 5px;"><i class="fa fa-info"></i></button>  
+                                </div><!-- /. tools -->
+
+                                <i class="fa fa-globe"></i>
+                                <h3 class="box-title">
+                                    Map
+                                </h3>
+                            </div>
+                            <div class="box-body" style="height: 460px;" id="mapcontainer">
+                                
+                                <div id="map" style="text-align: center;"></div>
+
+                                <div class="pull-right">
+                                
+                                    <button id="resetmap" class="btn btn-primary btn-xs">Reset map</button>
+                                    <!--<button id="movemap" class="btn btn-primary btn-sm">Move map</button>-->
+                                    <button id="biggerDots" class="btn btn-primary btn-xs" data-toggle="tooltip" title="Larger dots"><i class="fa fa-plus"></i></button>
+                                    <button id="smallerDots" class="btn btn-primary btn-xs" data-toggle="tooltip" title="Smaller dots"><i class="fa fa-minus"></i></button>
+
+                                    
+
+                                </div>
+
+                                <div id="mapinfo">&nbsp;</div>
+                            </div><!-- /.box-body-->
+                            
+                        </div>
+                        <!-- /.box -->
+
+
+
                             <!-- Sunburst box -->
                             <div class="box box-primary">
                                 <div class="box-header">
