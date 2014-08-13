@@ -49,15 +49,24 @@ function parseTree()
     buildNewickNodes(newick);
 
   /* debug for showing what format the newick is in */
-  $('#db').html(JSON.stringify(newick.branchset));
+  var newickJSONstring = JSON.stringify(newick.branchset);
+  $('#db').html(newickJSONstring);
     
     $('#treewindow').append('<div id="tree"></div>');
     d3.phylogram.build("#tree", newick, {skipLabels:false,skipTicks:true,width:400,height:400,skipBranchLengthScaling: true});
+
+
+  
+  // create sunburst with newick
+   createSunburst(newickJSONstring);
+
+
   }
   else
   {
     fakeAlert("There seems to be problems with the newick format you inserted.");
   }
+
 }
 
 function createObjectFromNewick(newick_string)

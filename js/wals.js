@@ -143,6 +143,209 @@ d3.select('#resetmap').on('click',function(a){
   
 });
 
+function createSunburst(newickJSONstring){                      
+                // ZOOMABLE SUNBURST
+// ########################################
+
+var partition = d3.layout.partition()
+    .value(function(d) { return 1; })
+    ;
+
+
+// prepare data
+
+/*
+
+var newick_string = document.getElementById('newick_string').value;
+  var treewindow = document.getElementById('treewindow');
+  treewindow.innerHTML = '';
+  
+  if(newick_string.indexOf(';') == newick_string.length -1)
+  {
+
+    var newick = Newick.parse(newick_string); 
+    var newickNodes = [];
+    function buildNewickNodes(node, callback)
+    {
+      newickNodes.push(node)
+        if(node.branchset)
+        {
+          for(var i=0; i < node.branchset.length; i++)
+          {
+            buildNewickNodes(node.branchset[i])
+          }
+        }
+    }
+    buildNewickNodes(newick);
+
+}
+*/
+
+//console.log(JSON.stringify(newick.branchset));
+
+//newickJSONstring = JSON.stringify(newick.branchset);
+newnewickJSONstring = newickJSONstring.replace(/branchset/g,"children");
+
+newickNEW = JSON.parse(newnewickJSONstring);
+
+hierarchy = { "name": "root", "children": newickNEW};
+console.log(hierarchy);
+
+hierdata = partition.nodes(hierarchy);
+console.log(hierdata);
+
+var childrennodes = {};
+var currlevel = 'root';  
+                      
+hierdata.forEach(function(d){
+    if(d.branchset){
+        d.branchset.forEach(function(c){
+            if(childrennodes[d.name]){
+                childrennodes[d.name].push(c.name);
+            }
+            else{
+                childrennodes[d.name] = [c.name];
+            }});
+    }
+});
+
+
+
+
+
+var swidth = 400,
+    sheight = 400,
+    radius = Math.min(swidth-30, sheight-30) / 2;
+
+var x = d3.scale.linear()
+    .range([0, 2 * Math.PI]);
+
+var y = d3.scale.sqrt()
+    .range([0, radius]);
+
+
+var svgsun = d3.select("#sunburst").append("svg")
+    .attr("width", swidth)
+    .attr("height", sheight)
+  .append("g")
+    .attr("transform", "translate(" + swidth / 2 + "," + (sheight / 2 + 10) + ")");
+
+
+
+var arc = d3.svg.arc()
+    .startAngle(function(d) { return Math.max(0, Math.min(2 * Math.PI, x(d.x))); })
+    .endAngle(function(d) { return Math.max(0, Math.min(2 * Math.PI, x(d.x + d.dx))); })
+    .innerRadius(function(d) { return Math.max(0, y(d.y)); })
+    .outerRadius(function(d) { return Math.max(0, y(d.y + d.dy)); });
+
+//d3.json("tree.json", function(error, root) {
+  
+  var pathsun = svgsun.selectAll("path")
+      .data(hierdata)
+    .enter().append("path")
+    .attr("class",function(d,i){
+        return "sunburstarcs " + 'sun_' + d.name;
+    })
+      .attr("d", arc)
+      //.style("fill", function(d) { return color((d.children ? d : d.parent).name); })
+      .style("fill", function(d){
+        //console.log(d);
+        
+        
+        currchildren = childrennodes[currlevel];
+        //console.log(currchildren);
+        currlevelnode = '';
+
+ 
+
+        //console.log(currlevelnode);
+        return groupScale(d.name);
+        
+        //return 'red';
+      })
+      .attr('cursor',"pointer")
+      .on("click", function(d){
+            currlevel = d.name;
+            click(d);
+      })
+      .on("mouseover",function(d){
+        d3.select("#info")
+            .text(function(){
+                //console.log(d);
+                return d.name;
+            });
+      })
+      ;
+
+    pathsun
+      .append("title")
+      .text(function(d){
+        return d.name;
+      });
+
+  function click(d) {
+  console.log(d);
+    pathsun.transition()
+      .duration(750)
+      .attrTween("d", arcTween(d));
+      
+    // update voronoi cells
+    d3.selectAll('.poly')
+        .attr("fill",function(d,i){
+         currchildren = childrennodes[currlevel];
+         currlevelnode = '';
+                    currchildren.forEach(function(f){
+                        //console.log(f);
+                        if(edges[data[i].name].indexOf(f) > -1){
+                            currlevelnode = f;
+                        }
+                    });
+                    //console.log(currlevelnode);
+            return groupScale(currlevelnode);
+        });
+        
+    // update language locations
+    d3.selectAll('.location')
+        .style("fill",function(d,i){
+         currchildren = childrennodes[currlevel];
+         currlevelnode = '';
+                    currchildren.forEach(function(f){
+                        //console.log(f);
+                        if(edges[data[i].name].indexOf(f) > -1){
+                            currlevelnode = f;
+                        }
+                    });
+                    //console.log(currlevelnode);
+            return groupScale(currlevelnode);
+        });
+        
+    // update sunburst segments
+    d3.selectAll('.sunburstarcs')
+        .style("fill",function(d,i){
+         currchildren = childrennodes[currlevel];
+         currlevelnode = '';
+                    //console.log(currlevelnode);
+            return groupScale(d.name);
+        });
+  }
+  
+//});
+
+d3.select(self.frameElement).style("height", sheight + "px");
+
+// Interpolate the scales!
+function arcTween(d) {
+  var xd = d3.interpolate(x.domain(), [d.x, d.x + d.dx]),
+      yd = d3.interpolate(y.domain(), [d.y, 1]),
+      yr = d3.interpolate(y.range(), [d.y ? 20 : 0, radius]);
+  return function(d, i) {
+    return i
+        ? function(t) { return arc(d); }
+        : function(t) { x.domain(xd(t)); y.domain(yd(t)).range(yr(t)); return arc(d); };
+  };
+}
+
+}
 
 
 
