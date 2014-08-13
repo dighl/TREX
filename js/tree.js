@@ -53,6 +53,7 @@ function parseTree()
     
     $('#treewindow').append('<div id="tree"></div>');
     d3.phylogram.build("#tree", newick, {skipLabels:false,skipTicks:true,width:400,height:400,skipBranchLengthScaling: true});
+    $('#tree').draggable();
   }
   else
   {
@@ -78,4 +79,5 @@ function createObjectFromNewick(newick_string)
   buildNewickNodes(newick);
   return newick;
 }
+
 
