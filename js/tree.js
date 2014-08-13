@@ -56,10 +56,14 @@ function parseTree()
     d3.phylogram.build("#tree", newick, {skipLabels:false,skipTicks:true,width:400,height:400,skipBranchLengthScaling: true});
 
 
+
   
   // create sunburst with newick
    createSunburst(newickJSONstring);
 
+
+
+    $('#tree').draggable();
 
   }
   else
@@ -87,4 +91,5 @@ function createObjectFromNewick(newick_string)
   buildNewickNodes(newick);
   return newick;
 }
+
 
