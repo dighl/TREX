@@ -81,7 +81,13 @@
                             </h3>
                           </div>
                           <div class="box-body" style="height: 100px;" id="newickinsert">
-                            <input id="newick_string" type="text" onkeyup="checkfortreeparse(event);" onclick="focus();" placeholder="Insert data in NEWICK format here" value="" style="width:400px" />
+                            <textarea id="newick_string" type="text"
+                            onkeyup="checkfortreeparse(event);"
+                            onclick="focus();" placeholder="Insert data in NEWICK format here"
+                            value=""
+                            rows=3
+                            cols=50
+                            style="width:400px">(((German,Dutch),English)WestGermanic,(Swedish,(Norwegian,Danish))NorthGermanic);</textarea> 
                             <button class="btn submit" onclick="parseTree();">SUBMIT</button>
                           
                             <div id="newickinfo">&nbsp;</div>
