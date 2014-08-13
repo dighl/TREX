@@ -1,17 +1,59 @@
-var newick = Newick.parse("(((German,Dutch),English)East_Germanic,(Swedish,(Norwegian,Danish))Scandinavian);");
-var newickNodes = [];
-function buildNewickNodes(node, callback)
+function fakeAlert(text)
 {
-  newickNodes.push(node)
-    if(node.branchset)
-    {
-      for(var i=0; i < node.branchset.length; i++)
-      {
-        buildNewickNodes(node.branchset[i])
-      }
-    }
-}
-buildNewickNodes(newick);
+  var falert = document.createElement('div');
+  falert.id = 'fake';
+  var text = '<div class="message"><p>' + text + '</p>';
+  text += '<div class="okbutton" onclick="' + "$('#fake').remove(); document.onkeydown = function(event){basickeydown(event)};" + '")> OK </div></div>';
+  falert.className = 'fake_alert';
 
-$('#treewindow').append('<div id="tree"></div>');
-d3.phylogram.build("#tree", newick, {skipLabels:false,skipTicks:true,width:400,height:400,skipBranchLengthScaling: true});
+  document.body.appendChild(falert);
+  falert.innerHTML = text;
+  document.onkeydown = function(event){$('#fake').remove(); document.onkeydown = function(event){basickeydown(event);};};
+
+}
+
+function checkfortreeparse(event)
+{
+  if(event.keyCode == 13)
+  {
+    parseTree();
+  }
+  else
+  {
+    return;
+  }
+}
+
+function parseTree()
+{
+  var newick_string = document.getElementById('newick_string').value;
+  var treewindow = document.getElementById('treewindow');
+  treewindow.innerHTML = '';
+  
+  if(newick_string.indexOf(';') == newick_string.length -1)
+  {
+
+    var newick = Newick.parse(newick_string); 
+    var newickNodes = [];
+    function buildNewickNodes(node, callback)
+    {
+      newickNodes.push(node)
+        if(node.branchset)
+        {
+          for(var i=0; i < node.branchset.length; i++)
+          {
+            buildNewickNodes(node.branchset[i])
+          }
+        }
+    }
+    buildNewickNodes(newick);
+    
+    $('#treewindow').append('<div id="tree"></div>');
+    d3.phylogram.build("#tree", newick, {skipLabels:false,skipTicks:true,width:400,height:400,skipBranchLengthScaling: true});
+  }
+  else
+  {
+    fakeAlert("There seems to be problems with the newick format you inserted.");
+  }
+}
+
