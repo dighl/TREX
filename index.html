@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>TrEx - Tree Explorer</title>
+        <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+        <!-- bootstrap 3.0.2 -->
+        <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+        <!-- font Awesome -->
+        <link href="css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+        <!-- Ionicons -->
+        <link href="css/ionicons.min.css" rel="stylesheet" type="text/css" />
+        <!-- Theme style -->
+        <link href="css/AdminLTE.css" rel="stylesheet" type="text/css" />
+        <link href="css/bootstrap-select.css" rel="stylesheet" type="text/css" />
+        <link rel="stylesheet" type="text/css" href="css/style.css">
+
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+          <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+          <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+        <![endif]-->
+    </head>
+    <body class="skin-blue">
+        <!-- header logo: style can be found in header.less -->
+
+            <!-- Right side column. Contains the navbar and content of the page -->
+            <aside class="right-side">
+                <!-- Content Header (Page header) -->
+                <section class="content-header">
+                    <h1>
+                        TrEx - Tree Explorer
+                        <small>Exploring ...</small>
+                    </h1>
+
+                    <ol class="breadcrumb">
+                        <li><i class="fa fa-male"></i> <a href="http://th-mayer.de" class="text-blue">Thomas Mayer</a>, 
+                            <a href="http://lingulist.de" class="text-blue">Johann-Mattis List</a>
+                            <br>
+                            <i class="fa fa-github"></i> Code on <a href="https://github.com/tmayer/TREX" class="text-blue">Github</a>
+                        </li>
+
+                    </ol>
+                    <hr/>
+                </section>
+
+                <!-- Main content -->
+                <section class="content">
+
+                    
+
+                    <!-- top row -->
+                    <div class="row">
+                        <div class="col-xs-12 connectedSortable">
+                            
+                        </div><!-- /.col -->
+                    </div>
+                    <!-- /.row -->
+
+                    <!-- Main row -->
+                    <div class="row">
+                        <!-- Left col -->
+                        <section class="col-lg-6 connectedSortable"> 
+                            <!-- Box (with bar chart) -->
+                                 
+
+                            
+                            <!-- Map box -->
+                            <div class="box box-primary">
+                                <div class="box-header">
+                                    <!-- tools box -->
+                                    <div class="pull-right box-tools">          
+                                        <button class="btn btn-primary btn-sm pull-right" data-widget='collapse' data-toggle="tooltip" title="Collapse" style="margin-right: 5px;"><i class="fa fa-compress"></i></button> 
+                                        <button class="btn btn-primary btn-sm pull-right" data-toggle="tooltip" 
+                                        title="Click on the map and drag cursor to select an area" style="margin-right: 5px;"><i class="fa fa-info"></i></button>  
+                                    </div><!-- /. tools -->
+
+                                    <i class="fa fa-globe"></i>
+                                    <h3 class="box-title">
+                                        Map
+                                    </h3>
+                                </div>
+                                <div class="box-body" style="height: 460px;" id="mapcontainer">
+                                    
+                                    <div id="map" style="text-align: center;"></div>
+
+                                    <div class="pull-right">
+                                    
+                                        <button id="resetmap" class="btn btn-primary btn-xs">Reset map</button>
+                                        <!--<button id="movemap" class="btn btn-primary btn-sm">Move map</button>-->
+                                        <button id="biggerDots" class="btn btn-primary btn-xs" data-toggle="tooltip" title="Larger dots"><i class="fa fa-plus"></i></button>
+                                        <button id="smallerDots" class="btn btn-primary btn-xs" data-toggle="tooltip" title="Smaller dots"><i class="fa fa-minus"></i></button>
+
+                                        
+
+                                    </div>
+
+                                    <div id="mapinfo">&nbsp;</div>
+                                </div><!-- /.box-body-->
+                                
+                            </div>
+                            <!-- /.box -->
+
+
+                                                
+                            
+
+                        </section><!-- /.Left col -->
+                        <!-- right col (We are only adding the ID to make the widgets sortable)-->
+                        <section class="col-lg-6 connectedSortable">
+                            <!-- Sunburst box -->
+                            <div class="box box-primary">
+                                <div class="box-header">
+                                    <!-- tools box -->
+                                    <div class="pull-right box-tools">          
+                                        <button class="btn btn-primary btn-sm pull-right" data-widget='collapse' data-toggle="tooltip" title="Collapse" style="margin-right: 5px;"><i class="fa fa-compress"></i></button>
+                                        <button class="btn btn-primary btn-sm pull-right" data-toggle="tooltip" 
+                                        title="Click on a segment of the sunburst to zoom in on the subfamily. Click on the center to go back." style="margin-right: 5px;"><i class="fa fa-info"></i></button> 
+                                    </div><!-- /. tools -->
+
+                                    <i class="fa fa-bar-chart-o"></i>
+                                    <h3 class="box-title">
+                                        Sunburst
+                                    </h3>
+                                </div>
+                                <div class="box-body" style="height: 503px;" id="sunburstcontainer">
+                                    
+                                    <div id="sunburst" style="text-align: center;"></div>
+                                    <br>
+
+                                    <div id="sunburstinfo" style="margin-top: 50px;">&nbsp;</div>
+                                </div><!-- /.box-body-->
+                                
+                            </div>
+                            <!-- /.box -->
+
+                           
+
+                        </section><!-- right col -->
+                    </div><!-- /.row (main row) -->
+
+                </section><!-- /.content -->
+
+
+
+<!-- Main content -->
+                <section class="content">
+
+                    
+
+                    <!-- top row -->
+                    <div class="row">
+                        <div class="col-xs-12 connectedSortable">
+                            
+                        </div><!-- /.col -->
+                    </div>
+                    <!-- /.row -->
+
+                    <!-- Main row -->
+                    <div class="row">
+                        <!-- Left col -->
+                        <section class="col-lg-6 connectedSortable"> 
+                            <!-- Box (with bar chart) -->
+                                 
+
+                                                        <!-- Description box -->
+                            <div class="box box-success">
+                                <div class="box-header">
+                                    <!-- tools box -->
+                                    <div class="pull-right box-tools">          
+                                        <button class="btn btn-success btn-sm pull-right" data-widget='collapse' data-toggle="tooltip" title="Collapse" style="margin-right: 5px;"><i class="fa fa-compress"></i></button>
+                                    </div><!-- /. tools -->
+
+                                    <i class="fa fa-info-circle"></i>
+                                    <h3 class="box-title">
+                                        Description
+                                    </h3>
+                                </div>
+                                <div class="box-body">
+                                    
+                                    
+
+                                    
+                                </div><!-- /.box-body-->
+                                
+                            </div>
+                            <!-- /.box -->
+
+                                                
+                            
+
+                        </section><!-- /.Left col -->
+                        <!-- right col (We are only adding the ID to make the widgets sortable)-->
+                        <section class="col-lg-6 connectedSortable">
+                    
+
+
+                            <!-- References box -->
+                            <div class="box box-success">
+                                <div class="box-header">
+                                    <!-- tools box -->
+                                    <div class="pull-right box-tools">          
+                                        <button class="btn btn-success btn-sm pull-right" data-widget='collapse' data-toggle="tooltip" title="Collapse" style="margin-right: 5px;"><i class="fa fa-compress"></i></button>
+                                    </div><!-- /. tools -->
+
+                                    <i class="fa fa-file-text"></i>
+                                    <h3 class="box-title">
+                                        References
+                                    </h3>
+                                </div>
+                                <div class="box-body">
+                                    
+                                     
+                                </div><!-- /.box-body-->
+                                
+                            </div>
+                            <!-- /.box -->
+
+                            
+
+                           
+
+                        </section><!-- right col -->
+                    </div><!-- /.row (main row) -->
+
+                </section><!-- /.content -->
+
+
+
+
+
+
+
+            </aside><!-- /.right-side -->
+        </div><!-- ./wrapper -->
+
+
+        <!-- jQuery 2.0.2 -->
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+        <!-- jQuery UI 1.10.3 -->
+        <script src="js/jquery-ui-1.10.3.min.js" type="text/javascript"></script>
+        <!-- Bootstrap -->
+        <script src="js/bootstrap.min.js" type="text/javascript"></script>
+        <script src="js/bootstrap-select.js" type="text/javascript"></script>
+
+        <!-- AdminLTE App -->
+        <script src="js/AdminLTE/app.js" type="text/javascript"></script>
+        
+        <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+        <script src="js/AdminLTE/dashboard.js" type="text/javascript"></script>    
+
+        
+
+        <script src="d3/d3.min.js"></script>
+        <script src="d3/topojson.js"></script> 
+        <script src="js/wals.js"></script> 
+        
+
+
+    </body>
+</html>
