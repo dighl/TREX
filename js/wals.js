@@ -24,7 +24,7 @@ var fam;
 var featureSet = {};
 
 //############### projection settings ###############
-var margin = {top: 10, left: 10, bottom: 80, right: 10}
+var margin = {top: 10, left: 10, bottom: 10, right: 10}
   , width = parseInt(d3.select('#map').style('width'));
 
 if(width > 580){ width = 580;}
