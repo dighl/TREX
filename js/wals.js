@@ -347,6 +347,50 @@ function arcTween(d) {
 
 }
 
+function drawMapPoints(latlon){
+  //############### plot locations ###############
+  //console.log(latlon);
+
+  var datamappoints = [];
+  for(var key in latlon){
+    var currPoint = { "name": key, "latitude": latlon[key][0], "longitude": latlon[key][1]};
+    datamappoints.push(currPoint);
+  }
+  console.log(datamappoints);
+
+  
+  var nodeCircles = g.append('g').attr('class','nodeCircles');
+    nodeCircles.selectAll("path")
+      .data(datamappoints)
+      .enter()
+      .append("circle")
+      .attr('class',function(d){
+        return "mappoint_" + d.name;
+      })
+      .attr('cx',function(d){
+        return projection([d.longitude, d.latitude])[0];  
+      })
+      .attr('cy', function(d){
+        return projection([d.longitude, d.latitude])[1];
+      })
+      .attr('r', function(d){
+        return radSmall/scaleFactor;
+      })
+      .style("fill", function(d){
+        return "darkGreen";
+      })
+      .style("stroke","black")
+      .style("stroke-width", function(){ return 0.2/scaleFactor;})
+      .style("cursor","pointer") 
+      .append("title")
+      .text(function(d){
+        return d.name;
+      })
+    ;
+
+  
+
+}
 
 
 

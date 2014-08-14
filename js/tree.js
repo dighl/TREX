@@ -83,6 +83,7 @@ function parseTree()
     // replace old svg first, make sure nothing remained 
     document.getElementById('sunburst').innerHTML = '';
     createSunburst(newickJSONstring);
+    drawMapPoints(latlon);
 
     $('#tree').draggable();
 
