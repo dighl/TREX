@@ -364,8 +364,9 @@ function drawMapPoints(latlon){
       .data(datamappoints)
       .enter()
       .append("circle")
+      .attr('id',function(d){return 'mappoint_'+d.name;})
       .attr('class',function(d){
-        return "mappoint_" + d.name;
+        return "mappoint";
       })
       .attr('cx',function(d){
         return projection([d.longitude, d.latitude])[0];  

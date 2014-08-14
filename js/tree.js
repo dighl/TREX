@@ -31,19 +31,20 @@ function parseTree()
   var tmp = getEthnologue();
   var newick_string = tmp[0];
   var latlon = tmp[1]; 
+  var newick_dict = tmp[2];
 
   /* debug message */
   $('#db').html("Coordinates: "+JSON.stringify(latlon));
   
   var nst = document.getElementById('newick_string');
   nst.innerHTML = '<b>Computed classification in NEWICK format: </b> <pre><div oncontextmenu="exportNewick(event);" title="Click to edit, right click to download." onclick="this.contentEditable=\'true\';" id="newick_code">'+newick_string+'</div></pre>';
-
-$('#newick_code').bind('mousedown.ui-disableSelection selectstart.ui-disableSelection', function(event) {
+  
+  /* reset default behaviour, since otherwise element won't be editable in firefox */
+  $('#newick_code').bind('mousedown.ui-disableSelection selectstart.ui-disableSelection', function(event) {
       event.stopImmediatePropagation();
-})
+  })
 
   nst.style.display = 'block';
-
 
   var treewindow = document.getElementById('treewindow');
   treewindow.innerHTML = '';
@@ -80,13 +81,14 @@ $('#newick_code').bind('mousedown.ui-disableSelection selectstart.ui-disableSele
           skipLabels:false,
           skipTicks:true,
           width:400,
-          height: Object.keys(latlon).length * 15,  
+          height: Object.keys(latlon).length * 30,  
           skipBranchLengthScaling: true
         });
 
     // create sunburst with newick
-    // replace old svg first, make sure nothing remained 
+    // replace old svg first, make sure nothing remained, same applies to map ?
     document.getElementById('sunburst').innerHTML = '';
+    $('.mappoint').remove();
     createSunburst(newickJSONstring);
     drawMapPoints(latlon);
 
@@ -97,6 +99,26 @@ $('#newick_code').bind('mousedown.ui-disableSelection selectstart.ui-disableSele
   {
     fakeAlert("There seem to be problems with the newick format you inserted.");
   }
+  
+  /* add highlight function for node element on map and the like */
+  $('.leave').on('mouseover', function(){$('#mappoint_'+this.id).css('fill','red')});
+  $('.leave').on('mouseout', function(){$('#mappoint_'+this.id).css('fill','DarkGreen')});
+  $('.inner_node').on('mouseover', function(){
+    var children = get_children(this.id,newick_dict);
+    for(var i=0,child;child=children[i];i++)
+    {
+      $('#mappoint_'+child).css('fill','red');
+    }
+  });
+  $('.inner_node').on('mouseout', function(){
+    var children = get_children(this.id,newick_dict);
+    for(var i=0,child;child=children[i];i++)
+    {
+      $('#mappoint_'+child).css('fill','DarkGreen');
+    }
+  });
+
+
 
 }
 
@@ -346,8 +368,44 @@ function getEthnologue()
       }
     }
   }
-  return [newick_string,latlon];
+  return [newick_string,latlon,newick];
 }
+
+function get_children(node,newick)
+{
+  /* find start node first  in newick stuff */
+  var nodes = Object.keys(newick);
+  while(nodes.length > 0)
+  {
+    var tmp_node = nodes.shift();
+    if(tmp_node.split(':')[0] == node)
+    {
+      break;
+    }
+  }
+  
+  var children = [];
+  var queue = [tmp_node];
+
+  while(queue.length > 0)
+  {
+    var cnode = queue.shift();
+    var tmp_children = newick[cnode];
+    for(var i=0,child;child=tmp_children[i];i++)
+    {
+      if(child.indexOf(':') != -1)
+      {
+        queue.push(child);
+      }
+      else
+      {
+        children.push(child);
+      }
+    }
+  }
+  return children;
+}
+
 
 var STORE = '';
 
@@ -390,3 +448,6 @@ function exportNewick(event)
   var blob = new Blob([nwk], {type: 'text/plain;charset=utf-8'});
   saveAs(blob, "tree.nwk");
 }
+
+
+

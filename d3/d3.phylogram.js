@@ -159,16 +159,28 @@ if (!d3) { throw "d3 wasn't included!"};
   d3.phylogram.styleTreeNodes = function(vis) {
     vis.selectAll('g.leaf.node')
       .append("svg:circle")
-        .attr("r", 4.5)
-        .attr('stroke',  'yellowGreen')
-        .attr('fill', 'greenYellow')
+        .attr("r", 8)
+        .attr('stroke',  'black')
+        .attr('fill', 'white')
+        .attr('id', function(d){return d.name})
+        .attr('class','leave')
         .attr('stroke-width', '2px');
+
+    vis.selectAll('g.inner.node')
+      .append('svg:circle')
+        .attr('r',8)
+        .attr('stroke', 'black')
+        .attr('fill', 'white')
+        .attr('id',function(d){return d.name})
+        .attr('class','inner_node')
+        .attr('title',function(d){return d.name})
+        .attr('stroke-width','2px');
     
     vis.selectAll('g.root.node')
       .append('svg:circle')
-        .attr("r", 4.5)
-        .attr('fill', 'steelblue')
-        .attr('stroke', '#369')
+        .attr("r", 8)
+        .attr('fill', 'white')
+        .attr('stroke', 'black')
         .attr('stroke-width', '2px');
   }
   
@@ -285,7 +297,7 @@ if (!d3) { throw "d3 wasn't included!"};
           .text(function(d) { return d.name; });
 
       vis.selectAll('g.leaf.node').append("svg:text")
-        .attr("dx", 8)
+        .attr("dx", 10)
         .attr("dy", 3)
         .attr("text-anchor", "start")
         .attr('font-family', 'Helvetica Neue, Helvetica, sans-serif')
