@@ -279,7 +279,7 @@ var arc = d3.svg.arc()
       ;
 
     pathsun
-      .append("title")
+      //.append("title")
       .attr('id',function(d){return 'sun_'+d.name;})
       .text(function(d){
         return d.name;
@@ -377,18 +377,19 @@ function drawMapPoints(latlon){
         return projection([d.longitude, d.latitude])[1];
       })
       .attr('r', function(d){
-        return radSmall/scaleFactor;
+        return radSmall/scaleFactor * 2;
       })
       .style("fill", function(d){
         return "darkGreen";
       })
       .style("stroke","black")
       .style("stroke-width", function(){ return 0.2/scaleFactor;})
-      .style("cursor","pointer") 
-      .append("title")
-      .text(function(d){
-        return d.name;
-      })
+      .style("cursor","pointer")
+      //.attr('titlex',function(d){return d.name})
+      //.append("title")
+      //.text(function(d){
+      //  return d.name;
+      //})
     ;
 
   

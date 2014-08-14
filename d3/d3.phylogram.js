@@ -173,7 +173,7 @@ if (!d3) { throw "d3 wasn't included!"};
         .attr('fill', 'white')
         .attr('id',function(d){return d.name})
         .attr('class','inner_node')
-        .attr('title',function(d){return d.name})
+        //.attr('title',function(d){return d.name})
         .attr('stroke-width','2px');
     
     vis.selectAll('g.root.node')
@@ -294,7 +294,8 @@ if (!d3) { throw "d3 wasn't included!"};
           .attr("text-anchor", 'end')
           .attr('font-size', '8px')
           .attr('fill', '#000')
-          .text(function(d) { return d.name; });
+          //.text(function(d) { return d.name; })
+          ;
 
       vis.selectAll('g.leaf.node').append("svg:text")
         .attr("dx", 10)

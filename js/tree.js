@@ -101,8 +101,8 @@ function parseTree()
   }
   
   /* add highlight function for node element on map and the like */
-  $('.leave').on('mouseover', function(){$('#mappoint_'+this.id).css('fill','red')});
-  $('.leave').on('mouseout', function(){$('#mappoint_'+this.id).css('fill','DarkGreen')});
+  $('.leave').on('mouseover', function(){$('#mappoint_'+this.id).css('fill','red').attr('r',function(d,i){return 2 * parseFloat(i)})});
+  $('.leave').on('mouseout', function(){$('#mappoint_'+this.id).css('fill','DarkGreen').attr('r',function(d,i){return 0.5 * parseFloat(i)})});
   $('.inner_node').on('mouseover', function(){
     var children = get_children(this.id,newick_dict);
     for(var i=0,child;child=children[i];i++)
@@ -135,6 +135,16 @@ function parseTree()
       
     }
   });
+  $('.inner_node').tipsy({gravity:'s',html:true,title: function(){return this.id;}});
+  $('.sunburstarcs').tipsy({gravity: 'w', html:true,title: function(){return this.id.replace(/^sun_/,'');}});
+
+  //$('.mappoint').tooltip({
+  //  content: function(){return "bla";},
+  //          position: { 
+  //          my: "left top+20 center", 
+  //          at: "right center" } 
+  //});
+  $('.mappoint').tipsy({gravity: 'w', html: true, title: function(){return this.id.replace(/^mappoint_/,'');}});
 
 
 
