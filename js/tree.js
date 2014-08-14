@@ -88,6 +88,7 @@ $('#newick_code').bind('mousedown.ui-disableSelection selectstart.ui-disableSele
     // replace old svg first, make sure nothing remained 
     document.getElementById('sunburst').innerHTML = '';
     createSunburst(newickJSONstring);
+    drawMapPoints(latlon);
 
     $('#tree').draggable();
 
