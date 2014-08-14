@@ -36,7 +36,12 @@ function parseTree()
   $('#db').html("Coordinates: "+JSON.stringify(latlon));
   
   var nst = document.getElementById('newick_string');
-  nst.innerHTML = '<b>Computed classification in NEWICK format: </b> <pre><code>'+newick_string+'</code></pre>';
+  nst.innerHTML = '<b>Computed classification in NEWICK format: </b> <pre><div oncontextmenu="exportNewick(event);" title="Click to edit, right click to download." onclick="this.contentEditable=\'true\';" id="newick_code">'+newick_string+'</div></pre>';
+
+$('#newick_code').bind('mousedown.ui-disableSelection selectstart.ui-disableSelection', function(event) {
+      event.stopImmediatePropagation();
+})
+
   nst.style.display = 'block';
 
 
@@ -368,3 +373,19 @@ var dropZone = document.getElementById('ethnologue');
 dropZone.addEventListener('dragover',handleDragOver,false);
 dropZone.addEventListener('drop',handleFileSelect,false);
 
+
+// Note that I took the event string to bind to out of the jQuery.ui.js file.
+$('#ethnologue').bind('mousedown.ui-disableSelection selectstart.ui-disableSelection', function(event) {
+      event.stopImmediatePropagation();
+})
+
+
+function exportNewick(event)
+{
+  event.preventDefault();
+  
+  var nwk = document.getElementById('newick_code').innerHTML;
+
+  var blob = new Blob([nwk], {type: 'text/plain;charset=utf-8'});
+  saveAs(blob, "tree.nwk");
+}
