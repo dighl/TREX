@@ -105,6 +105,41 @@ if (!d3) { throw "d3 wasn't included!"};
     
     return diagonal;
   }
+
+  /* addon by @lingulist */
+  d3.phylogram.leftAngleDiagonal = function() {
+    var projection = function(d) { return [d.x, d.y]; }
+    
+    var path = function(pathData) {
+      return "M" + pathData[0] + ' ' + pathData[1] + " " + pathData[2];
+    }
+    
+    function diagonal(diagonalPath, i) {
+      var source = diagonalPath.source,
+          target = diagonalPath.target,
+          midpointX = (source.x + target.x) / 2,
+          midpointY = (source.y + target.y) / 2,
+          pathData = [source, {x: target.x, y: source.y}, target];
+      pathData = pathData.map(projection);
+      return path(pathData)
+    }
+    
+    diagonal.projection = function(x) {
+      if (!arguments.length) return projection;
+      projection = x;
+      return diagonal;
+    };
+    
+    diagonal.path = function(x) {
+      if (!arguments.length) return path;
+      path = x;
+      return diagonal;
+    };
+    
+    return diagonal;
+  }
+
+
   
   d3.phylogram.radialRightAngleDiagonal = function() {
     return d3.phylogram.rightAngleDiagonal()

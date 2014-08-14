@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>TrEx - Tree Explorer</title>
+        <title>TREX - Tree Explorer</title>
         <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
         <!-- bootstrap 3.0.2 -->
         <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" />
@@ -33,8 +33,8 @@
                 <!-- Content Header (Page header) -->
                 <section class="content-header">
                     <h1>
-                        TrEx - Tree Explorer
-                        <small>Exploring ...</small>
+                        TREX - Tree Explorer
+                        <small>Exploring phylogenetic trees from multiple perspectives</small>
                     </h1>
 
                     <ol class="breadcrumb">
@@ -78,7 +78,7 @@
                                 fa-info"></i></button>  
                             </div><!-- /. tools -->
 
-                            <i class="fa fa-globe"></i>
+                            <i class="fa fa-database"></i>
                             <h3 class="box-title">
                               DATA
                             </h3>
@@ -129,7 +129,7 @@ YIDDISH_WESTERN	52.0000	23.0000	Indo-European,Germanic,West,HighGerman,Yiddish</
                                 fa-info"></i></button>  
                             </div><!-- /. tools -->
 
-                            <i class="fa fa-globe"></i>
+                            <i class="fa fa-tree"></i>
                             <h3 class="box-title">
                               TREE
                             </h3>
@@ -143,7 +143,7 @@ YIDDISH_WESTERN	52.0000	23.0000	Indo-European,Germanic,West,HighGerman,Yiddish</
                               <button id="smallerHeight" onclick = "resizeTree('width','down');" class="btn btn-primary btn-xs" data-toggle="tooltip" title="Compress tree vertically"><i class="fa fa-compress"></i> <i class="fa fa-arrows-h"></i></button>
                                <button id="biggerWidth" onclick="resizeTree('height','up');" class="btn btn-primary btn-xs" data-toggle="tooltip" title="Expand tree horizontally"><i class="fa fa-expand"></i> <i class="fa fa-arrows-v"></i></button>
                               <button id="smallerWidth" onclick = "resizeTree('height','down');" class="btn btn-primary btn-xs" data-toggle="tooltip" title="Compress tree horizontally"><i class="fa fa-compress"></i> <i class="fa fa-arrows-v"></i></button>
-                             
+                              <input type="range" min="0" max="360" id="nAngle"> 
 
 
                             </div><br>
@@ -215,7 +215,7 @@ YIDDISH_WESTERN	52.0000	23.0000	Indo-European,Germanic,West,HighGerman,Yiddish</
                                         title="Click on a segment of the sunburst to zoom in on the subfamily. Click on the center to go back." style="margin-right: 5px;"><i class="fa fa-info"></i></button> 
                                     </div><!-- /. tools -->
 
-                                    <i class="fa fa-bar-chart-o"></i>
+                                    <i class="fa fa-sun-o"></i>
                                     <h3 class="box-title">
                                         Sunburst
                                     </h3>
