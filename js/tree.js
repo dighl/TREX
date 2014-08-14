@@ -108,6 +108,7 @@ function parseTree()
     for(var i=0,child;child=children[i];i++)
     {
       $('#mappoint_'+child).css('fill','red');
+      $('#mappoint_'+child).attr('r',function(d,i){return 2 * parseFloat(i)});
     }
   });
   $('.inner_node').on('mouseout', function(){
@@ -115,8 +116,26 @@ function parseTree()
     for(var i=0,child;child=children[i];i++)
     {
       $('#mappoint_'+child).css('fill','DarkGreen');
+      $('#mappoint_'+child).attr('r',function(d,i){return 0.5 * parseFloat(i)});
     }
   });
+  
+  $('.sunburstarcs').on('mouseover', function(){
+    var children = get_children(this.id.replace(/^sun_/,''),newick_dict);
+    for(var i=0,child;child=children[i];i++)
+    {
+      $('#mappoint_'+child).css('fill','red').attr('r', function(d,i){return 2 * parseFloat(i);});
+    }
+  });
+  $('.sunburstarcs').on('mouseout', function(){
+    var children = get_children(this.id.replace(/^sun_/,''),newick_dict);
+    for(var i=0,child;child=children[i];i++)
+    {
+      $('#mappoint_'+child).css('fill','DarkGreen').attr('r', function(d,i){return 0.5 * parseFloat(i);});
+      
+    }
+  });
+
 
 
 
@@ -375,6 +394,7 @@ function get_children(node,newick)
 {
   /* find start node first  in newick stuff */
   var nodes = Object.keys(newick);
+  var tmp_node = false;
   while(nodes.length > 0)
   {
     var tmp_node = nodes.shift();
@@ -382,6 +402,14 @@ function get_children(node,newick)
     {
       break;
     }
+    else
+    {
+      tmp_node = false;
+    }
+  }
+  if(!tmp_node)
+  {
+    return [node];
   }
   
   var children = [];

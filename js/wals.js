@@ -243,9 +243,10 @@ var arc = d3.svg.arc()
   var pathsun = svgsun.selectAll("path")
       .data(hierdata)
     .enter().append("path")
-    .attr("class",function(d,i){
-        return "sunburstarcs " + 'sun_' + d.name;
+    .attr("class",function(d){
+        return "sunburstarcs";// + 'sun_' + d.name;
     })
+    .attr('id',function(d){return 'sun_'+d.name;})
       .attr("d", arc)
       //.style("fill", function(d) { return color((d.children ? d : d.parent).name); })
       .style("fill", function(d){
@@ -268,17 +269,18 @@ var arc = d3.svg.arc()
             currlevel = d.name;
             click(d);
       })
-      .on("mouseover",function(d){
-        d3.select("#info")
-            .text(function(){
-                //console.log(d);
-                return d.name;
-            });
-      })
+      //.on("mouseover",function(d){
+      //  d3.select("#info")
+      //      .text(function(){
+      //          //console.log(d);
+      //          return d.name;
+      //      });
+      //})
       ;
 
     pathsun
       .append("title")
+      .attr('id',function(d){return 'sun_'+d.name;})
       .text(function(d){
         return d.name;
       });
