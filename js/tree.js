@@ -183,6 +183,8 @@ function getEthnologue()
     }
   }
 
+  $('#db').html(JSON.stringify(good_nodes));
+
   var newick = {};
 
   /* second run, create dictionary, but ignore nodes irrelevant for the classification */
@@ -250,6 +252,13 @@ function getEthnologue()
         var next_node = node + ':' + (j+1);
         if(good_nodes.indexOf(next_node) != -1)
         {
+          if(current_parent in newick)
+          {}
+          else
+          {
+            newick[current_parent] = []
+          }
+
           if(newick[current_parent].indexOf(next_node) == -1)
           {
             newick[current_parent].push(next_node);
@@ -265,7 +274,14 @@ function getEthnologue()
         }
         else
         {
-          newick[current_parent].push(taxon);
+          if(current_parent in newick)
+          {
+            newick[current_parent].push(taxon);
+          }
+          else
+          {
+            newick[current_parent] = [taxon];
+          }
         }
       }
     }
