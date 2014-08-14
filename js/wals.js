@@ -86,7 +86,7 @@ d3.json("world-110m.json", function(error, topology) {
 // zoom and pan
 
 var zoom = d3.behavior.zoom()
-    .scaleExtent([1, 8])
+    .scaleExtent([1, 20]) /* added deeper scaling @lingulist */
     .on("zoom",function() {
         g.attr("transform","translate("+ 
             d3.event.translate.join(",")+")scale("+d3.event.scale+")");

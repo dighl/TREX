@@ -83,7 +83,7 @@
                               DATA
                             </h3>
                           </div>
-                          <div class="box-body" style="height: auto;" id="newickinsert">
+                          <div class="box-body" style="height:auto;min-height:300px;" id="newickinsert">
                             <!--<textarea id="newick_string"
                                       title="double click to edit"
                             onkeyup="checkfortreeparse(event);"
@@ -110,9 +110,8 @@ DUTCH	52.5000	6.0000	Indo-European,Germanic,West,LowSaxon-LowFranconian,LowFranc
 YIDDISH_EASTERN	52.0000	23.0000	Indo-European,Germanic,West,HighGerman,Yiddish
 YIDDISH_WESTERN	52.0000	23.0000	Indo-European,Germanic,West,HighGerman,Yiddish</textarea><br><br>
 <div id="newick_string" style="display:none"></div>
+<button class="btn btn-primary btn-sm pull-right" onclick="parseTree()">SUBMIT</button><br>
 
-                            <button class="btn btn-primary btn-sm" onclick="parseTree()">SUBMIT</button>
-                          
                             <div id="newickinfo">&nbsp;</div>
                           </div><!-- /.box-body-->
 
@@ -135,10 +134,26 @@ YIDDISH_WESTERN	52.0000	23.0000	Indo-European,Germanic,West,HighGerman,Yiddish</
                               TREE
                             </h3>
                           </div>
-                          <div class="box-body" id="treewindow">
-                          
+                          <div class="box-body" style="min-height:50px;height:auto;">
+                            <div class="pull-right">
+                              <!--<button id="movemap" class="btn btn-primary btn-sm">Move map</button>-->
+                              <button id="biggerNodes" onclick="resizeNodes('tree_node','up');" class="btn btn-primary btn-xs" data-toggle="tooltip" title="Larger nodes"><i class="fa fa-plus"></i> <i class="fa fa-circle"></i></button>
+                              <button id="smallerNodes" onclick = "resizeNodes('tree_node','down');" class="btn btn-primary btn-xs" data-toggle="tooltip" title="Smaller nodes"><i class="fa fa-minus"></i> <i class="fa fa-circle"></i></button>
+                              <button id="biggerHeight" onclick="resizeTree('width','up');" class="btn btn-primary btn-xs" data-toggle="tooltip" title="Expand tree vertically"><i class="fa fa-expand"></i> <i class="fa fa-arrows-h"></i></button>
+                              <button id="smallerHeight" onclick = "resizeTree('width','down');" class="btn btn-primary btn-xs" data-toggle="tooltip" title="Compress tree vertically"><i class="fa fa-compress"></i> <i class="fa fa-arrows-h"></i></button>
+                               <button id="biggerWidth" onclick="resizeTree('height','up');" class="btn btn-primary btn-xs" data-toggle="tooltip" title="Expand tree horizontally"><i class="fa fa-expand"></i> <i class="fa fa-arrows-v"></i></button>
+                              <button id="smallerWidth" onclick = "resizeTree('height','down');" class="btn btn-primary btn-xs" data-toggle="tooltip" title="Compress tree horizontally"><i class="fa fa-compress"></i> <i class="fa fa-arrows-v"></i></button>
+                             
+
+
+                            </div><br>
+
+                            <div id="treewindow"></div>
+
+
 
                             <div id="treeviewinfo"></div>
+                            
                           </div><!-- /.box-body-->
 
                         </div>
@@ -175,8 +190,8 @@ YIDDISH_WESTERN	52.0000	23.0000	Indo-European,Germanic,West,HighGerman,Yiddish</
                                 
                                     <button id="resetmap" class="btn btn-primary btn-xs">Reset map</button>
                                     <!--<button id="movemap" class="btn btn-primary btn-sm">Move map</button>-->
-                                    <button id="biggerDots" class="btn btn-primary btn-xs" data-toggle="tooltip" title="Larger dots"><i class="fa fa-plus"></i></button>
-                                    <button id="smallerDots" class="btn btn-primary btn-xs" data-toggle="tooltip" title="Smaller dots"><i class="fa fa-minus"></i></button>
+                                    <button id="biggerDots" onclick="resizeNodes('mappoint','up')" class="btn btn-primary btn-xs" data-toggle="tooltip" title="Larger dots"><i class="fa fa-plus"></i></button>
+                                    <button id="smallerDots" onclick="resizeNodes('mappoint','down')" class="btn btn-primary btn-xs" data-toggle="tooltip" title="Smaller dots"><i class="fa fa-minus"></i></button>
 
                                     
 
@@ -205,7 +220,7 @@ YIDDISH_WESTERN	52.0000	23.0000	Indo-European,Germanic,West,HighGerman,Yiddish</
                                         Sunburst
                                     </h3>
                                 </div>
-                                <div class="box-body" style="height: 503px;" id="sunburstcontainer">
+                                <div class="box-body" style="height: auto;" id="sunburstcontainer">
                                     
                                     <div id="sunburst" style="text-align: center;"></div>
                                     <br>

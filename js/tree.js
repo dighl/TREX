@@ -1,3 +1,11 @@
+/* set up a global configuration variable */
+var CFG = {};
+CFG['tree_height'] = 30;
+CFG['tree_width'] = 400;
+CFG['newick'] = false;
+CFG['taxlen'] = false;
+CFG['newick_dict'] = false;
+
 function fakeAlert(text)
 {
   var falert = document.createElement('div');
@@ -32,6 +40,11 @@ function parseTree()
   var newick_string = tmp[0];
   var latlon = tmp[1]; 
   var newick_dict = tmp[2];
+
+  /* append newick_string to CFG */
+  CFG['newick'] = newick_string;
+  CFG['taxlen'] = Object.keys(latlon).length;
+  CFG['newick_dict'] = newick_dict;
 
   /* debug message */
   $('#db').html("Coordinates: "+JSON.stringify(latlon));
@@ -80,8 +93,8 @@ function parseTree()
         {
           skipLabels:false,
           skipTicks:true,
-          width:400,
-          height: Object.keys(latlon).length * 30,  
+          width:CFG['tree_width'],
+          height: Object.keys(latlon).length * CFG['tree_height'],  
           skipBranchLengthScaling: true
         });
 
@@ -488,4 +501,98 @@ function exportNewick(event)
 }
 
 
+
+function resizeNodes(attrib,bigorsmall)
+{
+  if(bigorsmall == 'up')
+  {
+    $('.'+attrib).attr('r', function(d,i){return parseFloat(i) + 0.1 * parseFloat(i);});
+  }
+  else
+  {
+    $('.'+attrib).attr('r', function(d,i){return parseFloat(i) - 0.1 * parseFloat(i);});
+  }
+}
+
+function resizeTree(what,bigorsmall)
+{
+  if(bigorsmall == 'up')
+  {
+    if(what == 'height')
+    {
+      CFG['tree_height'] = parseInt(CFG['tree_height'] + 0.1 * CFG['tree_height']);
+    }
+    else
+    {
+      CFG['tree_width'] = parseInt(CFG['tree_width'] + 0.1 * CFG['tree_width']);
+    }
+  }
+  else
+  {
+    if(what == 'height')
+    {
+      CFG['tree_height'] = parseInt(CFG['tree_height'] - 0.1 * CFG['tree_height']);
+    }
+    else
+    {
+      CFG['tree_width'] = parseInt(CFG['tree_width'] - 0.1 * CFG['tree_width']);
+    }
+  }
+  createTree();
+}
+
+
+function createTree()
+{
+    var newick = Newick.parse(CFG['newick']); 
+    var newickNodes = [];
+    function buildNewickNodes(node, callback)
+    {
+      newickNodes.push(node)
+        if(node.branchset)
+        {
+          for(var i=0; i < node.branchset.length; i++)
+          {
+            buildNewickNodes(node.branchset[i])
+          }
+        }
+    }
+    buildNewickNodes(newick);
+    
+    document.getElementById('treewindow').innerHTML = '';
+
+    /* create the phylogram of the newick tree */
+    $('#treewindow').append('<div id="tree"></div>');
+    d3.phylogram.build(
+        "#tree", 
+        newick, 
+        {
+          skipLabels:false,
+          skipTicks:true,
+          width:CFG['tree_width'],
+          height: CFG['taxlen'] * CFG['tree_height'],  
+          skipBranchLengthScaling: true
+        });
+
+  /* add highlight function for node element on map and the like */
+  $('.leave').on('mouseover', function(){$('#mappoint_'+this.id).css('fill','red').attr('r',function(d,i){return 2 * parseFloat(i)})});
+  $('.leave').on('mouseout', function(){$('#mappoint_'+this.id).css('fill','DarkGreen').attr('r',function(d,i){return 0.5 * parseFloat(i)})});
+  $('.inner_node').on('mouseover', function(){
+    var children = get_children(this.id,CFG['newick_dict']);
+    for(var i=0,child;child=children[i];i++)
+    {
+      $('#mappoint_'+child).css('fill','red');
+      $('#mappoint_'+child).attr('r',function(d,i){return 2 * parseFloat(i)});
+    }
+  });
+  $('.inner_node').on('mouseout', function(){
+    var children = get_children(this.id,CFG['newick_dict']);
+    for(var i=0,child;child=children[i];i++)
+    {
+      $('#mappoint_'+child).css('fill','DarkGreen');
+      $('#mappoint_'+child).attr('r',function(d,i){return 0.5 * parseFloat(i)});
+    }
+  });
+
+}
 

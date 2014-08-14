@@ -163,7 +163,7 @@ if (!d3) { throw "d3 wasn't included!"};
         .attr('stroke',  'black')
         .attr('fill', 'white')
         .attr('id', function(d){return d.name})
-        .attr('class','leave')
+        .attr('class','leave tree_node')
         .attr('stroke-width', '2px');
 
     vis.selectAll('g.inner.node')
@@ -172,13 +172,14 @@ if (!d3) { throw "d3 wasn't included!"};
         .attr('stroke', 'black')
         .attr('fill', 'white')
         .attr('id',function(d){return d.name})
-        .attr('class','inner_node')
+        .attr('class','inner_node tree_node')
         //.attr('title',function(d){return d.name})
         .attr('stroke-width','2px');
     
     vis.selectAll('g.root.node')
       .append('svg:circle')
         .attr("r", 8)
+        .attr('class','tree_node')
         .attr('fill', 'white')
         .attr('stroke', 'black')
         .attr('stroke-width', '2px');
