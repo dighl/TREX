@@ -77,18 +77,41 @@
 
                             <i class="fa fa-globe"></i>
                             <h3 class="box-title">
-                              NEWICK
+                              DATA
                             </h3>
                           </div>
-                          <div class="box-body" style="height: 100px;" id="newickinsert">
-                            <textarea id="newick_string" type="text"
+                          <div class="box-body" style="height: 400px;" id="newickinsert">
+                            <!--<textarea id="newick_string"
+                                      title="double click to edit"
                             onkeyup="checkfortreeparse(event);"
-                            onclick="focus();" placeholder="Insert data in NEWICK format here"
+                            ondblclick="focus();"
+                            placeholder="Insert data in NEWICK format here"
                             value=""
                             rows=3
-                            cols=50
-                            style="width:400px">(((German,Dutch)GermanDutch,English)WestGermanic,(Swedish,(Norwegian,Danish)NorwegianDanish)NorthGermanic);</textarea> 
-                            <button class="btn btn-primary btn-sm" onclick="parseTree();">SUBMIT</button>
+                            cols=80
+                            style="width:400px">(((German,Dutch)GermanDutch,English)WestGermanic,(Swedish,(Norwegian,Danish)NorwegianDanish)NorthGermanic);</textarea> <br><br>-->
+                            <textarea id="ethnologue"
+                                      class="textinput"
+                            title="Double click to edit or drag your file directly here."
+                            data-toggle="tooltip"
+                            ondblclick="focus();"
+                            placeholder="Insert data in NEWICK format here"
+                            value=""
+                            rows=10
+                            
+                            wrap="off"
+                            style="overflow:auto;width:100%"
+                            >DOCULECT	LAT	LON	CLS
+STANDARD_GERMAN	52.0000	10.0000	Indo-European,Germanic,West,HighGerman,German,MiddleGerman,EastMiddleGerman
+ENGLISH	52.0000	0.0000	Indo-European,Germanic,West,English
+DANISH	56.0000	10.0000	Indo-European,Germanic,North,EastScandinavian,Danish-Swedish,Danish-Riksmal,Danish
+SWEDISH	60.0000	15.0000	Indo-European,Germanic,North,EastScandinavian,Danish-Swedish,Swedish
+DUTCH	52.5000	6.0000	Indo-European,Germanic,West,LowSaxon-LowFranconian,LowFranconian
+YIDDISH_EASTERN	52.0000	23.0000	Indo-European,Germanic,West,HighGerman,Yiddish
+YIDDISH_WESTERN	52.0000	23.0000	Indo-European,Germanic,West,HighGerman,Yiddish</textarea><br><br>
+<div id="newick_string" style="display:none"></div>
+
+                            <button class="btn btn-primary btn-sm" onclick="parseTree()">SUBMIT</button>
                           
                             <div id="newickinfo">&nbsp;</div>
                           </div><!-- /.box-body-->
@@ -317,7 +340,7 @@
         <script src="js/wals.js"></script>
         <script src="js/tree.js"></script>
 
-        <div id="db">DEBUG</div>
+        <div id="db"></div>
 
     </body>
 </html>
