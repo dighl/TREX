@@ -68,7 +68,16 @@ function parseTree()
     
     /* create the phylogram of the newick tree */
     $('#treewindow').append('<div id="tree"></div>');
-    d3.phylogram.build("#tree", newick, {skipLabels:false,skipTicks:true,width:400,height:400,skipBranchLengthScaling: true});
+    d3.phylogram.build(
+        "#tree", 
+        newick, 
+        {
+          skipLabels:false,
+          skipTicks:true,
+          width:400,
+          height: Object.keys(latlon).length * 15,  
+          skipBranchLengthScaling: true
+        });
 
     // create sunburst with newick
     // replace old svg first, make sure nothing remained 
@@ -130,7 +139,7 @@ function getEthnologue()
     var lineage = row[clsIdx].split(',');
     var taxon = row[0]+':0'; /* currently, we store taxon at first pos */
 
-    latlon[row[0]] = [row[latIdx],row[lonIdx]];
+    latlon[row[0]] = [parseFloat(row[latIdx]),parseFloat(row[lonIdx])];
     
     for(var j=0,node;node=lineage[j];j++)
     {

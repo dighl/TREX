@@ -71,7 +71,7 @@
                             <div class="pull-right box-tools">          
                               <button class="btn btn-primary btn-sm pull-right" data-widget='collapse' data-toggle="tooltip" title="Collapse" style="margin-right: 5px;"><i class="fa fa-compress"></i></button> 
                               <button class="btn btn-primary btn-sm pull-right" data-toggle="tooltip" 
-                              title="Insert tree file in Newick format here." style="margin-right: 5px;"><i class="fa
+                              title="Insert the language data. Either insert the data manually by double-clicking the text field, or drop your file containing the data directly in the text field." style="margin-right: 5px;"><i class="fa
                                 fa-info"></i></button>  
                             </div><!-- /. tools -->
 
@@ -80,7 +80,7 @@
                               DATA
                             </h3>
                           </div>
-                          <div class="box-body" style="height: 400px;" id="newickinsert">
+                          <div class="box-body" style="height: auto;" id="newickinsert">
                             <!--<textarea id="newick_string"
                                       title="double click to edit"
                             onkeyup="checkfortreeparse(event);"
@@ -93,7 +93,6 @@
                             <textarea id="ethnologue"
                                       class="textinput"
                             title="Double click to edit or drag your file directly here."
-                            data-toggle="tooltip"
                             ondblclick="focus();"
                             placeholder="Insert data in NEWICK format here"
                             value=""
