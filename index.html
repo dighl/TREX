@@ -1,107 +1,88 @@
-<!DOCTYPE html>
+<!DOCTYPEhtml>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>TREX - Tree Explorer</title>
-        <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
-        <!-- bootstrap 3.0.2 -->
-        <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-        <!-- font Awesome -->
-        <link href="css/font-awesome.min.css" rel="stylesheet" type="text/css" />
-        <!-- Ionicons -->
-        <link href="css/ionicons.min.css" rel="stylesheet" type="text/css" />
-        <!-- Theme style -->
-        <link href="css/AdminLTE.css" rel="stylesheet" type="text/css" />
-        <link href="css/bootstrap-select.css" rel="stylesheet" type="text/css" />
-        <link rel="stylesheet" type="text/css" href="css/style.css">
+<head>
+<meta charset="UTF-8">
+<title>TREX - Tree Explorer</title>
+<meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+<!-- bootstrap 3.0.2 -->
+<link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+<!-- font Awesome -->
+<link href="css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+<!-- Ionicons -->
+<link href="css/ionicons.min.css" rel="stylesheet" type="text/css" />
+<!-- Theme style -->
+<link href="css/AdminLTE.css" rel="stylesheet" type="text/css" />
+<link href="css/bootstrap-select.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" type="text/css" href="css/style.css">
 
-        <link rel="stylesheet" type="text/css" href="css/jquery.tipsy.css">
+<link rel="stylesheet" type="text/css" href="css/jquery.tipsy.css">
 
 
-        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-        <!--[if lt IE 9]>
-          <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-          <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
-        <![endif]-->
-    </head>
-    <body class="skin-blue">
-        <!-- header logo: style can be found in header.less -->
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+<![endif]-->
+</head>
+<body class="skin-blue">
+  <!-- header logo: style can be found in header.less -->
 
-            <!-- Right side column. Contains the navbar and content of the page -->
-            <aside class="right-side">
-                <!-- Content Header (Page header) -->
-                <section class="content-header">
-                    <h1>
-                        TREX - Tree Explorer
-                        <small>Exploring phylogenetic trees from multiple perspectives</small>
-                    </h1>
+  <!-- Right side column. Contains the navbar and content of the page -->
+  <aside class="right-side">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        TREX - Tree Explorer
+        <small>Exploring phylogenetic trees from multiple perspectives</small>
+      </h1>
 
-                    <ol class="breadcrumb">
-                        <li><i class="fa fa-male"></i> <a href="http://th-mayer.de" class="text-blue">Thomas Mayer</a>, 
-                            <a href="http://lingulist.de" class="text-blue">Johann-Mattis List</a>
-                            <br>
-                            <i class="fa fa-github"></i> Code on <a href="https://github.com/tmayer/TREX" class="text-blue">Github</a>
-                        </li>
+      <ol class="breadcrumb">
+        <li><i class="fa fa-male"></i> <a href="http://th-mayer.de" class="text-blue">Thomas Mayer</a>, 
+          <a href="http://lingulist.de" class="text-blue">Johann-Mattis List</a>
+          <br>
+          <i class="fa fa-github"></i> Code on <a href="https://github.com/tmayer/TREX" class="text-blue">Github</a>
+        </li>
 
-                    </ol>
-                    <hr/>
-                </section>
+      </ol>
+      <hr/>
+    </section>
 
-                <!-- Main content -->
-                <section class="content">
+    <!-- Main content -->
+    <section class="content">
 
-                    
 
-                    <!-- top row -->
-                    <div class="row">
-                        <div class="col-xs-12 connectedSortable">
-                            
-                        </div><!-- /.col -->
-                    </div>
-                    <!-- /.row -->
 
-                    <!-- Main row -->
-                    <div class="row">
+      <!-- top row -->
+      <div class="row">
+        <div class="col-xs-12 connectedSortable">
 
-                      <!-- Left col -->
-                      <section class="col-lg-6 connectedSortable"> 
-                        <!-- Box (with bar chart) -->
-                        <!-- Map box -->
-                        <div class="box box-primary">
-                          <div class="box-header">
-                            <!-- tools box -->
-                            <div class="pull-right box-tools">          
-                              <button class="btn btn-primary btn-sm pull-right" data-widget='collapse' data-toggle="tooltip" title="Collapse" style="margin-right: 5px;"><i class="fa fa-compress"></i></button> 
-                              <button class="btn btn-primary btn-sm pull-right" data-toggle="tooltip" 
-                              title="Insert the language data. Either insert the data manually by double-clicking the text field, or drop your file containing the data directly in the text field." style="margin-right: 5px;"><i class="fa
-                                fa-info"></i></button>  
-                            </div><!-- /. tools -->
+        </div><!-- /.col -->
+      </div>
+      <!-- /.row -->
 
-                            <i class="fa fa-database"></i>
-                            <h3 class="box-title">
-                              DATA
-                            </h3>
-                          </div>
-                          <div class="box-body" style="height:auto;min-height:300px;" id="newickinsert">
-                            <!--<textarea id="newick_string"
-                                      title="double click to edit"
-                            onkeyup="checkfortreeparse(event);"
-                            ondblclick="focus();"
-                            placeholder="Insert data in NEWICK format here"
-                            value=""
-                            rows=3
-                            cols=80
-                            style="width:400px">(((German,Dutch)GermanDutch,English)WestGermanic,(Swedish,(Norwegian,Danish)NorwegianDanish)NorthGermanic);</textarea> <br><br>-->
-                            <textarea id="ethnologue"
-                                      class="textinput"
-                            placeholder="Insert data in NEWICK format here"
-                            value=""
-                            rows=10
-                            
-                            wrap="off"
-                            style="overflow:auto;width:100%"
-                            >DOCULECT	LAT	LON	CLS
+
+
+      <!-- Main row -->
+      <div class="row">
+        <!-- Left col -->
+        <section class="col-lg-7 connectedSortable"> 
+          <!-- Box (with bar chart) -->
+          <!-- Map box -->
+          <div class="box box-primary">
+            <div class="box-header">
+              <!-- tools box -->
+              <div class="pull-right box-tools">          
+                <button class="btn btn-primary btn-sm pull-right" data-widget='collapse' data-toggle="tooltip" title="Collapse" style="margin-right: 5px;"><i class="fa fa-compress"></i></button> 
+                <button class="btn btn-primary btn-sm pull-right" data-toggle="tooltip" title="Insert the language data. Either insert the data manually by double-clicking the text field, or drop your file containing the data directly in the text field." style="margin-right: 5px;"><i class="fa fa-info"></i></button>  
+              </div><!-- /. tools -->
+              <i class="fa fa-database"></i>
+              <h3 class="box-title">
+                DATA
+              </h3>
+            </div>
+            <div class="box-body" style="height:auto;min-height:300px;" id="newickinsert">
+              <textarea id="ethnologue" class="textinput" placeholder="Insert data in NEWICK format here" value="" rows=10 wrap="off" style="overflow:auto;width:100%">DOCULECT	LAT	LON	CLS
 STANDARD_GERMAN	52.0000	10.0000	Indo-European,Germanic,West,HighGerman,German,MiddleGerman,EastMiddleGerman
 ENGLISH	52.0000	0.0000	Indo-European,Germanic,West,English
 DANISH	56.0000	10.0000	Indo-European,Germanic,North,EastScandinavian,Danish-Swedish,Danish-Riksmal,Danish
@@ -109,255 +90,233 @@ SWEDISH	60.0000	15.0000	Indo-European,Germanic,North,EastScandinavian,Danish-Swe
 DUTCH	52.5000	6.0000	Indo-European,Germanic,West,LowSaxon-LowFranconian,LowFranconian
 YIDDISH_EASTERN	52.0000	23.0000	Indo-European,Germanic,West,HighGerman,Yiddish
 YIDDISH_WESTERN	52.0000	23.0000	Indo-European,Germanic,West,HighGerman,Yiddish</textarea><br><br>
-<div id="newick_string" style="display:none"></div>
-<button class="btn btn-primary btn-sm pull-right" onclick="parseTree()">SUBMIT</button><br>
+              <div id="newick_string" style="display:none"></div>
+              <button class="btn btn-primary btn-sm pull-right" onclick="parseTree()">SUBMIT</button><br>
 
-                            <div id="newickinfo">&nbsp;</div>
-                          </div><!-- /.box-body-->
+            <div id="newickinfo">&nbsp;</div>
+            </div><!-- /.box-body-->
 
-                        </div>
-                        <!-- /.box -->
+          </div>
+          <!-- /.box -->
 
-                        <!-- Map box -->
-                        <div class="box box-primary">
-                          <div class="box-header">
-                            <!-- tools box -->
-                            <div class="pull-right box-tools">          
-                              <button class="btn btn-primary btn-sm pull-right" data-widget='collapse' data-toggle="tooltip" title="Collapse" style="margin-right: 5px;"><i class="fa fa-compress"></i></button> 
-                              <button class="btn btn-primary btn-sm pull-right" data-toggle="tooltip" 
-                              title="Explore the tree." style="margin-right: 5px;"><i class="fa
-                                fa-info"></i></button>  
-                            </div><!-- /. tools -->
+          <!-- Map box -->
+          <div class="box box-primary">
+            <div class="box-header">
+              <!-- tools box -->
+              <div class="pull-right box-tools">          
+                <button class="btn btn-primary btn-sm pull-right" data-widget='collapse' data-toggle="tooltip" title="Collapse" style="margin-right: 5px;"><i class="fa fa-compress"></i></button> 
+                <button class="btn btn-primary btn-sm pull-right" data-toggle="tooltip" 
+                                                                  title="Use mousewheel to zoom in and out. Drag map to desired position." style="margin-right: 5px;"><i class="fa fa-info"></i></button>  
+              </div><!-- /. tools -->
 
-                            <i class="fa fa-tree"></i>
-                            <h3 class="box-title">
-                              TREE
-                            </h3>
-                          </div>
-                          <div class="box-body" style="min-height:50px;height:auto;">
-                            <div class="pull-right">
-                              <!--<button id="movemap" class="btn btn-primary btn-sm">Move map</button>-->
-                              <button id="biggerNodes" onclick="resizeNodes('tree_node','up');" class="btn btn-primary btn-xs" data-toggle="tooltip" title="Larger nodes"><i class="fa fa-plus"></i> <i class="fa fa-circle"></i></button>
-                              <button id="smallerNodes" onclick = "resizeNodes('tree_node','down');" class="btn btn-primary btn-xs" data-toggle="tooltip" title="Smaller nodes"><i class="fa fa-minus"></i> <i class="fa fa-circle"></i></button>
-                              <button id="biggerHeight" onclick="resizeTree('width','up');" class="btn btn-primary btn-xs" data-toggle="tooltip" title="Expand tree vertically"><i class="fa fa-expand"></i> <i class="fa fa-arrows-h"></i></button>
-                              <button id="smallerHeight" onclick = "resizeTree('width','down');" class="btn btn-primary btn-xs" data-toggle="tooltip" title="Compress tree vertically"><i class="fa fa-compress"></i> <i class="fa fa-arrows-h"></i></button>
-                               <button id="biggerWidth" onclick="resizeTree('height','up');" class="btn btn-primary btn-xs" data-toggle="tooltip" title="Expand tree horizontally"><i class="fa fa-expand"></i> <i class="fa fa-arrows-v"></i></button>
-                              <button id="smallerWidth" onclick = "resizeTree('height','down');" class="btn btn-primary btn-xs" data-toggle="tooltip" title="Compress tree horizontally"><i class="fa fa-compress"></i> <i class="fa fa-arrows-v"></i></button>
-                              <input type="range" min="0" max="360" id="nAngle"> 
+              <i class="fa fa-globe"></i>
+              <h3 class="box-title">
+                Map
+              </h3>
+            </div>
+            <div class="box-body" style="height: 460px;" id="mapcontainer">
 
+              <div id="map" style="text-align: center;"></div>
 
-                            </div><br>
+              <div class="pull-right">
 
-                            <div id="treewindow"></div>
+                <button id="resetmap" class="btn btn-primary btn-xs">Reset map</button>
+                <!--<button id="movemap" class="btn btn-primary btn-sm">Move map</button>-->
+                <button id="biggerDots" onclick="resizeNodes('mappoint','up')" class="btn btn-primary btn-xs" data-toggle="tooltip" title="Larger dots"><i class="fa fa-plus"></i></button>
+                <button id="smallerDots" onclick="resizeNodes('mappoint','down')" class="btn btn-primary btn-xs" data-toggle="tooltip" title="Smaller dots"><i class="fa fa-minus"></i></button>
 
 
 
-                            <div id="treeviewinfo"></div>
-                            
-                          </div><!-- /.box-body-->
+              </div>
 
-                        </div>
-                        <!-- /.box -->
+              <div id="mapinfo">&nbsp;</div>
+            </div><!-- /.box-body-->
 
+          </div>
+          <!-- /.box -->
+        </section>
 
+        <section class="col-lg-5 connectedSortable">
 
-                        </section><!-- /.Left col -->
+          <!-- Sunburst box -->
+          <div class="box box-primary">
+            <div class="box-header">
+              <!-- tools box -->
+              <div class="pull-right box-tools">          
+                <button class="btn btn-primary btn-sm pull-right" data-widget='collapse' data-toggle="tooltip" title="Collapse" style="margin-right: 5px;"><i class="fa fa-compress"></i></button>
+                <button class="btn btn-primary btn-sm pull-right" data-toggle="tooltip" 
+                                                                  title="Click on a segment of the sunburst to zoom in on the subfamily. Click on the center to go back." style="margin-right: 5px;"><i class="fa fa-info"></i></button> 
+              </div><!-- /. tools -->
 
+              <i class="fa fa-sun-o"></i>
+              <h3 class="box-title">
+                Sunburst
+              </h3>
+            </div>
+            <div class="box-body" style="height: auto;" id="sunburstcontainer">
 
-                        <!-- right col (We are only adding the ID to make the widgets sortable)-->
-                        <section class="col-lg-6 connectedSortable">
+              <div id="sunburst" style="text-align: center;"></div>
+              <br>
 
-                        <!-- Map box -->
-                        <div class="box box-primary">
-                            <div class="box-header">
-                                <!-- tools box -->
-                                <div class="pull-right box-tools">          
-                                    <button class="btn btn-primary btn-sm pull-right" data-widget='collapse' data-toggle="tooltip" title="Collapse" style="margin-right: 5px;"><i class="fa fa-compress"></i></button> 
-                                    <button class="btn btn-primary btn-sm pull-right" data-toggle="tooltip" 
-                                    title="Use mousewheel to zoom in and out. Drag map to desired position." style="margin-right: 5px;"><i class="fa fa-info"></i></button>  
-                                </div><!-- /. tools -->
+              <div id="sunburstinfo" style="margin-top: 50px;">&nbsp;</div>
+            </div><!-- /.box-body-->
 
-                                <i class="fa fa-globe"></i>
-                                <h3 class="box-title">
-                                    Map
-                                </h3>
-                            </div>
-                            <div class="box-body" style="height: 460px;" id="mapcontainer">
-                                
-                                <div id="map" style="text-align: center;"></div>
-
-                                <div class="pull-right">
-                                
-                                    <button id="resetmap" class="btn btn-primary btn-xs">Reset map</button>
-                                    <!--<button id="movemap" class="btn btn-primary btn-sm">Move map</button>-->
-                                    <button id="biggerDots" onclick="resizeNodes('mappoint','up')" class="btn btn-primary btn-xs" data-toggle="tooltip" title="Larger dots"><i class="fa fa-plus"></i></button>
-                                    <button id="smallerDots" onclick="resizeNodes('mappoint','down')" class="btn btn-primary btn-xs" data-toggle="tooltip" title="Smaller dots"><i class="fa fa-minus"></i></button>
-
-                                    
-
-                                </div>
-
-                                <div id="mapinfo">&nbsp;</div>
-                            </div><!-- /.box-body-->
-                            
-                        </div>
-                        <!-- /.box -->
-
-
-
-                            <!-- Sunburst box -->
-                            <div class="box box-primary">
-                                <div class="box-header">
-                                    <!-- tools box -->
-                                    <div class="pull-right box-tools">          
-                                        <button class="btn btn-primary btn-sm pull-right" data-widget='collapse' data-toggle="tooltip" title="Collapse" style="margin-right: 5px;"><i class="fa fa-compress"></i></button>
-                                        <button class="btn btn-primary btn-sm pull-right" data-toggle="tooltip" 
-                                        title="Click on a segment of the sunburst to zoom in on the subfamily. Click on the center to go back." style="margin-right: 5px;"><i class="fa fa-info"></i></button> 
-                                    </div><!-- /. tools -->
-
-                                    <i class="fa fa-sun-o"></i>
-                                    <h3 class="box-title">
-                                        Sunburst
-                                    </h3>
-                                </div>
-                                <div class="box-body" style="height: auto;" id="sunburstcontainer">
-                                    
-                                    <div id="sunburst" style="text-align: center;"></div>
-                                    <br>
-
-                                    <div id="sunburstinfo" style="margin-top: 50px;">&nbsp;</div>
-                                </div><!-- /.box-body-->
-                                
-                            </div>
-                            <!-- /.box -->
-
-                           
-
-                        </section><!-- right col -->
-                    </div><!-- /.row (main row) -->
-
-                </section><!-- /.content -->
+          </div>
+          <!-- /.box -->
+          
+          <!-- Map box -->
+          <div class="box box-primary">
+            <div class="box-header">
+              <!-- tools box -->
+              <div class="pull-right box-tools">          
+                <button class="btn btn-primary btn-sm pull-right" data-widget='collapse' data-toggle="tooltip" title="Collapse" style="margin-right: 5px;"><i class="fa fa-compress"></i></button> 
+                <button class="btn btn-primary btn-sm pull-right" data-toggle="tooltip" title="Explore the tree." style="margin-right: 5px;"><i class="fa fa-info"></i></button>  
+              </div><!-- /. tools -->
+              <i class="fa fa-tree"></i>
+              <h3 class="box-title">
+                TREE
+              </h3>
+            </div>
+            <div class="box-body" style="min-height:50px;height:auto;">
+              <div class="pull-right btn-primary">
+                <!--<button id="movemap" class="btn btn-primary btn-sm">Move map</button>-->
+                <button id="biggerNodes" onclick="resizeNodes('tree_node_size','up');" class="btn btn-primary btn-xs" data-toggle="tooltip" title="Larger nodes"><i class="fa fa-plus"></i> <i class="fa fa-circle"></i></button>
+                <button id="smallerNodes" onclick = "resizeNodes('tree_node_size','down');" class="btn btn-primary btn-xs" data-toggle="tooltip" title="Smaller nodes"><i class="fa fa-minus"></i> <i class="fa fa-circle"></i></button>
+                <button id="biggerText" onclick="resizeNodes('tree_font_size','up');" class="btn btn-primary btn-xs" data-toggle="tooltip" title="Larger nodes"><i class="fa fa-plus"></i> <i class="fa fa-header"></i></button>
+                <button id="smallerText" onclick = "resizeNodes('tree_font_size','down');" class="btn btn-primary btn-xs" data-toggle="tooltip" title="Smaller nodes"><i class="fa fa-minus"></i> <i class="fa fa-header"></i></button>
+                <button id="biggerHeight" onclick="resizeTree('width','up');" class="btn btn-primary btn-xs" data-toggle="tooltip" title="Expand tree vertically"><i class="fa fa-expand"></i> <i class="fa fa-arrows-h"></i></button>
+                <button id="smallerHeight" onclick = "resizeTree('width','down');" class="btn btn-primary btn-xs" data-toggle="tooltip" title="Compress tree vertically"><i class="fa fa-compress"></i> <i class="fa fa-arrows-h"></i></button>
+                <button id="biggerWidth" onclick="resizeTree('height','up');" class="btn btn-primary btn-xs" data-toggle="tooltip" title="Expand tree horizontally"><i class="fa fa-expand"></i> <i class="fa fa-arrows-v"></i></button>
+                <button id="smallerWidth" onclick = "resizeTree('height','down');" class="btn btn-primary btn-xs" data-toggle="tooltip" title="Compress tree horizontally"><i class="fa fa-compress"></i> <i class="fa fa-arrows-v"></i></button>
+                <button id="radialLayout" onclick="CFG['tree_layout']='radial';createTree();" class="btn btn-primary btn-xs" data-toggle="tooltip" title="Switch to radial layout"><i class="fa fa-circle-o"></i></button>
+                <button id="radialLayout" onclick="CFG['tree_layout']='rectangle';createTree();" class="btn btn-primary btn-xs" data-toggle="tooltip" title="Switch to rectangular layout"><i class="fa fa-square-o"></i></button>
 
 
 
-<!-- Main content -->
-                <section class="content">
+              </div>
+              <br>
+              <div id="treewindow"></div>
+              <div id="treeviewinfo"></div>
+            </div><!-- /.box-body-->
+          </div>
+          <!-- /.box -->
 
-                    
-
-                    <!-- top row -->
-                    <div class="row">
-                        <div class="col-xs-12 connectedSortable">
-                            
-                        </div><!-- /.col -->
-                    </div>
-                    <!-- /.row -->
-
-                    <!-- Main row -->
-                    <div class="row">
-                        <!-- Left col -->
-                        <section class="col-lg-6 connectedSortable"> 
-                            <!-- Box (with bar chart) -->
-                                 
-
-                                                        <!-- Description box -->
-                            <div class="box box-success">
-                                <div class="box-header">
-                                    <!-- tools box -->
-                                    <div class="pull-right box-tools">          
-                                        <button class="btn btn-success btn-sm pull-right" data-widget='collapse' data-toggle="tooltip" title="Collapse" style="margin-right: 5px;"><i class="fa fa-compress"></i></button>
-                                    </div><!-- /. tools -->
-
-                                    <i class="fa fa-info-circle"></i>
-                                    <h3 class="box-title">
-                                        Description
-                                    </h3>
-                                </div>
-                                <div class="box-body">
-                                    
-                                    
-
-                                    
-                                </div><!-- /.box-body-->
-                                
-                            </div>
-                            <!-- /.box -->
-
-                                                
-                            
-
-                        </section><!-- /.Left col -->
-                        <!-- right col (We are only adding the ID to make the widgets sortable)-->
-                        <section class="col-lg-6 connectedSortable">
-                    
+        </section><!-- /.Left col -->
+        <!-- right col (We are only adding the ID to make the widgets sortable)-->
 
 
-                            <!-- References box -->
-                            <div class="box box-success">
-                                <div class="box-header">
-                                    <!-- tools box -->
-                                    <div class="pull-right box-tools">          
-                                        <button class="btn btn-success btn-sm pull-right" data-widget='collapse' data-toggle="tooltip" title="Collapse" style="margin-right: 5px;"><i class="fa fa-compress"></i></button>
-                                    </div><!-- /. tools -->
 
-                                    <i class="fa fa-file-text"></i>
-                                    <h3 class="box-title">
-                                        References
-                                    </h3>
-                                </div>
-                                <div class="box-body">
-                                    
-                                     
-                                </div><!-- /.box-body-->
-                                
-                            </div>
-                            <!-- /.box -->
+        </section><!-- right col -->
+        </div><!-- /.row (main row) -->
 
-                            
+    </section><!-- /.content -->
 
-                           
 
-                        </section><!-- right col -->
-                    </div><!-- /.row (main row) -->
 
-                </section><!-- /.content -->
+    <!--Main content -->
+    <section class="content">
+
+
+
+      <!-- top row -->
+      <div class="row">
+        <div class="col-xs-12 connectedSortable">
+
+        </div><!-- /.col -->
+      </div>
+      <!-- /.row -->
+
+      <!-- Main row -->
+      <div class="row">
+        <!-- Left col -->
+        <section class="col-lg-7 connectedSortable"> 
+          <!-- Box (with bar chart) -->
+
+
+          <!-- Description box -->
+          <div class="box box-success">
+            <div class="box-header">
+              <!-- tools box -->
+              <div class="pull-right box-tools">          
+                <button class="btn btn-success btn-sm pull-right" data-widget='collapse' data-toggle="tooltip" title="Collapse" style="margin-right: 5px;"><i class="fa fa-compress"></i></button>
+              </div><!-- /. tools -->
+
+              <i class="fa fa-info-circle"></i>
+              <h3 class="box-title">
+                Description
+              </h3>
+            </div>
+            <div class="box-body">
 
 
 
 
+            </div><!-- /.box-body-->
+
+          </div>
+          <!-- /.box -->
 
 
 
-            </aside><!-- /.right-side -->
-        </div><!-- ./wrapper -->
+
+        </section><!-- /.Left col -->
+        <!-- right col (We are only adding the ID to make the widgets sortable)-->
+        <section class="col-lg-5 connectedSortable">
 
 
-        <!-- jQuery 2.0.2 -->
-        <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
-        <!-- jQuery UI 1.10.3 -->
-        <script src="js/jquery-ui-1.10.3.min.js" type="text/javascript"></script>
-        <!-- Bootstrap -->
-        <script src="js/bootstrap.min.js" type="text/javascript"></script>
-        <script src="js/bootstrap-select.js" type="text/javascript"></script>
 
-        <!-- AdminLTE App -->
-        <script src="js/AdminLTE/app.js" type="text/javascript"></script>
-        
-        <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-        <script src="js/AdminLTE/dashboard.js" type="text/javascript"></script>
+          <!-- References box -->
+          <div class="box box-success">
+            <div class="box-header">
+              <!-- tools box -->
+              <div class="pull-right box-tools">          
+                <button class="btn btn-success btn-sm pull-right" data-widget='collapse' data-toggle="tooltip" title="Collapse" style="margin-right: 5px;"><i class="fa fa-compress"></i></button>
+              </div><!-- /. tools -->
 
-        
-        
-        <script src="d3/d3.min.js"></script>
-        <script src="d3/newick.js"></script>
-        <script src="d3/d3.phylogram.js"></script>
-        <script src="d3/topojson.js"></script>
-        <script src="js/FileSaver.js"></script>
-        <script src="js/jquery.tipsy.js"></script>
-        <script src="js/wals.js"></script>
-        <script src="js/tree.js"></script>
+              <i class="fa fa-file-text"></i>
+              <h3 class="box-title">
+                References
+              </h3>
+            </div>
+            <div class="box-body">
+            </div><!-- /.box-body-->
+          </div>
+          <!-- /.box -->
 
-        <div id="db"></div>
+        </section><!-- right col -->
+      </div><!-- /.row (main row) -->
 
-    </body>
+    </section><!-- /.content -->
+  </aside><!-- /.right-side -->
+  </div><!-- ./wrapper -->
+
+
+<!-- jQuery 2.0.2 -->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+<!-- jQuery UI 1.10.3 -->
+<script src="js/jquery-ui-1.10.3.min.js" type="text/javascript"></script>
+<!-- Bootstrap -->
+<script src="js/bootstrap.min.js" type="text/javascript"></script>
+<script src="js/bootstrap-select.js" type="text/javascript"></script>
+
+<!-- AdminLTE App -->
+<script src="js/AdminLTE/app.js" type="text/javascript"></script>
+
+<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+<script src="js/AdminLTE/dashboard.js" type="text/javascript"></script>
+
+
+
+<script src="d3/d3.min.js"></script>
+<script src="d3/newick.js"></script>
+<script src="d3/d3.phylogram.js"></script>
+<script src="d3/topojson.js"></script>
+<script src="js/FileSaver.js"></script>
+<script src="js/jquery.tipsy.js"></script>
+<script src="js/wals.js"></script>
+<script src="js/tree.js"></script>
+
+<div id="db"></div>
+
+</body>
 </html>

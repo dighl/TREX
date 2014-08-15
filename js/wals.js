@@ -1,4 +1,3 @@
-
 //############### global variables ###############
 var widthbox = parseInt(d3.select('#map').style('width')); 
 var width = 580; 
@@ -360,7 +359,6 @@ function drawMapPoints(latlon){
   }
   console.log(datamappoints);
 
-  
   var nodeCircles = g.append('g').attr('class','nodeCircles');
     nodeCircles.selectAll("path")
       .data(datamappoints)
@@ -377,7 +375,7 @@ function drawMapPoints(latlon){
         return projection([d.longitude, d.latitude])[1];
       })
       .attr('r', function(d){
-        return radSmall/scaleFactor * 2;
+        return radSmall/scaleFactor;
       })
       .style("fill", function(d){
         return "darkGreen";

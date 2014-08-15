@@ -5,6 +5,12 @@ CFG['tree_width'] = 400;
 CFG['newick'] = false;
 CFG['taxlen'] = false;
 CFG['newick_dict'] = false;
+CFG['tree_layout'] = 'rectangle';
+CFG['tree_node_size'] = 5;
+CFG['tree_font_size'] = 8;
+CFG['newick_object'] = false;
+CFG['taxa'] = [];
+CFG['map_node_size'] = false;
 
 function fakeAlert(text)
 {
@@ -43,7 +49,8 @@ function parseTree()
 
   /* append newick_string to CFG */
   CFG['newick'] = newick_string;
-  CFG['taxlen'] = Object.keys(latlon).length;
+  CFG['taxa'] = Object.keys(latlon);
+  CFG['taxlen'] = CFG['taxa'].length;
   CFG['newick_dict'] = newick_dict;
 
   /* debug message */
@@ -84,19 +91,7 @@ function parseTree()
     var newickJSONstring = JSON.stringify(newick.branchset);
     
     //$('#db').html(newickJSONstring);
-    
-    /* create the phylogram of the newick tree */
-    $('#treewindow').append('<div id="tree"></div>');
-    d3.phylogram.build(
-        "#tree", 
-        newick, 
-        {
-          skipLabels:false,
-          skipTicks:true,
-          width:CFG['tree_width'],
-          height: Object.keys(latlon).length * CFG['tree_height'],  
-          skipBranchLengthScaling: true
-        });
+    createTree();
 
     // create sunburst with newick
     // replace old svg first, make sure nothing remained, same applies to map ?
@@ -113,56 +108,48 @@ function parseTree()
     fakeAlert("There seem to be problems with the newick format you inserted.");
   }
   
-  /* add highlight function for node element on map and the like */
-  $('.leave').on('mouseover', function(){$('#mappoint_'+this.id).css('fill','red').attr('r',function(d,i){return 2 * parseFloat(i)})});
-  $('.leave').on('mouseout', function(){$('#mappoint_'+this.id).css('fill','DarkGreen').attr('r',function(d,i){return 0.5 * parseFloat(i)})});
-  $('.inner_node').on('mouseover', function(){
-    var children = get_children(this.id,newick_dict);
-    for(var i=0,child;child=children[i];i++)
-    {
-      $('#mappoint_'+child).css('fill','red');
-      $('#mappoint_'+child).attr('r',function(d,i){return 2 * parseFloat(i)});
-    }
-  });
-  $('.inner_node').on('mouseout', function(){
-    var children = get_children(this.id,newick_dict);
-    for(var i=0,child;child=children[i];i++)
-    {
-      $('#mappoint_'+child).css('fill','DarkGreen');
-      $('#mappoint_'+child).attr('r',function(d,i){return 0.5 * parseFloat(i)});
-    }
-  });
-  
+
   $('.sunburstarcs').on('mouseover', function(){
     var children = get_children(this.id.replace(/^sun_/,''),newick_dict);
     for(var i=0,child;child=children[i];i++)
     {
-      $('#mappoint_'+child).css('fill','red').attr('r', function(d,i){return 2 * parseFloat(i);});
+      $('#mappoint_'+child).css('fill','red').attr('r', function(d,i){return resizeMapNodes(i,'up');});
     }
   });
   $('.sunburstarcs').on('mouseout', function(){
     var children = get_children(this.id.replace(/^sun_/,''),newick_dict);
     for(var i=0,child;child=children[i];i++)
     {
-      $('#mappoint_'+child).css('fill','DarkGreen').attr('r', function(d,i){return 0.5 * parseFloat(i);});
+      $('#mappoint_'+child).css('fill','DarkGreen').attr('r', function(d,i){return resizeMapNodes(i,'down');});
       
     }
   });
   $('.inner_node').tipsy({gravity:'s',html:true,title: function(){return this.id;}});
   $('.sunburstarcs').tipsy({gravity: 'w', html:true,title: function(){return this.id.replace(/^sun_/,'');}});
-
-  //$('.mappoint').tooltip({
-  //  content: function(){return "bla";},
-  //          position: { 
-  //          my: "left top+20 center", 
-  //          at: "right center" } 
-  //});
   $('.mappoint').tipsy({gravity: 'w', html: true, title: function(){return this.id.replace(/^mappoint_/,'');}});
 
-
-
-
 }
+
+function resizeMapNodes(size,bigorsmall)
+{
+  if(bigorsmall == 'down')
+  {
+    if(CFG['map_node_size'])
+    {
+      return CFG['map_node_size'];
+    }
+    else
+    {
+      return size;
+    }
+  }
+  else
+  {
+    CFG['map_node_size'] = parseFloat(size);
+    return parseFloat(size) + 0.5 * parseFloat(size);
+  }
+}
+
 
 function createObjectFromNewick(newick_string)
 {
@@ -502,16 +489,19 @@ function exportNewick(event)
 
 
 
-function resizeNodes(attrib,bigorsmall)
+function resizeNodes(what,bigorsmall)
 {
   if(bigorsmall == 'up')
   {
-    $('.'+attrib).attr('r', function(d,i){return parseFloat(i) + 0.1 * parseFloat(i);});
+    var new_node_size = CFG[what] + 0.1 * CFG[what];
+    CFG[what] = new_node_size;
   }
   else
   {
-    $('.'+attrib).attr('r', function(d,i){return parseFloat(i) - 0.1 * parseFloat(i);});
+    var new_node_size = CFG[what] - 0.1 * CFG[what];
+    CFG[what] = new_node_size;
   }
+  createTree();
 }
 
 function resizeTree(what,bigorsmall)
@@ -544,45 +534,81 @@ function resizeTree(what,bigorsmall)
 
 function createTree()
 {
-    var newick = Newick.parse(CFG['newick']); 
-    var newickNodes = [];
-    function buildNewickNodes(node, callback)
+    if(!CFG['newick_object'])
     {
-      newickNodes.push(node)
-        if(node.branchset)
-        {
-          for(var i=0; i < node.branchset.length; i++)
+      var newick = Newick.parse(CFG['newick']); 
+      var newickNodes = [];
+      function buildNewickNodes(node, callback)
+      {
+        newickNodes.push(node)
+          if(node.branchset)
           {
-            buildNewickNodes(node.branchset[i])
+            for(var i=0; i < node.branchset.length; i++)
+            {
+              buildNewickNodes(node.branchset[i])
+            }
           }
-        }
+      }
+      buildNewickNodes(newick);
+      CFG['newick_object'] = newick;
     }
-    buildNewickNodes(newick);
+    else
+    {
+      var newick = CFG['newick_object'];
+    }
     
     document.getElementById('treewindow').innerHTML = '';
 
     /* create the phylogram of the newick tree */
     $('#treewindow').append('<div id="tree"></div>');
-    d3.phylogram.build(
-        "#tree", 
-        newick, 
-        {
-          skipLabels:false,
-          skipTicks:true,
-          width:CFG['tree_width'],
-          height: CFG['taxlen'] * CFG['tree_height'],  
-          skipBranchLengthScaling: true
-        });
+    
+    if(CFG['tree_layout'] == 'rectangle')
+    {
+      d3.phylogram.build(
+          "#tree", 
+          newick, 
+          {
+            labelWidth: 120,
+            font_size: CFG['tree_font_size'] + 'px',
+            node_size: CFG['tree_node_size'],
+            skipLabels:false,
+            skipTicks:true,
+            width:CFG['tree_width'],
+            height: CFG['taxlen'] * CFG['tree_height'],  
+            skipBranchLengthScaling: true
+          });
+    }
+    else
+    {
+      d3.phylogram.buildRadial(
+          "#tree", 
+          newick, 
+          {
+            labelWidth: 120,
+            font_size: CFG['tree_font_size']+'px',
+            node_size: CFG['tree_node_size'],
+            skipLabels:false,
+            skipTicks:true,
+            width:CFG['tree_width'],
+            height: CFG['taxlen'] * CFG['tree_height'],  
+            skipBranchLengthScaling: true
+          });
+    }
 
+  
+  /* reset map nodes */
+  $('.mappoint').css('fill','DarkGreen').attr('r',function(d,i){return resizeMapNodes(i,'down')});
+  
   /* add highlight function for node element on map and the like */
-  $('.leave').on('mouseover', function(){$('#mappoint_'+this.id).css('fill','red').attr('r',function(d,i){return 2 * parseFloat(i)})});
-  $('.leave').on('mouseout', function(){$('#mappoint_'+this.id).css('fill','DarkGreen').attr('r',function(d,i){return 0.5 * parseFloat(i)})});
+  $('.leave').on('mouseover', function(){$('#mappoint_'+this.id).css('fill','red').attr('r',function(d,i){return resizeMapNodes(i,'up');})});
+  $('.leave').on('mouseout', function(){$('#mappoint_'+this.id).css('fill','DarkGreen').attr('r',function(d,i){return resizeMapNodes(i,'down');})});
+
   $('.inner_node').on('mouseover', function(){
     var children = get_children(this.id,CFG['newick_dict']);
     for(var i=0,child;child=children[i];i++)
     {
       $('#mappoint_'+child).css('fill','red');
-      $('#mappoint_'+child).attr('r',function(d,i){return 2 * parseFloat(i)});
+      $('#mappoint_'+child).attr('r',function(d,i){return resizeMapNodes(i,'up');});
     }
   });
   $('.inner_node').on('mouseout', function(){
@@ -590,9 +616,12 @@ function createTree()
     for(var i=0,child;child=children[i];i++)
     {
       $('#mappoint_'+child).css('fill','DarkGreen');
-      $('#mappoint_'+child).attr('r',function(d,i){return 0.5 * parseFloat(i)});
+      $('#mappoint_'+child).attr('r',function(d,i){return resizeMapNodes(i,'down');});
     }
   });
+  
+  $('.leave').css('fill',function(d){if(CFG['taxa'].indexOf(this.id) != -1){return 'white';} else{return 'red'}});
 
+  $('#tree').draggable({containment: "#treewindow"});
 }
 

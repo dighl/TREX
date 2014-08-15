@@ -191,10 +191,12 @@ if (!d3) { throw "d3 wasn't included!"};
     return coordAngle
   }
   
-  d3.phylogram.styleTreeNodes = function(vis) {
+  d3.phylogram.styleTreeNodes = function(vis,options) {
+    var node_size = options.node_size || 6;
+
     vis.selectAll('g.leaf.node')
       .append("svg:circle")
-        .attr("r", 8)
+        .attr("r", node_size)
         .attr('stroke',  'black')
         .attr('fill', 'white')
         .attr('id', function(d){return d.name})
@@ -203,7 +205,7 @@ if (!d3) { throw "d3 wasn't included!"};
 
     vis.selectAll('g.inner.node')
       .append('svg:circle')
-        .attr('r',8)
+        .attr('r',node_size)
         .attr('stroke', 'black')
         .attr('fill', 'white')
         .attr('id',function(d){return d.name})
@@ -213,7 +215,7 @@ if (!d3) { throw "d3 wasn't included!"};
     
     vis.selectAll('g.root.node')
       .append('svg:circle')
-        .attr("r", 8)
+        .attr("r", node_size)
         .attr('class','tree_node')
         .attr('fill', 'white')
         .attr('stroke', 'black')
@@ -246,6 +248,7 @@ if (!d3) { throw "d3 wasn't included!"};
   
   d3.phylogram.build = function(selector, nodes, options) {
     options = options || {}
+    var font_size = options.font_size || "10px";
     var w = options.width || d3.select(selector).style('width') || d3.select(selector).attr('width'),
         h = options.height || d3.select(selector).style('height') || d3.select(selector).attr('height'),
         w = parseInt(w),
@@ -319,8 +322,27 @@ if (!d3) { throw "d3 wasn't included!"};
           }
         })
         .attr("transform", function(d) { return "translate(" + d.y + "," + d.x + ")"; })
+        .on('click',click);
+
+    function click(d) 
+    {
+      if (d.branchset) 
+      {
+        d._children = d.branchset;
+        d.children = null;
+        d.branchset = null;  
+      } 
+      else 
+      {
+        d.branchset = d._children;
+        d._children = null;
+        d.children = d._children;
+        d.toggled = false;
+      }
+      createTree(); 
+    }
       
-    d3.phylogram.styleTreeNodes(vis)
+    d3.phylogram.styleTreeNodes(vis,options)
     
     if (!options.skipLabels) {
       vis.selectAll('g.inner.node')
@@ -338,7 +360,7 @@ if (!d3) { throw "d3 wasn't included!"};
         .attr("dy", 3)
         .attr("text-anchor", "start")
         .attr('font-family', 'Helvetica Neue, Helvetica, sans-serif')
-        .attr('font-size', '10px')
+        .attr('font-size', font_size)
         .attr('fill', 'black')
         .text(function(d) { return d.name });// + ' ('+d.length+')'; });
     }
@@ -349,16 +371,19 @@ if (!d3) { throw "d3 wasn't included!"};
   d3.phylogram.buildRadial = function(selector, nodes, options) {
     options = options || {}
     var w = options.width || d3.select(selector).style('width') || d3.select(selector).attr('width'),
-        r = w / 2,
+        r = w / 1.25, 
         labelWidth = options.skipLabels ? 10 : options.labelWidth || 120;
     
+    var node_size = options.node_size || 8;
+    var font_size = options.font_size || "10px";
+
     var vis = d3.select(selector).append("svg:svg")
         .attr("width", r * 2)
         .attr("height", r * 2)
       .append("svg:g")
         .attr("transform", "translate(" + r + "," + r + ")");
         
-    var tree = d3.layout.tree()
+    var tree = d3.layout.cluster()
       .size([360, r - labelWidth])
       .sort(function(node) { return node.children ? node.children.length : -1; })
       .children(options.children || function(node) {
@@ -366,16 +391,39 @@ if (!d3) { throw "d3 wasn't included!"};
       })
       .separation(function(a, b) { return (a.parent == b.parent ? 1 : 2) / a.depth; });
     
+    var diagonalx = d3.svg.diagonal.radial()
+        .projection(function(d) { return [d.y, d.x / 180 * Math.PI]; });
+
     var phylogram = d3.phylogram.build(selector, nodes, {
       vis: vis,
       tree: tree,
+      node_size: node_size,
       skipBranchLengthScaling: true,
       skipTicks: true,
       skipLabels: options.skipLabels,
       diagonal: d3.phylogram.radialRightAngleDiagonal()
     })
+
     vis.selectAll('g.node')
       .attr("transform", function(d) { return "rotate(" + (d.x - 90) + ")translate(" + d.y + ")"; })
+      .on('click',click);
+    
+    function click(d) 
+    {
+      if (d.branchset) 
+      {
+        d._children = d.branchset;
+        d.children = null;
+        d.branchset = null;
+      } 
+      else 
+      {
+        d.branchset = d._children;
+        d._children = null;
+        d.children = d._children;
+      }
+      createTree(); 
+    }
     
     if (!options.skipLabels) {
       vis.selectAll('g.leaf.node text')
@@ -384,9 +432,9 @@ if (!d3) { throw "d3 wasn't included!"};
         .attr("text-anchor", function(d) { return d.x < 180 ? "start" : "end"; })
         .attr("transform", function(d) { return d.x < 180 ? null : "rotate(180)"; })
         .attr('font-family', 'Helvetica Neue, Helvetica, sans-serif')
-        .attr('font-size', '10px')
+        .attr('font-size', font_size)
         .attr('fill', 'black')
-        .text(function(d) { return d.data.name; });
+        .text(function(d) { return d.name; });
 
       vis.selectAll('g.inner.node text')
         .attr("dx", function(d) { return d.x < 180 ? -6 : 6; })
