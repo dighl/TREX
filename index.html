@@ -82,7 +82,7 @@
               </h3>
             </div>
             <div class="box-body" style="height:auto;min-height:300px;" id="newickinsert">
-              <textarea id="ethnologue" class="textinput" placeholder="Insert data in NEWICK format here" value="" rows=10 wrap="off" style="overflow:auto;width:100%">DOCULECT	LAT	LON	CLS
+              <textarea id="ethnologue" class="form-control" placeholder="Insert data in NEWICK format here" value="" rows=10 wrap="off" style="overflow:auto;width:100%">DOCULECT	LAT	LON	CLS
 STANDARD_GERMAN	52.0000	10.0000	Indo-European,Germanic,West,HighGerman,German,MiddleGerman,EastMiddleGerman
 ENGLISH	52.0000	0.0000	Indo-European,Germanic,West,English
 DANISH	56.0000	10.0000	Indo-European,Germanic,North,EastScandinavian,Danish-Swedish,Danish-Riksmal,Danish
@@ -170,7 +170,7 @@ YIDDISH_WESTERN	52.0000	23.0000	Indo-European,Germanic,West,HighGerman,Yiddish</
               <!-- tools box -->
               <div class="pull-right box-tools">          
                 <button class="btn btn-primary btn-sm pull-right" data-widget='collapse' data-toggle="tooltip" title="Collapse" style="margin-right: 5px;"><i class="fa fa-compress"></i></button> 
-                <button class="btn btn-primary btn-sm pull-right" data-toggle="tooltip" title="Explore the tree." style="margin-right: 5px;"><i class="fa fa-info"></i></button>  
+                <button class="btn btn-primary btn-sm pull-right" data-toggle="tooltip" title="Explore the tree. Modify the tree with help of the menu buttons on the right. Download with left mouse click." style="margin-right: 5px;"><i class="fa fa-info"></i></button>  
               </div><!-- /. tools -->
               <i class="fa fa-tree"></i>
               <h3 class="box-title">
@@ -178,20 +178,19 @@ YIDDISH_WESTERN	52.0000	23.0000	Indo-European,Germanic,West,HighGerman,Yiddish</
               </h3>
             </div>
             <div class="box-body" style="min-height:50px;height:auto;">
-              <div class="pull-right btn-primary">
+              <div class="pull-right btn-warning btn-xs" style="padding:5px">
                 <!--<button id="movemap" class="btn btn-primary btn-sm">Move map</button>-->
                 <button id="biggerNodes" onclick="resizeNodes('tree_node_size','up');" class="btn btn-primary btn-xs" data-toggle="tooltip" title="Larger nodes"><i class="fa fa-plus"></i> <i class="fa fa-circle"></i></button>
                 <button id="smallerNodes" onclick = "resizeNodes('tree_node_size','down');" class="btn btn-primary btn-xs" data-toggle="tooltip" title="Smaller nodes"><i class="fa fa-minus"></i> <i class="fa fa-circle"></i></button>
-                <button id="biggerText" onclick="resizeNodes('tree_font_size','up');" class="btn btn-primary btn-xs" data-toggle="tooltip" title="Larger nodes"><i class="fa fa-plus"></i> <i class="fa fa-header"></i></button>
-                <button id="smallerText" onclick = "resizeNodes('tree_font_size','down');" class="btn btn-primary btn-xs" data-toggle="tooltip" title="Smaller nodes"><i class="fa fa-minus"></i> <i class="fa fa-header"></i></button>
+                <button id="biggerText" onclick="resizeNodes('tree_font_size','up');" class="btn btn-primary btn-xs" data-toggle="tooltip" title="Larger font"><i class="fa fa-plus"></i> <i class="fa fa-header"></i></button>
+                <button id="smallerText" onclick = "resizeNodes('tree_font_size','down');" class="btn btn-primary btn-xs" data-toggle="tooltip" title="Smaller font"><i class="fa fa-minus"></i> <i class="fa fa-header"></i></button>
                 <button id="biggerHeight" onclick="resizeTree('width','up');" class="btn btn-primary btn-xs" data-toggle="tooltip" title="Expand tree vertically"><i class="fa fa-expand"></i> <i class="fa fa-arrows-h"></i></button>
                 <button id="smallerHeight" onclick = "resizeTree('width','down');" class="btn btn-primary btn-xs" data-toggle="tooltip" title="Compress tree vertically"><i class="fa fa-compress"></i> <i class="fa fa-arrows-h"></i></button>
                 <button id="biggerWidth" onclick="resizeTree('height','up');" class="btn btn-primary btn-xs" data-toggle="tooltip" title="Expand tree horizontally"><i class="fa fa-expand"></i> <i class="fa fa-arrows-v"></i></button>
                 <button id="smallerWidth" onclick = "resizeTree('height','down');" class="btn btn-primary btn-xs" data-toggle="tooltip" title="Compress tree horizontally"><i class="fa fa-compress"></i> <i class="fa fa-arrows-v"></i></button>
                 <button id="radialLayout" onclick="CFG['tree_layout']='radial';createTree();" class="btn btn-primary btn-xs" data-toggle="tooltip" title="Switch to radial layout"><i class="fa fa-circle-o"></i></button>
-                <button id="radialLayout" onclick="CFG['tree_layout']='rectangle';createTree();" class="btn btn-primary btn-xs" data-toggle="tooltip" title="Switch to rectangular layout"><i class="fa fa-square-o"></i></button>
-
-
+                <button id="rectangleLayout" onclick="CFG['tree_layout']='rectangle';createTree();" class="btn btn-primary btn-xs" data-toggle="tooltip" title="Switch to rectangular layout"><i class="fa fa-square-o"></i></button>
+                <button id="rectangleLayout" onclick="exportSVG('tree');" class="btn btn-primary btn-xs" data-toggle="tooltip" title="Download current view"><i class="fa fa-download"></i></button>
 
               </div>
               <br>

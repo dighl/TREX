@@ -12,6 +12,8 @@ CFG['newick_object'] = false;
 CFG['taxa'] = [];
 CFG['map_node_size'] = false;
 
+var STORE = ''; // variable needed for file select
+
 function fakeAlert(text)
 {
   var falert = document.createElement('div');
@@ -54,7 +56,7 @@ function parseTree()
   CFG['newick_dict'] = newick_dict;
 
   /* debug message */
-  $('#db').html("Coordinates: "+JSON.stringify(latlon));
+  //$('#db').html("Coordinates: "+JSON.stringify(latlon));
   
   var nst = document.getElementById('newick_string');
   nst.innerHTML = '<b>Computed classification in NEWICK format: </b> <pre><div oncontextmenu="exportNewick(event);" title="Click to edit, right click to download." onclick="this.contentEditable=\'true\';" id="newick_code">'+newick_string+'</div></pre>';
@@ -124,12 +126,12 @@ function parseTree()
       
     }
   });
-  $('.inner_node').tipsy({gravity:'s',html:true,title: function(){return this.id;}});
   $('.sunburstarcs').tipsy({gravity: 'w', html:true,title: function(){return this.id.replace(/^sun_/,'');}});
   $('.mappoint').tipsy({gravity: 'w', html: true, title: function(){return this.id.replace(/^mappoint_/,'');}});
 
 }
 
+/* function to modify the nodes on the map */
 function resizeMapNodes(size,bigorsmall)
 {
   if(bigorsmall == 'down')
@@ -150,7 +152,7 @@ function resizeMapNodes(size,bigorsmall)
   }
 }
 
-
+/* function to create a newick object from a newick string */
 function createObjectFromNewick(newick_string)
 {
   var newick = Newick.parse(newick_string); 
@@ -170,6 +172,7 @@ function createObjectFromNewick(newick_string)
   return newick;
 }
 
+/* core function returns newick strings from ethnologue style classifications */
 function getEthnologue()
 {
   var ethnologue = document.getElementById('ethnologue').value;
@@ -189,8 +192,50 @@ function getEthnologue()
   var lonIdx = header.indexOf("LON");
 
   var latlon = {};
+  
+  /* retrieve the classification from the input string */
+  var classification = {}; // stores classification
+  var tracker = {} // stores non-unique items and creates unique ones
+  var converter = {} // stores replacement names
+  
+  for(var i=0,row;row=dpoints[i];i++)
+  {
+    var lineage = row[clsIdx].split(',');
+    var taxon = row[0];
+    for(var j=1;j<lineage.length;j++)
+    {
+      var node = lineage[j];
+      
+      var parents = lineage.slice(0,j).join(',');
+      
+      if(node in tracker)
+      {
+        if(tracker[node].indexOf(parents) != -1)
+        {
+          if(node+'/'+parents in converter)
+          {
+            dpoints[i][clsIdx] = dpoints[i][clsIdx].replace(parents+','+node,parents+','+converter[node+'/'+parents]);
+          }
+        }
+        else
+        {
+          /* append alternative node to tracker */
+          var new_node = node + (tracker[node].length+1);
+          converter[node+'/'+parents] = new_node;
+          dpoints[i][clsIdx] = dpoints[i][clsIdx].replace(parents+','+node,parents+','+converter[node+'/'+parents]);
 
-  var classification = {};
+          tracker[node].push(parents);
+        }
+      }
+      else
+      {
+        tracker[node] = [parents];
+      }
+      //alert('#'+taxon+" "+tracker[node]+'  '+node+'  '+parents);
+    }
+    //alert(dpoints[i][clsIdx]);
+  }
+
   for(var i=0,row;row=dpoints[i];i++)
   {
     var lineage = row[clsIdx].split(',');
@@ -200,6 +245,7 @@ function getEthnologue()
     
     for(var j=0,node;node=lineage[j];j++)
     {
+      // get child and parent 
       var parnt = node+':'+(j+1)
       var child = lineage[j+1]+':'+(j+2);
 
@@ -445,8 +491,6 @@ function get_children(node,newick)
 }
 
 
-var STORE = '';
-
 function handleFileSelect(evt)
 {
   evt.stopPropagation();
@@ -487,6 +531,13 @@ function exportNewick(event)
   saveAs(blob, "tree.nwk");
 }
 
+function exportSVG(identifier)
+{
+  var svg = document.getElementById(identifier).firstChild;
+  var svg_xml = (new XMLSerializer).serializeToString(svg);
+  var blob = new Blob([svg_xml],{type:'text/svg;charset=utf-8'});
+  saveAs(blob, identifier+'.svg');
+}
 
 
 function resizeNodes(what,bigorsmall)
@@ -622,6 +673,9 @@ function createTree()
   
   $('.leave').css('fill',function(d){if(CFG['taxa'].indexOf(this.id) != -1){return 'white';} else{return 'red'}});
 
-  $('#tree').draggable({containment: "#treewindow"});
+  $('.inner_node').tipsy({gravity:'s',html:true,title: function(){return this.id;}});
+
+  $('#tree').draggable();
+  $('#tree').on('contextmenu',function(event){event.preventDefault(); exportSVG('tree');});
 }
 
