@@ -13,6 +13,8 @@ CFG['taxa'] = [];
 CFG['map_node_size'] = false;
 
 var STORE = ''; // variable needed for file select
+var DOCUL = {}; // variable stores doculect external data
+
 
 function fakeAlert(text)
 {
@@ -178,10 +180,13 @@ function getEthnologue()
   var ethnologue = document.getElementById('ethnologue').value;
   var elist = ethnologue.split(/\n|\r\n/);
   var dpoints = [];
+
   for(var i=1,row;row=elist[i];i++)
   {
     dpoints.push(row.split('\t'));
   }
+
+  /* create the header */
   var header = elist[0].split('\t');
 
   /* get index for CLS */
@@ -191,8 +196,65 @@ function getEthnologue()
   var latIdx = header.indexOf("LAT");
   var lonIdx = header.indexOf("LON");
 
-  var latlon = {};
+  /* if lat and lon are undefined, we need to supply the data from our big tsv-file */
+  _added_values = false; /* store status of added values  for later check */
+  if(latIdx == -1 || clsIdx == -1)
+  {
+    parseDoculects();
+
+    /* get index of iso in header */
+    var isoIdx = header.indexOf('ISO');
+
+    if(isoIdx == -1){fakeAlert('no iso-codes specified!')} // debug
+    _added_values = true;
+  }
+
+  if(latIdx == -1)
+  {
+    latIdx = header.length;
+    lonIdx = latIdx + 1;
+
+    header.push('LAT');
+    header.push('LON');
+
+    for(var i=0,line;line=dpoints[i];i++)
+    {
+      var iso = line[isoIdx];
+      var lat = DOCUL[iso][1];
+      var lon = DOCUL[iso][2];
+      dpoints[i].push(lat);
+      dpoints[i].push(lon);
+    }
+  }
+  if(clsIdx == -1)
+  {
+    clsIdx = header.length;
+
+    header.push("CLS");
+
+    for(var i=0,line;line=dpoints[i];i++)
+    {
+      var iso = line[isoIdx];
+      var cls = DOCUL[iso][3]; // currently only ethnologue, no further choice!
+      dpoints[i].push(cls);
+    }
+  }
+
+  if(_added_values)
+  {
+    var txt = header.join('\t')+'\n';
+    for(var i=0,line;line=dpoints[i];i++)
+    {
+      txt += line.join('\t')+'\n';
+    }
+
+    fakeAlert("No coordinates were provided, added data automatically.");
+    
+    document.getElementById('ethnologue').value = txt;
+  }
   
+  var latlon = {}
+
   /* retrieve the classification from the input string */
   var classification = {}; // stores classification
   var tracker = {} // stores non-unique items and creates unique ones
@@ -679,3 +741,31 @@ function createTree()
   $('#tree').on('contextmenu',function(event){event.preventDefault(); exportSVG('tree');});
 }
 
+/* function parses file data/doculects.tsv and stores it in an object with iso-codes as key */
+function parseDoculects()
+{
+  var tmp = {};
+  var storer = '';
+
+  $.ajax(
+    {
+      async:false,
+      type: "GET",
+      url: 'data/doculects.tsv',
+      dataType: "text",
+      success: function(data) 
+      {
+        storer = data;
+        var rows = storer.split(/\n/);
+        for(var i=1,row;row=rows[i];i++)
+        {
+          cells = row.split('\t');
+          tmp[cells[0]] = cells.slice(1,cells.length);
+        }
+        tmp['header'] = rows[0];
+      }
+    });
+
+
+  DOCUL = tmp;
+}
