@@ -55,6 +55,9 @@ var g = svg.append("g");
 var mapPoly = g.append('g').attr('class','mapPoly')
 var edgeArcs = g.append('g').attr('class','edgeArcs'); 
 var overall = g.append('g').attr('class','overAll');
+var nodeCircles = g.append('g').attr('class','nodeCircles');
+var cells = g.append("svg:g");
+var polys = g.append("g").attr("id","polys");
 
 // define scales and projections 
 var path = d3.geo.path()
@@ -104,6 +107,11 @@ var zoom = d3.behavior.zoom()
             .style('stroke-width',function(d){
                 return 1/d3.event.scale;
             }); 
+
+        polys.selectAll("polygon")
+          .style('stroke-width',function(d){
+            return 1/d3.event.scale;
+          });
             
 
   });
@@ -116,7 +124,7 @@ var zoom = d3.behavior.zoom()
 d3.select('#resetmap').on('click',function(a){
 	 radSmall = 2.5;
 	 zoom.scale(1);
-     zoom.translate([0,0]);d3.event.scale = 1;
+   zoom.translate([0,0]);d3.event.scale = 1;
 	 g.transition()
 	 .duration(750)
 	 .attr('transform','translate(0,0)');
@@ -136,10 +144,7 @@ d3.select('#resetmap').on('click',function(a){
 	     .style('stroke-width',function(d){
 	         return 1/scaleFactor;
 	     }); 
-	     
-     
- 
-  
+
 });
 
 function createSunburst(newickJSONstring){                      
@@ -153,36 +158,6 @@ var partition = d3.layout.partition()
 
 // prepare data
 
-/*
-
-var newick_string = document.getElementById('newick_string').value;
-  var treewindow = document.getElementById('treewindow');
-  treewindow.innerHTML = '';
-  
-  if(newick_string.indexOf(';') == newick_string.length -1)
-  {
-
-    var newick = Newick.parse(newick_string); 
-    var newickNodes = [];
-    function buildNewickNodes(node, callback)
-    {
-      newickNodes.push(node)
-        if(node.branchset)
-        {
-          for(var i=0; i < node.branchset.length; i++)
-          {
-            buildNewickNodes(node.branchset[i])
-          }
-        }
-    }
-    buildNewickNodes(newick);
-
-}
-*/
-
-//console.log(JSON.stringify(newick.branchset));
-
-//newickJSONstring = JSON.stringify(newick.branchset);
 newnewickJSONstring = newickJSONstring.replace(/branchset/g,"children");
 
 newickNEW = JSON.parse(newnewickJSONstring);
@@ -359,7 +334,7 @@ function drawMapPoints(latlon){
   }
   console.log(datamappoints);
 
-  var nodeCircles = g.append('g').attr('class','nodeCircles');
+  
     nodeCircles.selectAll("path")
       .data(datamappoints)
       .enter()
@@ -383,14 +358,44 @@ function drawMapPoints(latlon){
       .style("stroke","black")
       .style("stroke-width", function(){ return 0.2/scaleFactor;})
       .style("cursor","pointer")
-      //.attr('titlex',function(d){return d.name})
-      //.append("title")
-      //.text(function(d){
-      //  return d.name;
-      //})
-    ;
+      ;
 
-  
+    cells
+      .attr("id", "cells")
+      .attr("pointer-events",'none')
+      ;
+
+      positions = [];
+      datamappoints.forEach(function(a){
+        positions.push(projection([a.longitude,a.latitude]));
+      });
+
+      //console.log(positions);
+
+      var polygons = d3.geom.voronoi(positions);            
+                        
+      // plot the voronoi polygons
+      
+
+
+      polys.selectAll('polygon')
+          .data(polygons)
+          .enter()
+          .append("polygon")
+          .attr('class',function(d,i){return 'poly poly_' + i;})
+          .attr("points",function(d,i) { 
+              return d.map(function(m){
+                  return [m[0],m[1]].join(',');
+              }).join(" ");
+          })
+          .style("fill", "red")
+          .style('stroke','red')
+          .style('stroke-width',function(){
+            return 1/scaleFactor;
+          })
+          .style("cursor","pointer")
+          .style('opacity',0.4)
+          ;
 
 }
 
