@@ -274,7 +274,7 @@ if (!d3) { throw "d3 wasn't included!"};
     } else {
       var yscale = scaleBranchLengths(nodes, w)
     }
-    
+
     if (!options.skipTicks) {
       vis.selectAll('line')
           .data(yscale.ticks(10))
@@ -305,7 +305,10 @@ if (!d3) { throw "d3 wasn't included!"};
         .attr("d", diagonal)
         .attr("fill", "none")
         .attr("stroke", "#000")
-        .attr("stroke-width", "4px");
+        .attr("stroke-width", "4px")
+        .attr("id",function(d){return "link_"+d.source.name+'_'+d.target.name;});
+
+    //alert(JSON.stringify(Object.keys(tree.links(nodes)["1"].id)));
         
     var node = vis.selectAll("g.node")
         .data(nodes)
@@ -322,7 +325,8 @@ if (!d3) { throw "d3 wasn't included!"};
           }
         })
         .attr("transform", function(d) { return "translate(" + d.y + "," + d.x + ")"; })
-        .on('click',click);
+        .on('click',click)
+        .transition().duration(750);
 
     function click(d) 
     {
@@ -339,7 +343,7 @@ if (!d3) { throw "d3 wasn't included!"};
         d.children = d._children;
         d.toggled = false;
       }
-      createTree(); 
+      createTree(); //d3.phylogram.update(selector, nodes, options); 
     }
       
     d3.phylogram.styleTreeNodes(vis,options)
@@ -366,6 +370,55 @@ if (!d3) { throw "d3 wasn't included!"};
     }
     
     return {tree: tree, vis: vis}
+  }
+  
+  /* update tree when toggling layout */
+  d3.phylogram.update = function(selector, nodes, options)
+  {
+    /* solution can be accomplished as follows:
+     *
+     * - START by selecting all children of the given node, including their intermediate nodes 
+     * - have them all disappear
+     * - reset the name of the node which was clicked
+     * 
+     * as an alternative:
+     *
+     * - recompute new tree layout
+     * - check for each element whether it is still present or not, if not have it being deleted
+     * - 
+     */
+
+    var tree = options.tree || d3.layout.cluster()
+      .size([400, 400])
+      .sort(function(node) { return node.children ? node.children.length : -1; })
+      .children(options.children || function(node) {
+        return node.branchset
+      });
+
+    /* retrieve the old object */
+    var old_vis = d3.select('#tree > svg');
+    //old_vis.selectAll('g.node')
+    //  .transition().duration(1000)
+    //  .text('')
+    //  .attr('transform', function(d){return old_vis.select('g.root').attr('transform');});
+    
+    var new_nodes = tree(CFG['newick_object']);
+
+    //alert(JSON.stringify(Object.keys(new_nodes["0"]["1"]["name"])));
+    var names = [];
+    for(d in new_nodes["0"])
+    {
+      names.push(d.name);
+    }
+    
+    alert(names.join(','));
+    old_vis.selectAll('g.node circle')
+      .attr('fill',function(d){if(names.indexOf(d.id) != -1){return "red"} else{return "green";}});
+
+
+    /* get new vis */
+    //var new_vis = d3.layout.cluster(nodes);
+
   }
   
   d3.phylogram.buildRadial = function(selector, nodes, options) {

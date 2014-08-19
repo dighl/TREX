@@ -13,7 +13,7 @@ CFG['taxa'] = [];
 CFG['map_node_size'] = false;
 
 var STORE = ''; // variable needed for file select
-var DOCUL = {}; // variable stores doculect external data
+//var DOCUL = {}; // variable stores doculect external data
 
 
 function fakeAlert(text)
@@ -200,7 +200,7 @@ function getEthnologue()
   _added_values = false; /* store status of added values  for later check */
   if(latIdx == -1 || clsIdx == -1)
   {
-    parseDoculects();
+    //parseDoculects();
 
     /* get index of iso in header */
     var isoIdx = header.indexOf('ISO');
