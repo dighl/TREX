@@ -387,7 +387,7 @@ if (!d3) { throw "d3 wasn't included!"};
      */
     var diagonal = options.diagonal || d3.phylogram.rightAngleDiagonal();
     var tree = options.tree || d3.layout.cluster()
-      .size([options.width, options.height])
+      .size([options.height, options.width])
       .sort(function(node) { return node.children ? node.children.length : -1; })
       .children(options.children || function(node) {
         return node.branchset
