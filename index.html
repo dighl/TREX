@@ -16,7 +16,7 @@
 <link rel="stylesheet" type="text/css" href="css/style.css">
 
 <link rel="stylesheet" type="text/css" href="css/jquery.tipsy.css">
-
+<link type="image/png" href="img/rex.png" rel="icon"></link>
 
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -32,7 +32,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        TREX - Tree Explorer
+        <img src="img/rex.png" style="height:75px;margin-left:20px;margin-right:20px;" alt="trexi" /> TREX - Tree Explorer
         <small>Exploring phylogenetic trees from multiple perspectives</small>
       </h1>
 
@@ -185,10 +185,10 @@ UPPER_SORBIAN	hsb</textarea><br><br>
                 <button id="smallerNodes" onclick = "resizeNodes('tree_node_size','down');" class="btn btn-primary btn-xs" data-toggle="tooltip" title="Smaller nodes"><i class="fa fa-minus"></i> <i class="fa fa-circle"></i></button>
                 <button id="biggerText" onclick="resizeNodes('tree_font_size','up');" class="btn btn-primary btn-xs" data-toggle="tooltip" title="Larger font"><i class="fa fa-plus"></i> <i class="fa fa-header"></i></button>
                 <button id="smallerText" onclick = "resizeNodes('tree_font_size','down');" class="btn btn-primary btn-xs" data-toggle="tooltip" title="Smaller font"><i class="fa fa-minus"></i> <i class="fa fa-header"></i></button>
-                <button id="biggerHeight" onclick="resizeTree('width','up');" class="btn btn-primary btn-xs" data-toggle="tooltip" title="Expand tree vertically"><i class="fa fa-expand"></i> <i class="fa fa-arrows-h"></i></button>
-                <button id="smallerHeight" onclick = "resizeTree('width','down');" class="btn btn-primary btn-xs" data-toggle="tooltip" title="Compress tree vertically"><i class="fa fa-compress"></i> <i class="fa fa-arrows-h"></i></button>
-                <button id="biggerWidth" onclick="resizeTree('height','up');" class="btn btn-primary btn-xs" data-toggle="tooltip" title="Expand tree horizontally"><i class="fa fa-expand"></i> <i class="fa fa-arrows-v"></i></button>
-                <button id="smallerWidth" onclick = "resizeTree('height','down');" class="btn btn-primary btn-xs" data-toggle="tooltip" title="Compress tree horizontally"><i class="fa fa-compress"></i> <i class="fa fa-arrows-v"></i></button>
+                <button id="biggerHeight" onclick="resizeTree('width','up');" class="btn btn-primary btn-xs" data-toggle="tooltip" title="Expand tree horizontally"><i class="fa fa-expand"></i> <i class="fa fa-arrows-h"></i></button>
+                <button id="smallerHeight" onclick = "resizeTree('width','down');" class="btn btn-primary btn-xs" data-toggle="tooltip" title="Compress tree horizontally"><i class="fa fa-compress"></i> <i class="fa fa-arrows-h"></i></button>
+                <button id="biggerWidth" onclick="resizeTree('height','up');" class="btn btn-primary btn-xs" data-toggle="tooltip" title="Expand tree vertically"><i class="fa fa-expand"></i> <i class="fa fa-arrows-v"></i></button>
+                <button id="smallerWidth" onclick = "resizeTree('height','down');" class="btn btn-primary btn-xs" data-toggle="tooltip" title="Compress tree vertically"><i class="fa fa-compress"></i> <i class="fa fa-arrows-v"></i></button>
                 <button id="radialLayout" onclick="CFG['tree_layout']='radial';createTree();" class="btn btn-primary btn-xs" data-toggle="tooltip" title="Switch to radial layout"><i class="fa fa-circle-o"></i></button>
                 <button id="rectangleLayout" onclick="CFG['tree_layout']='rectangle';createTree();" class="btn btn-primary btn-xs" data-toggle="tooltip" title="Switch to rectangular layout"><i class="fa fa-square-o"></i></button>
                 <button id="rectangleLayout" onclick="exportSVG('tree');" class="btn btn-primary btn-xs" data-toggle="tooltip" title="Download current view"><i class="fa fa-download"></i></button>
