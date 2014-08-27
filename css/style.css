@@ -77,7 +77,7 @@ circle.hidden {
 .fake_alert {
 	position: fixed;
 	background-color: rgba(0,0,0,0.5);
-	z-index: 1;
+	z-index: 1000;
 	top:0;
 	left: 0;
 	right: 0;
@@ -96,24 +96,40 @@ circle.hidden {
   left:0;
   right:0;
   background-color: Crimson;
-  border: 2px dotted white;
+  border: 2px solid white;
   text-align:center;
   width:40%;
   float: left;
+  border-radius: 10px;
 }
 .message p {
   color: white;
   font-weight: bold;
   padding-right: 10px;
   padding-left: 10px;
+  text-align:center;
 }
 .message div {
   color: white;
   font-weight: bold;
-  width: 100%;
+  width: 50%;
   padding-top:10px;
+  position: relative;
+  left:0;
+  right:0;
+  margin: 10px;
   padding-bottom: 10px;
-  border-top: 2px dotted Crimson;
+  border-top: 2px solid Crimson;
   background-color: #2e5ca8;
   cursor: pointer;
+}
+
+.portlet-placeholder {
+  border: 1px dotted black;
+  margin: 0 1em 1em 0;
+  background-color: Crimson;
+  opacity: 0.5;
+  height: 25px;
+  width: 25px;
+  border-radius: 20px;
 }
