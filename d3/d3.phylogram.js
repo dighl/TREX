@@ -198,7 +198,7 @@ if (!d3) { throw "d3 wasn't included!"};
         .attr('stroke',  'black')
         .attr('fill', 'white')
         .attr('id', function(d){return d.name})
-        .attr('class','leave tree_node')
+        .attr('class','leaf tree_node')
         .attr('stroke-width', '2px');
 
     vis.selectAll('g.inner.node')
@@ -443,7 +443,14 @@ if (!d3) { throw "d3 wasn't included!"};
               }
             } 
             else{
-              return "translate("+d.y+","+d.x+")";
+              if(options.radial)
+              {
+                return "rotate(" + (d.x-90)+")translate("+d.y+")";
+              }
+              else
+              {
+                return "translate("+d.y+","+d.x+")";
+              }
             }
         })
       .attr('style',function(d){if(d.name in modifier){return 'display:inline'} else{return "display:none"}})
@@ -465,36 +472,87 @@ if (!d3) { throw "d3 wasn't included!"};
     
     old_vis.selectAll('path.link')
       .transition().duration(750)
+      .attr(
+          'style',
+          function(d){
+            if(d.source.name in modifier && d.target.name in modifier){
+              return "display:inline"} 
+            else{
+              return "display:none"}
+          })
       .attr('d',diagonal)
-      .attr('style',function(d){if(d.source.name in modifier && d.target.name in modifier){return "display:inline"} else{return "display:none"}})
-      ;
+    ;
 
     old_vis.selectAll('g.node text').remove();
-
-    old_vis.selectAll('g.node').append("svg:text")
-      .attr("dx", 10)
-      .attr("dy", 3)
-      .attr("text-anchor", "start")
-      .attr('font-family', 'Helvetica Neue, Helvetica, sans-serif')
-      .attr('font-size', options.font_size)
-      .attr('fill', function(d){if(d.toggled){return 'red'}else{return 'black'}})
-      .text(function(d) { 
-        if(d.name in modifier){
-          if(modifier[d.name][2] == 'leaf')
-          {
-            return d.name 
+    
+    if(options.radial)
+    {
+      old_vis.selectAll('g.node').append("svg:text")
+        .attr("dx", function(d) { return d.x < 180 ? 8 : -8; })
+        .attr("dy", ".31em")
+        .attr("text-anchor", function(d) { return d.x < 180 ? "start" : "end"; })
+        .attr("transform", function(d) { return d.x < 180 ? null : "rotate(180)"; })
+        .attr('font-family', 'Helvetica Neue, Helvetica, sans-serif')
+        .attr('font-size', options.font_size)
+        .attr(
+            'fill', 
+            function(d){
+              if(d.toggled){
+                return 'red'}
+              else{
+                return 'black'}
+            })
+        .text(function(d) { 
+          if(d.name in modifier){
+            if(modifier[d.name][2] == 'leaf')
+            {
+              return d.name 
+            }
+            else
+            {
+              return '';
+            }
           }
           else
           {
             return '';
           }
-        }
-        else
-        {
-          return '';
-        }
-      });
-    
+        });
+    }
+    else
+    {
+      old_vis.selectAll('g.node').append("svg:text")
+        .attr("dx", 10)
+        .attr("dy", 3)
+        .attr("text-anchor", "start")
+        .attr('font-family', 'Helvetica Neue, Helvetica, sans-serif')
+        .attr('font-size', options.font_size)
+        .attr(
+            'fill', 
+            function(d){
+              if(d.toggled){
+                return 'red'}
+              else{
+                return 'black'}
+            })
+        .text(function(d) { 
+          if(d.name in modifier){
+            if(modifier[d.name][2] == 'leaf')
+            {
+              return d.name 
+            }
+            else
+            {
+              return '';
+            }
+          }
+          else
+          {
+            return '';
+          }
+        });
+    }
+
   }
   
   d3.phylogram.buildRadial = function(selector, nodes, options) {
