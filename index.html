@@ -60,43 +60,40 @@
       <div class="row">
         <!-- Left col -->
         <section class="col-lg-7 connectedSortable"> 
-          <!-- Box (with bar chart) -->
-          <!-- Map box -->
+
+ <!-- Tree box -->
           <div class="box box-primary">
             <div class="box-header">
               <!-- tools box -->
               <div class="pull-right box-tools">          
                 <button class="btn btn-primary btn-sm pull-right" data-widget='collapse' data-toggle="tooltip" title="Collapse" style="margin-right: 5px;"><i class="fa fa-compress"></i></button> 
-                <button class="btn btn-primary btn-sm pull-right" data-toggle="tooltip" title="Insert the language data. Either insert the data manually by double-clicking the text field, or drop your file containing the data directly in the text field." style="margin-right: 5px;"><i class="fa fa-info"></i></button>  
+                <button class="btn btn-primary btn-sm pull-right" data-toggle="tooltip" title="Explore the tree. Modify the tree with help of the menu buttons on the right. Download with left mouse click." style="margin-right: 5px;"><i class="fa fa-info"></i></button>  
               </div><!-- /. tools -->
-              <i class="fa fa-database"></i>
+              <i class="fa fa-tree"></i>
               <h3 class="box-title">
-                DATA
+                TREE
               </h3>
             </div>
-            <div class="box-body" style="height:auto;min-height:300px;" id="newickinsert">
-              <textarea id="ethnologue" class="form-control" placeholder="Insert data in NEWICK format here" value="" rows=10 wrap="off" style="overflow:auto;width:100%">NAME	ISO
-GERMAN	deu
-BELARUSIAN	bel
-BOSNIAN	bos
-BULGARIAN	bul
-CROATIAN	hrv
-CZECH	ces
-KASHUBIAN	csb
-LOWER_SORBIAN	dsb
-MACEDONIAN	mkd
-POLISH	pol
-SERBOCROATIAN	srp
-SLOVAK	slk
-SLOVENIAN	slv
-UKRAINIAN	ukr
-UPPER_SORBIAN	hsb</textarea><br><br>
-              <div id="newick_string" style="display:none"></div>
-              <button class="btn btn-primary btn-sm pull-right" onclick="parseTree()">SUBMIT</button><br>
+            <div class="box-body" style="min-height:50px;height:auto;">
+              <div class="pull-right btn-group btn-xs" style="padding:5px">
+                <!--<button id="movemap" class="btn btn-primary btn-sm">Move map</button>-->
+                <button id="biggerNodes" onclick="resizeNodes('tree_node_size','up');" class="btn btn-primary btn-xs" data-toggle="tooltip" title="Larger nodes"><i class="fa fa-plus"></i> <i class="fa fa-circle"></i></button>
+                <button id="smallerNodes" onclick = "resizeNodes('tree_node_size','down');" class="btn btn-primary btn-xs" data-toggle="tooltip" title="Smaller nodes"><i class="fa fa-minus"></i> <i class="fa fa-circle"></i></button>
+                <button id="biggerText" onclick="resizeNodes('tree_font_size','up');" class="btn btn-primary btn-xs" data-toggle="tooltip" title="Larger font"><i class="fa fa-plus"></i> <i class="fa fa-header"></i></button>
+                <button id="smallerText" onclick = "resizeNodes('tree_font_size','down');" class="btn btn-primary btn-xs" data-toggle="tooltip" title="Smaller font"><i class="fa fa-minus"></i> <i class="fa fa-header"></i></button>
+                <button id="biggerHeight" onclick="resizeTree('width','up');" class="btn btn-primary btn-xs" data-toggle="tooltip" title="Expand tree horizontally"><i class="fa fa-expand"></i> <i class="fa fa-arrows-h"></i></button>
+                <button id="smallerHeight" onclick = "resizeTree('width','down');" class="btn btn-primary btn-xs" data-toggle="tooltip" title="Compress tree horizontally"><i class="fa fa-compress"></i> <i class="fa fa-arrows-h"></i></button>
+                <button id="biggerWidth" onclick="resizeTree('height','up');" class="btn btn-primary btn-xs" data-toggle="tooltip" title="Expand tree vertically"><i class="fa fa-expand"></i> <i class="fa fa-arrows-v"></i></button>
+                <button id="smallerWidth" onclick = "resizeTree('height','down');" class="btn btn-primary btn-xs" data-toggle="tooltip" title="Compress tree vertically"><i class="fa fa-compress"></i> <i class="fa fa-arrows-v"></i></button>
+                <button id="radialLayout" onclick="CFG['tree_layout']='radial';createTree();" class="btn btn-primary btn-xs" data-toggle="tooltip" title="Switch to radial layout"><i class="fa fa-circle-o"></i></button>
+                <button id="rectangleLayout" onclick="CFG['tree_layout']='rectangle';createTree();" class="btn btn-primary btn-xs" data-toggle="tooltip" title="Switch to rectangular layout"><i class="fa fa-square-o"></i></button>
+                <button id="rectangleLayout" onclick="exportSVG('tree');" class="btn btn-primary btn-xs" data-toggle="tooltip" title="Download current view"><i class="fa fa-download"></i></button>
 
-            <div id="newickinfo">&nbsp;</div>
+              </div>
+              <br>
+              <div id="treewindow"></div>
+              <div id="treeviewinfo"></div>
             </div><!-- /.box-body-->
-
           </div>
           <!-- /.box -->
 
@@ -135,9 +132,53 @@ UPPER_SORBIAN	hsb</textarea><br><br>
 
           </div>
           <!-- /.box -->
+          
+                   
+          
+          
+          
         </section>
 
         <section class="col-lg-5 connectedSortable">
+          
+          <!-- Input box -->
+          <div class="box box-primary">
+            <div class="box-header">
+              <!-- tools box -->
+              <div class="pull-right box-tools">          
+                <button class="btn btn-primary btn-sm pull-right" data-widget='collapse' data-toggle="tooltip" title="Collapse" style="margin-right: 5px;"><i class="fa fa-compress"></i></button> 
+                <button class="btn btn-primary btn-sm pull-right" data-toggle="tooltip" title="Insert the language data. Either insert the data manually by double-clicking the text field, or drop your file containing the data directly in the text field." style="margin-right: 5px;"><i class="fa fa-info"></i></button>  
+              </div><!-- /. tools -->
+              <i class="fa fa-database"></i>
+              <h3 class="box-title">
+                DATA
+              </h3>
+            </div>
+            <div class="box-body" style="height:auto;min-height:300px;" id="newickinsert">
+              <textarea id="ethnologue" class="form-control" placeholder="Insert data in NEWICK format here" value="" rows=10 wrap="off" style="overflow:auto;width:100%">NAME	ISO
+GERMAN	deu
+BELARUSIAN	bel
+BOSNIAN	bos
+BULGARIAN	bul
+CROATIAN	hrv
+CZECH	ces
+KASHUBIAN	csb
+LOWER_SORBIAN	dsb
+MACEDONIAN	mkd
+POLISH	pol
+SERBOCROATIAN	srp
+SLOVAK	slk
+SLOVENIAN	slv
+UKRAINIAN	ukr
+UPPER_SORBIAN	hsb</textarea><br><br>
+              <div id="newick_string" style="display:none"></div>
+              <button class="btn btn-primary btn-sm pull-right" onclick="parseTree()">SUBMIT</button><br>
+
+            <div id="newickinfo">&nbsp;</div>
+            </div><!-- /.box-body-->
+
+          </div>
+          <!-- /.box -->
 
           <!-- Sunburst box -->
           <div class="box box-primary">
@@ -165,41 +206,7 @@ UPPER_SORBIAN	hsb</textarea><br><br>
           </div>
           <!-- /.box -->
           
-          <!-- Map box -->
-          <div class="box box-primary">
-            <div class="box-header">
-              <!-- tools box -->
-              <div class="pull-right box-tools">          
-                <button class="btn btn-primary btn-sm pull-right" data-widget='collapse' data-toggle="tooltip" title="Collapse" style="margin-right: 5px;"><i class="fa fa-compress"></i></button> 
-                <button class="btn btn-primary btn-sm pull-right" data-toggle="tooltip" title="Explore the tree. Modify the tree with help of the menu buttons on the right. Download with left mouse click." style="margin-right: 5px;"><i class="fa fa-info"></i></button>  
-              </div><!-- /. tools -->
-              <i class="fa fa-tree"></i>
-              <h3 class="box-title">
-                TREE
-              </h3>
-            </div>
-            <div class="box-body" style="min-height:50px;height:auto;">
-              <div class="pull-right btn-group btn-xs" style="padding:5px">
-                <!--<button id="movemap" class="btn btn-primary btn-sm">Move map</button>-->
-                <button id="biggerNodes" onclick="resizeNodes('tree_node_size','up');" class="btn btn-primary btn-xs" data-toggle="tooltip" title="Larger nodes"><i class="fa fa-plus"></i> <i class="fa fa-circle"></i></button>
-                <button id="smallerNodes" onclick = "resizeNodes('tree_node_size','down');" class="btn btn-primary btn-xs" data-toggle="tooltip" title="Smaller nodes"><i class="fa fa-minus"></i> <i class="fa fa-circle"></i></button>
-                <button id="biggerText" onclick="resizeNodes('tree_font_size','up');" class="btn btn-primary btn-xs" data-toggle="tooltip" title="Larger font"><i class="fa fa-plus"></i> <i class="fa fa-header"></i></button>
-                <button id="smallerText" onclick = "resizeNodes('tree_font_size','down');" class="btn btn-primary btn-xs" data-toggle="tooltip" title="Smaller font"><i class="fa fa-minus"></i> <i class="fa fa-header"></i></button>
-                <button id="biggerHeight" onclick="resizeTree('width','up');" class="btn btn-primary btn-xs" data-toggle="tooltip" title="Expand tree horizontally"><i class="fa fa-expand"></i> <i class="fa fa-arrows-h"></i></button>
-                <button id="smallerHeight" onclick = "resizeTree('width','down');" class="btn btn-primary btn-xs" data-toggle="tooltip" title="Compress tree horizontally"><i class="fa fa-compress"></i> <i class="fa fa-arrows-h"></i></button>
-                <button id="biggerWidth" onclick="resizeTree('height','up');" class="btn btn-primary btn-xs" data-toggle="tooltip" title="Expand tree vertically"><i class="fa fa-expand"></i> <i class="fa fa-arrows-v"></i></button>
-                <button id="smallerWidth" onclick = "resizeTree('height','down');" class="btn btn-primary btn-xs" data-toggle="tooltip" title="Compress tree vertically"><i class="fa fa-compress"></i> <i class="fa fa-arrows-v"></i></button>
-                <button id="radialLayout" onclick="CFG['tree_layout']='radial';createTree();" class="btn btn-primary btn-xs" data-toggle="tooltip" title="Switch to radial layout"><i class="fa fa-circle-o"></i></button>
-                <button id="rectangleLayout" onclick="CFG['tree_layout']='rectangle';createTree();" class="btn btn-primary btn-xs" data-toggle="tooltip" title="Switch to rectangular layout"><i class="fa fa-square-o"></i></button>
-                <button id="rectangleLayout" onclick="exportSVG('tree');" class="btn btn-primary btn-xs" data-toggle="tooltip" title="Download current view"><i class="fa fa-download"></i></button>
 
-              </div>
-              <br>
-              <div id="treewindow"></div>
-              <div id="treeviewinfo"></div>
-            </div><!-- /.box-body-->
-          </div>
-          <!-- /.box -->
 
         </section><!-- /.Left col -->
         <!-- right col (We are only adding the ID to make the widgets sortable)-->

@@ -45,7 +45,7 @@ var projection = d3.geo.mercator()
 
 $('#mapcontainer').css("height",function(){return height + 120;});
 
-//############### make basic plot ###############
+//############### make basic map plot ###############
 var svg = d3.select("#map").append("svg") 
 	.attr("width", width)
 	.attr("height", height)
@@ -119,148 +119,128 @@ var zoom = d3.behavior.zoom()
   svg.call(zoom)
 
 
-
-
 d3.select('#resetmap').on('click',function(a){
 	 radSmall = 2.5;
 	 zoom.scale(1);
    zoom.translate([0,0]);d3.event.scale = 1;
 	 g.transition()
-	 .duration(750)
-	 .attr('transform','translate(0,0)');
+  	 .duration(750)
+  	 .attr('transform','translate(0,0)');
 	 scaleFactor = 1;
 	 ew = 0, ns = 0;
 	 g.selectAll("circle")
-	                 .attr("d", path.projection(projection))
-	                 .attr("r",function(d){
-	                     return radSmall/scaleFactor;
-	                 })
-	                 .style('stroke-width',function(d){
-	                     return 0.2/scaleFactor;
-	                 })
-	             ;
+     .attr("d", path.projection(projection))
+     .attr("r",function(d){
+         return radSmall/scaleFactor;
+     })
+     .style('stroke-width',function(d){
+         return 0.2/scaleFactor;
+     })
+	 ;
 	 g.selectAll("path")  
 	     .attr("d", path.projection(projection))
 	     .style('stroke-width',function(d){
 	         return 1/scaleFactor;
-	     }); 
+	  }); 
+
+   polys.selectAll("polygon")
+          .style('stroke-width',function(d){
+            return 1/d3.event.scale;
+   });
 
 });
 
-function createSunburst(newickJSONstring){                      
-                // ZOOMABLE SUNBURST
+// ZOOMABLE SUNBURST
 // ########################################
 
-var partition = d3.layout.partition()
-    .value(function(d) { return 1; })
-    ;
+function createSunburst(newickJSONstring){                      
+                
 
-
-// prepare data
-
-newnewickJSONstring = newickJSONstring.replace(/branchset/g,"children");
-
-newickNEW = JSON.parse(newnewickJSONstring);
-
-hierarchy = { "name": "root", "children": newickNEW};
-console.log(hierarchy);
-
-hierdata = partition.nodes(hierarchy);
-console.log(hierdata);
-
-var childrennodes = {};
-var currlevel = 'root';  
-                      
-hierdata.forEach(function(d){
-    if(d.branchset){
-        d.branchset.forEach(function(c){
-            if(childrennodes[d.name]){
-                childrennodes[d.name].push(c.name);
-            }
-            else{
-                childrennodes[d.name] = [c.name];
-            }});
-    }
-});
-
-
-
-
-
-var swidth = 400,
-    sheight = 400,
-    radius = Math.min(swidth-30, sheight-30) / 2;
-
-var x = d3.scale.linear()
-    .range([0, 2 * Math.PI]);
-
-var y = d3.scale.sqrt()
-    .range([0, radius]);
-
-
-var svgsun = d3.select("#sunburst").append("svg")
-    .attr("width", swidth)
-    .attr("height", sheight)
-  .append("g")
-    .attr("transform", "translate(" + swidth / 2 + "," + (sheight / 2 + 10) + ")");
-
-
-
-var arc = d3.svg.arc()
-    .startAngle(function(d) { return Math.max(0, Math.min(2 * Math.PI, x(d.x))); })
-    .endAngle(function(d) { return Math.max(0, Math.min(2 * Math.PI, x(d.x + d.dx))); })
-    .innerRadius(function(d) { return Math.max(0, y(d.y)); })
-    .outerRadius(function(d) { return Math.max(0, y(d.y + d.dy)); });
-
-//d3.json("tree.json", function(error, root) {
-  
-  var pathsun = svgsun.selectAll("path")
-      .data(hierdata)
-    .enter().append("path")
-    .attr("class",function(d){
-        return "sunburstarcs";// + 'sun_' + d.name;
-    })
-    .attr('id',function(d){return 'sun_'+d.name;})
-      .attr("d", arc)
-      //.style("fill", function(d) { return color((d.children ? d : d.parent).name); })
-      .style("fill", function(d){
-        //console.log(d);
-        
-        
-        currchildren = childrennodes[currlevel];
-        //console.log(currchildren);
-        currlevelnode = '';
-
- 
-
-        //console.log(currlevelnode);
-        return groupScale(d.name);
-        
-        //return 'red';
-      })
-      .attr('cursor',"pointer")
-      .on("click", function(d){
-            currlevel = d.name;
-            click(d);
-      })
-      //.on("mouseover",function(d){
-      //  d3.select("#info")
-      //      .text(function(){
-      //          //console.log(d);
-      //          return d.name;
-      //      });
-      //})
+  var partition = d3.layout.partition()
+      .value(function(d) { return 1; })
       ;
 
-    pathsun
-      //.append("title")
+  // prepare data
+
+  newnewickJSONstring = newickJSONstring.replace(/branchset/g,"children");
+
+  newickNEW = JSON.parse(newnewickJSONstring);
+
+  hierarchy = { "name": "root", "children": newickNEW};
+  console.log(hierarchy);
+
+  hierdata = partition.nodes(hierarchy);
+  console.log(hierdata);
+
+  var childrennodes = {};
+  var currlevel = 'root';  
+                        
+  hierdata.forEach(function(d){
+      if(d.branchset){
+          d.branchset.forEach(function(c){
+              if(childrennodes[d.name]){
+                  childrennodes[d.name].push(c.name);
+              }
+              else{
+                  childrennodes[d.name] = [c.name];
+              }});
+      }
+  });
+
+
+  var swidth = 400,
+      sheight = 400,
+      radius = Math.min(swidth-30, sheight-30) / 2;
+
+  var x = d3.scale.linear()
+      .range([0, 2 * Math.PI]);
+
+  var y = d3.scale.sqrt()
+      .range([0, radius]);
+
+
+  var svgsun = d3.select("#sunburst").append("svg")
+      .attr("width", swidth)
+      .attr("height", sheight)
+    .append("g")
+      .attr("transform", "translate(" + swidth / 2 + "," + (sheight / 2 + 10) + ")");
+
+  var arc = d3.svg.arc()
+      .startAngle(function(d) { return Math.max(0, Math.min(2 * Math.PI, x(d.x))); })
+      .endAngle(function(d) { return Math.max(0, Math.min(2 * Math.PI, x(d.x + d.dx))); })
+      .innerRadius(function(d) { return Math.max(0, y(d.y)); })
+      .outerRadius(function(d) { return Math.max(0, y(d.y + d.dy)); });
+
+    
+  var pathsun = svgsun.selectAll("path")
+      .data(hierdata)
+      .enter().append("path")
+      .attr("class",function(d){
+          return "sunburstarcs";// + 'sun_' + d.name;
+      })
+      .attr('id',function(d){return 'sun_'+d.name;})
+      .attr("d", arc)
+      .style("fill", function(d){
+          currchildren = childrennodes[currlevel];
+
+          currlevelnode = '';
+
+          return groupScale(d.name);
+        })
+        .attr('cursor',"pointer")
+        .on("click", function(d){
+              currlevel = d.name;
+              click(d);
+        })
+        ;
+
+  pathsun
       .attr('id',function(d){return 'sun_'+d.name;})
       .text(function(d){
         return d.name;
       });
 
   function click(d) {
-  console.log(d);
     pathsun.transition()
       .duration(750)
       .attrTween("d", arcTween(d));
@@ -268,15 +248,15 @@ var arc = d3.svg.arc()
     // update voronoi cells
     d3.selectAll('.poly')
         .attr("fill",function(d,i){
-         currchildren = childrennodes[currlevel];
-         currlevelnode = '';
-                    currchildren.forEach(function(f){
-                        //console.log(f);
-                        if(edges[data[i].name].indexOf(f) > -1){
-                            currlevelnode = f;
-                        }
-                    });
-                    //console.log(currlevelnode);
+           currchildren = childrennodes[currlevel];
+           currlevelnode = '';
+           currchildren.forEach(function(f){
+                
+              if(edges[data[i].name].indexOf(f) > -1){
+                      currlevelnode = f;
+                  }
+              });
+                    
             return groupScale(currlevelnode);
         });
         
@@ -286,26 +266,24 @@ var arc = d3.svg.arc()
          currchildren = childrennodes[currlevel];
          currlevelnode = '';
                     currchildren.forEach(function(f){
-                        //console.log(f);
+                        
                         if(edges[data[i].name].indexOf(f) > -1){
                             currlevelnode = f;
                         }
                     });
-                    //console.log(currlevelnode);
+                    
             return groupScale(currlevelnode);
         });
         
     // update sunburst segments
     d3.selectAll('.sunburstarcs')
         .style("fill",function(d,i){
-         currchildren = childrennodes[currlevel];
-         currlevelnode = '';
-                    //console.log(currlevelnode);
-            return groupScale(d.name);
+           currchildren = childrennodes[currlevel];
+           currlevelnode = '';
+           return groupScale(d.name);
         });
   }
   
-//});
 
 d3.select(self.frameElement).style("height", sheight + "px");
 
@@ -323,19 +301,17 @@ function arcTween(d) {
 
 }
 
+//############### plot locations ###############
+
 function drawMapPoints(latlon){
-  //############### plot locations ###############
-  //console.log(latlon);
 
   var datamappoints = [];
   for(var key in latlon){
     var currPoint = { "name": key, "latitude": latlon[key][0], "longitude": latlon[key][1]};
     datamappoints.push(currPoint);
   }
-  console.log(datamappoints);
-
   
-    nodeCircles.selectAll("path")
+  nodeCircles.selectAll("path")
       .data(datamappoints)
       .enter()
       .append("circle")
@@ -360,42 +336,39 @@ function drawMapPoints(latlon){
       .style("cursor","pointer")
       ;
 
-    cells
+  cells
       .attr("id", "cells")
       .attr("pointer-events",'none')
       ;
 
       positions = [];
-      datamappoints.forEach(function(a){
-        positions.push(projection([a.longitude,a.latitude]));
-      });
-
-      //console.log(positions);
-
-      var polygons = d3.geom.voronoi(positions);            
-                        
-      // plot the voronoi polygons
       
+  datamappoints.forEach(function(a){
+    positions.push(projection([a.longitude,a.latitude]));
+  });
 
+  var polygons = d3.geom.voronoi(positions);            
+                        
+  // plot the voronoi polygons
 
-      polys.selectAll('polygon')
-          .data(polygons)
-          .enter()
-          .append("polygon")
-          .attr('class',function(d,i){return 'poly poly_' + i;})
-          .attr("points",function(d,i) { 
-              return d.map(function(m){
-                  return [m[0],m[1]].join(',');
-              }).join(" ");
-          })
-          .style("fill", "red")
-          .style('stroke','red')
-          .style('stroke-width',function(){
-            return 1/scaleFactor;
-          })
-          .style("cursor","pointer")
-          .style('opacity',0.4)
-          ;
+  polys.selectAll('polygon')
+      .data(polygons)
+      .enter()
+      .append("polygon")
+      .attr('class',function(d,i){return 'poly poly_' + i;})
+      .attr("points",function(d,i) { 
+          return d.map(function(m){
+              return [m[0],m[1]].join(',');
+          }).join(" ");
+      })
+      .style("fill", "red")
+      .style('stroke','red')
+      .style('stroke-width',function(){
+        return 1/scaleFactor;
+      })
+      .style("cursor","pointer")
+      .style('opacity',0.4)
+      ;
 
 }
 
