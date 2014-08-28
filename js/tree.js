@@ -21,13 +21,15 @@ function fakeAlert(text)
   var falert = document.createElement('div');
   falert.id = 'fake';
   var text = '<div class="message"><p>' + text + '</p>';
-  text += '<div class="okbutton" onclick="' + "$('#fake').remove(); document.onkeydown = function(event){basickeydown(event)};" + '")> OK </div></div>';
+  text += '<button style="margin-bottom:10px" class="btn btn-success" onclick="' + "$('#fake').remove(); document.onkeydown = function(event){basickeydown(event)};" + '")> OK </button><br></div>';
   falert.className = 'fake_alert';
 
   document.body.appendChild(falert);
   falert.innerHTML = text;
-  document.onkeydown = function(event){$('#fake').remove(); document.onkeydown = function(event){basickeydown(event);};};
-
+  document.onkeydown = function(event){
+    $('#fake').remove(); 
+    //document.onkeydown = function(event){basickeydown(event);};
+  };
 }
 
 function checkfortreeparse(event)
@@ -356,8 +358,6 @@ function getEthnologue()
       good_nodes.push(classification[node][0]);
     }
   }
-
-  $('#db').html(JSON.stringify(good_nodes));
 
   var newick = {};
 
@@ -733,12 +733,12 @@ function createTree()
     }
   });
   
-  $('.leave').css('fill',function(d){if(CFG['taxa'].indexOf(this.id) != -1){return 'white';} else{return 'red'}});
+  //$('.leave').css('fill',function(d){if(CFG['taxa'].indexOf(this.id) != -1){return 'white';} else{return 'red'}});
 
   $('.inner_node').tipsy({gravity:'s',html:true,title: function(){return this.id;}});
 
   $('#tree').draggable();
-  $('#tree').on('contextmenu',function(event){event.preventDefault(); exportSVG('tree');});
+  $('#tree').on('dblclick',function(event){event.preventDefault(); exportSVG('tree');});
 }
 
 /* function parses file data/doculects.tsv and stores it in an object with iso-codes as key */
