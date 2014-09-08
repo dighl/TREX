@@ -571,8 +571,11 @@ function getEthnologue()
   return [newick_string,latlon,newick];
 }
 
-function get_children(node,newick)
-{
+function get_children(node,newick,internal_nodes) {
+  if (typeof internal_nodes == 'undefined') {
+    internal_nodes = false;
+  }
+
   /* find start node first  in newick stuff */
   var nodes = Object.keys(newick);
   var tmp_node = false;
@@ -605,6 +608,9 @@ function get_children(node,newick)
       if(child.indexOf(':') != -1)
       {
         queue.push(child);
+        if (internal_nodes) {
+          children.push(child.split(':')[0]);
+        }
       }
       else
       {
@@ -654,6 +660,7 @@ function exportNewick(event)
 
   var blob = new Blob([nwk], {type: 'text/plain;charset=utf-8'});
   saveAs(blob, "tree.nwk");
+  //console.log(get_children('Indo-European',CFG['newick_dict'],true));
 }
 
 function exportSVG(identifier)
