@@ -295,9 +295,7 @@ function getEthnologue()
       {
         tracker[node] = [parents];
       }
-      //alert('#'+taxon+" "+tracker[node]+'  '+node+'  '+parents);
     }
-    //alert(dpoints[i][clsIdx]);
   }
 
   for(var i=0,row;row=dpoints[i];i++)
@@ -460,7 +458,72 @@ function getEthnologue()
       }
     }
   }
+  
+  /* create specific object (in CFG) to show current classification of
+   * each doculect. 
+   * we do this from scratch, since otherwise we cannot guarantee that this 
+   * will be done correctly, correpsonding to our dictionary.
+   */
 
+  /* get the root node, forgot whether or where I stored it before ;-) */
+  var root_node = '';
+  for (key in newick) {
+    if (key.split(':')[1] == '1') {
+      root_node = key;
+      break
+    }
+  }
+  
+  /* make a queue and the classification */
+  var queue = [root_node];
+  var children = {};
+  var parents = {};
+  var leaves = [];
+  
+  while (queue.length > 0) {
+    var key = queue.shift();
+    
+    var name = key.split(':')[0];
+    var pos = key.split(':')[1];
+    
+    if (key in newick) {
+      children[name] = [];
+      for (var i=0,child; child=newick[key][i]; i++) {
+        children[name].push(child.split(':')[0]);
+        parents[child.split(':')[0]] = name;
+        queue.push(child);
+      }
+    }
+    else {
+      children[name] = [];
+      leaves.push(name);
+
+    }
+  }
+  
+  var cstrings = {};
+  // create classification strings
+  for (var i=0,l; l=leaves[i];i++) {
+    var tmp = [];
+    var next_node = l;
+    while (true == true) {
+      tmp.push(next_node);
+      if (next_node in parents) {
+        next_node = parents[next_node];
+      }
+      else {
+        break;
+      }
+    }
+    tmp.reverse();
+    cstrings[l] = tmp.join(',');
+  }
+
+  console.log(leaves, cstrings);
+  CFG['children'] = children;
+  CFG['parents'] = parents;
+  CFG['classification_strings'] = cstrings;
+  
   // now we transform the whole stuff into a newick string
   // this is a bit redundant, since we will then again parse it using
   // newick.js, but it is useful, since we also want to pass the newick
