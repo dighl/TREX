@@ -21,7 +21,7 @@ function fakeAlert(text)
   var falert = document.createElement('div');
   falert.id = 'fake';
   var text = '<div class="message"><p>' + text + '</p>';
-  text += '<button style="margin-bottom:10px" class="btn btn-success" onclick="' + "$('#fake').remove(); document.onkeydown = function(event){basickeydown(event)};" + '")> OK </button><br></div>';
+  text += '<button style="margin-bottom:10px" class="btn btn-success" onclick="' + "$('#fake').remove();" + '")> OK </button><br></div>';
   falert.className = 'fake_alert';
 
   document.body.appendChild(falert);

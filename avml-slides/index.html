@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+
+    <title>List &amp; Mayer - Visualizing Genetic Language Relations in Geographic Space</title>
+
+    <meta name="description" content="A framework for easily creating beautiful presentations 
+    using HTML">
+    <meta name="author" content="Hakim El Hattab">
+
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, 
+    user-scalable=no">
+
+    <link rel="stylesheet" href="css/reveal.css">
+    <link rel="stylesheet" href="css/theme/default.css" id="theme">
+
+    <!-- For syntax highlighting -->
+    <link rel="stylesheet" href="lib/css/zenburn.css">
+
+    <!-- If the query includes 'print-pdf', use the PDF print sheet -->
+    <script>
+      document.write( '<link rel="stylesheet" href="css/print/' + 
+      ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + 
+      '.css" type="text/css" media="print">' );
+    </script>
+
+    <!--[if lt IE 9]>
+    <script src="lib/js/html5shiv.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+        
+        <div class="slide-number"></div>
+        <div class="footer-uni">
+            <center>
+            <table border="0">
+            <tr>
+            <td valign="center"><img src="img/PhUniMa_Logo_w.png" height="40"></td>
+                <td width="20px">&nbsp;</td>
+                <td width="450px" align="center"><p style="font-family:Helvetica,
+                sans-serif;font-size: 11pt; font-weight:lighter;">
+                List &amp; Mayer - Visualizing Genetic Language Relations in Geographic Space </p></td>
+                <td width="20px">&nbsp;</td>
+            <td valign="center"><img src="img/dfg_logo_schriftzug_weiss.png" height="20"></td>
+            <td valign="center"><img src="img/logo_erc.png" height="60"></td>
+            </tr>
+            </table>
+            </center>
+        </div>
+
+    <div class="reveal">
+
+      <!-- Any section element inside of this container is displayed as a slide -->
+      <div class="slides">
+                
+                
+
+        <section>
+                    
+                    
+          <h1 style='font-size:1.5em;'>Visualizing Genetic Language Relations in Geographic Space
+                    <br><br><small>
+                    AVML - Advances in Visual Methods for Linguistics <br>
+                    24-26 September 2014, Tübingen</small></p>
+          <p>
+            <small style="font-size: 50%;">
+      
+            <a href="http://lingulist.de">Johann-Mattis List</a> / 
+        <a href="mailto:mattis.list@uni-marburg.de">mattis.list@uni-marburg.de</a>
+        <br>
+            <a href="http://th-mayer.de">Thomas Mayer</a> / 
+        <a href="mailto:thomas.mayer@uni-marburg.de">thomas.mayer@uni-marburg.de</a>
+        
+        
+            </small>
+          </p>
+                    
+        </section>
+        
+        <section>
+                    <h2>Overview</h2>
+                    
+                    <div class="textbox">
+                    <ol style="zoom: 130%;">
+                    <li><a href="#/introduction/">Introducing CLICS</a></li>
+                    <li><a href="#/visualization/">Visualization</a></li>
+                    <li><a href="#/casestudies/">Case studies</a></li>
+                    <li><a href="#/conclusions/">Conclusions and future work</a></li>
+                    </ol>
+                    </div>
+                
+        </section>
+        
+       
+
+        <section data-transition="zoom">
+          <h2>Thank you for your attention!</h2>
+          <div class="textbox" style="margin-top: 90px;">
+          <p>
+          <table border="0">
+        <tr><td>
+            <a href="http://lingulist.de">Johann-Mattis List</a></td><td>
+        <a href="mailto:mattis.list@uni-marburg.de">mattis.list@uni-marburg.de</a>
+        </td></tr>
+          <tr><td width="350"><a href="http://th-mayer.de">Thomas Mayer</a> </td><td>
+        <a href="mailto:thomas.mayer@uni-marburg.de">thomas.mayer@uni-marburg.de</a>
+        </td></tr>
+        </table>
+        </p>
+          </div>
+        </section>
+
+      </div>
+
+    </div>
+
+    <script src="lib/js/head.min.js"></script>
+    <script src="js/reveal.min.js"></script>
+
+    <script>
+
+      // Full list of configuration options available here:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+
+        theme: 'thommy',//Reveal.getQueryHash().theme, // available themes are in /css/theme
+        transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+        // Optional libraries used to extend on reveal.js
+        dependencies: [
+          { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+          { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+          { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+          { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+        ]
+      });
+
+    </script>
+        
+        <!-- From https://github.com/hakimel/reveal.js/pull/56#issuecomment-17470394 -->
+        <script>
+            var slideNumber = document.querySelector('.slide-number');
+            var updateSlideNumber = function(event) {
+                var textContent = event.indexh;
+                if (event.indexv > 0) {
+                    textContent += '-' + event.indexv;
+                }
+                if (event.indexh > 0) {
+                    slideNumber.textContent = textContent;
+                }
+            }
+
+            Reveal.addEventListener('ready', updateSlideNumber);
+            Reveal.addEventListener('slidechanged', updateSlideNumber);
+        </script>
+        
+
+  </body>
+</html>
