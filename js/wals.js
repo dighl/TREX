@@ -25,6 +25,8 @@ var childrennodes = {};
 var currlevel = "root";
 var edges = {};
 var datamappoints;
+var parents = {};
+
 
 //############### projection settings ###############
 var margin = {top: 10, left: 10, bottom: 10, right: 10}
@@ -150,18 +152,108 @@ d3.select('#resetmap').on('click',function(a){
    });
 });
 
-function getlevelnode(name){
+d3.select("#zoomtofit").on("click",function(d){
+    //var bounds = brush.extent();
+
+  var lats = [];
+    datamappoints.forEach(function(a){
+      lats.push(a.latitude);
+    });
+  var  longs = [];
+    datamappoints.forEach(function(a){
+      longs.push(a.longitude);
+    });
+
+  var offset = 10;
+  var minlats = d3.min(lats) - offset;
+  var maxlats = d3.max(lats) + offset;
+  var minlongs = d3.min(longs) - offset;
+  var maxlongs = d3.max(longs) + offset;
+  var minminxproj = projection([minlongs,minlats])[0];
+  var minminyproj = projection([minlongs,minlats])[1];
+  var minmaxxproj = projection([minlongs,maxlats])[0];
+  var minmaxyproj = projection([minlongs,maxlats])[1];
+  var maxminxproj = projection([maxlongs,minlats])[0];
+  var maxminyproj = projection([maxlongs,minlats])[1];
+  var maxmaxxproj = projection([maxlongs,maxlats])[0];
+  var maxmaxyproj = projection([maxlongs,maxlats])[1];
+
+  var bounds = [[minminxproj,minminyproj],
+  [maxmaxxproj,maxmaxyproj]
+  ];
+
+    console.log(bounds);
+  var dx = bounds[1][0] - bounds[0][0],
+      dy = bounds[1][1] - bounds[0][1],
+      x = (bounds[0][0] + bounds[1][0]) / 2,
+      y = (bounds[0][1] + bounds[1][1]) / 2,
+      scale = .9 / Math.max(dx / width, dy / height),
+      translate = [width / 2 - scale * x, height / 2 - scale * y - 50];
+
+  zoom.scale(scale);
+  zoom.translate(translate);
+  d3.event.scale = scale;
+
+  g.transition()
+      .duration(750)
+      .style("stroke-width", 1.5 / scale + "px")
+      .attr("transform", "translate(" + translate + ")scale(" + scale + ")");
+
+
+   scaleFactor = scale;
+   ew = translate[0];
+   ns = translate[1];
+    g.selectAll("circle")
+                   .attr("d", path.projection(projection))
+                   .attr("r",function(d){
+                       return radSmall/scaleFactor;
+                   })
+                   .style('stroke-width',function(d){
+                       return 0.2/scaleFactor;
+                   })
+               ;
+   g.selectAll("path")
+   .transition()
+      .duration(750)
+       .attr("d", path.projection(projection))
+       .style('stroke-width',function(d){
+           return 1/scaleFactor;
+       });
+
+
+   polys.selectAll("polygon")
+   .transition()
+      .duration(750)
+          .style('stroke-width',function(d){
+            return 1/d3.event.scale;
+   });
+
+});
+
+
+
+function getlevelnode(name,verbose){
   currchildren = childrennodes[currlevel];
-  console.log("children: ", currchildren);
+  if(verbose=="yes"){console.log("children: ", currchildren);}
   currlevelnode = '';
   currchildren.forEach(function(f){
-    children = get_children(name, CFG['newick_dict'], true);
-    console.log("curr children",children);
-    if(children.indexOf(f) > -1){
+    //children = get_children(name, CFG['newick_dict'], true);
+    //hierstring = CFG['classification_strings'][name];
+    //parents = hierstring.split(',');
+    //console.log("curr children",parents);
+    for(var cl in CFG['classification_strings']){
+      var currcl = CFG['classification_strings'][cl].split(',');
+      for(var i=1;i<currcl.length;i++){
+        parents[currcl[i]] = currcl.slice(0,i+1);
+      }
+    }
+    parents['root'] = [];
+    if(parents[name].indexOf(f) > -1){
       currlevelnode = f;
     }
   });
-  console.log("levelnode: ",currlevelnode);
+  //console.log("levelnode: ",currlevelnode);
+  if(verbose=="yes"){console.log(name,currlevelnode);}
   return currlevelnode;
 }
 
@@ -182,10 +274,10 @@ function createSunburst(newickJSONstring){
   newickNEW = JSON.parse(newnewickJSONstring);
 
   hierarchy = { "name": "root", "children": newickNEW};
-  console.log(hierarchy);
+  //console.log(hierarchy);
 
   hierdata = partition.nodes(hierarchy);
-  console.log(hierdata);
+  //console.log(hierdata);
 
 
   hierdata.forEach(function(d){
@@ -232,15 +324,17 @@ function createSunburst(newickJSONstring){
       .attr("d", arc)
       .style("fill", function(d){
           if(d.name == "root"){ return "#ccc";}
-          return groupScale(getlevelnode(d.name));
+          return groupScale(getlevelnode(d.name,verbose="yes"));
         })
-        .attr('cursor',"pointer")
-        .on("click", function(d){
-              currlevel = d.name;
-              console.log(currlevel);
-              click(d);
-        })
-        ;
+      .attr('cursor',"pointer")
+      .style('opacity',0.6)
+      .style("stroke","black")
+      .on("click", function(d){
+        currlevel = d.name;
+        //console.log(currlevel);
+        click(d);
+      })
+      ;
 
   pathsun
       .attr('id',function(d){return 'sun_'+d.name;})
@@ -250,7 +344,7 @@ function createSunburst(newickJSONstring){
 
 
   function click(e) {
-    console.log(e);
+    //console.log(e);
     pathsun.transition()
       .duration(750)
       .attrTween("d", arcTween(e));
@@ -366,7 +460,7 @@ function drawMapPoints(latlon){
 
           return groupScale(getlevelnode(datamappoints[i].name));
       })
-      .style('stroke','red')
+      .style('stroke','black')
       .style('stroke-width',function(){
         return 1/scaleFactor;
       })
