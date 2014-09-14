@@ -16,10 +16,10 @@
    width="454.40326"
    height="260.47144"
    xml:space="preserve"
-   sodipodi:docname="fig_7.svg"><metadata
+   sodipodi:docname="fig_11.svg"><metadata
      id="metadata8"><rdf:RDF><cc:Work
          rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type
-           rdf:resource="http://purl.org/dc/dcmitype/StillImage" /><dc:title></dc:title></cc:Work></rdf:RDF></metadata><defs
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" /><dc:title /></cc:Work></rdf:RDF></metadata><defs
      id="defs6"><mask
        id="mask3186"
        height="1"
@@ -104,7 +104,7 @@
      id="namedview4"
      showgrid="false"
      inkscape:zoom="0.98116164"
-     inkscape:cx="572.36087"
+     inkscape:cx="574.39927"
      inkscape:cy="27.847278"
      inkscape:window-x="173"
      inkscape:window-y="169"
@@ -140,7 +140,14 @@
                      inkscape:label="fig_1"
                      id="g3140"><g
                        transform="scale(0.1,0.1)"
-                       id="g3142"><path
+                       id="g3142"><rect
+                         style="color:#000000;fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:#ffffff;stroke-width:10;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+                         id="rect3034"
+                         width="523.86884"
+                         height="298.62561"
+                         x="-14.268801"
+                         y="-21.846981"
+                         transform="matrix(8,0,0,-8,-96.825983,1982.6875)" /><path
                          id="path3144"
                          style="fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none"
                          d="m 0,0 3628.3,0 0,2721.3 L 0,2721.3 0,0 z"
