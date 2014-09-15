@@ -26,6 +26,7 @@ var currlevel = "root";
 var edges = {};
 var datamappoints;
 var parents = {};
+var click;
 
 
 //############### projection settings ###############
@@ -66,7 +67,7 @@ var polys = g.append("g").attr("id","polys");
 // define scales and projections
 var path = d3.geo.path()
 	.projection(projection);
-var groupScale = d3.scale.category20();
+var groupScale = d3.scale.category10();
 
 // load and display the World
 d3.json("world-110m.json", function(error, topology) {
@@ -182,7 +183,7 @@ d3.select("#zoomtofit").on("click",function(d){
   [maxmaxxproj,maxmaxyproj]
   ];
 
-    console.log(bounds);
+    //console.log(bounds);
   var dx = bounds[1][0] - bounds[0][0],
       dy = bounds[1][1] - bounds[0][1],
       x = (bounds[0][0] + bounds[1][0]) / 2,
@@ -229,6 +230,8 @@ d3.select("#zoomtofit").on("click",function(d){
    });
 
 });
+
+
 
 
 
@@ -329,11 +332,11 @@ function createSunburst(newickJSONstring){
           return groupScale(currname);
         })
       .attr('cursor',"pointer")
-      .style('opacity',0.6)
+      .style('opacity',0.45)
       .style("stroke","black")
       .on("click", function(d){
         currlevel = d.name;
-        //console.log(currlevel);
+        console.log(d);
         click(d);
       })
       ;
@@ -344,9 +347,8 @@ function createSunburst(newickJSONstring){
         return d.name;
       });
 
-
-  function click(e) {
-    //console.log(e);
+  click = function (e) {
+    console.log(currlevel);
     pathsun.transition()
       .duration(750)
       .attrTween("d", arcTween(e));
@@ -363,11 +365,12 @@ function createSunburst(newickJSONstring){
     // update sunburst segments
     d3.selectAll('.sunburstarcs')
         .style("fill",function(d,i){
-          var currname = getlevelnode(d.name,verbose="yes");
+          var currname = getlevelnode(d.name);
           if(currname == "root"){ return "#CCC"}
           return groupScale(currname);
         });
   } // end click function
+
 
 
   d3.select(self.frameElement).style("height", sheight + "px");
@@ -456,6 +459,37 @@ function drawMapPoints(latlon){
       })
       .style("cursor","pointer")
       .style('opacity',0.4)
+      .on("click",function(d,i){
+        name = datamappoints[i].name;
+        currlevelnode = '';
+        currchildren.forEach(function(f){
+          for(var cl in CFG['classification_strings']){
+            var currcl = CFG['classification_strings'][cl].split(',');
+            for(var i=1;i<currcl.length;i++){
+              parents[currcl[i]] = currcl.slice(0,i+1);
+            }
+          }
+          parents['root'] = [];
+          if(parents[name].indexOf(f) > -1){
+            currlevelnode = f;
+          }
+        });
+        //if(currlevelnode == ""){ return "root";}
+        console.log(datamappoints[i].name,currlevelnode);
+        var reld = hierdata.filter(function(f){ return f.name == currlevelnode; });
+        //console.log(reld[0]);
+        if(reld.length == 0){
+          var reld = hierdata.filter(function(f){ return f.name == currlevel; });
+          console.log(reld[0]);
+          currparent = reld[0].parent;
+          currlevel = currparent.name;
+          click(currparent);
+        }
+        else{
+          currlevel = currlevelnode;
+          click(reld[0]);
+        }
+      })
       ;
 
 } // end drawMapPoints function
