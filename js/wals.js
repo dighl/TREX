@@ -27,6 +27,7 @@ var edges = {};
 var datamappoints;
 var parents = {};
 var click;
+var polygons;
 
 
 //############### projection settings ###############
@@ -229,7 +230,9 @@ d3.select("#zoomtofit").on("click",function(d){
             return 1/d3.event.scale;
    });
 
-});
+  
+
+}); // end zoomtofit
 
 
 
@@ -435,7 +438,7 @@ function drawMapPoints(latlon){
     positions.push(projection([a.longitude,a.latitude]));
   });
 
-  var polygons = d3.geom.voronoi(positions);
+  polygons = d3.geom.voronoi(positions);
 
   // plot the voronoi polygons
 
