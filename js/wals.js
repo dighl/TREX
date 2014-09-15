@@ -66,7 +66,7 @@ var polys = g.append("g").attr("id","polys");
 // define scales and projections
 var path = d3.geo.path()
 	.projection(projection);
-var groupScale = d3.scale.category10();
+var groupScale = d3.scale.category20();
 
 // load and display the World
 d3.json("world-110m.json", function(error, topology) {
@@ -254,6 +254,7 @@ function getlevelnode(name,verbose){
   });
   //console.log("levelnode: ",currlevelnode);
   if(verbose=="yes"){console.log(name,currlevelnode);}
+  if(currlevelnode == ""){ return "root";}
   return currlevelnode;
 }
 
@@ -323,8 +324,9 @@ function createSunburst(newickJSONstring){
       .attr('id',function(d){return 'sun_'+d.name;})
       .attr("d", arc)
       .style("fill", function(d){
-          if(d.name == "root"){ return "#ccc";}
-          return groupScale(getlevelnode(d.name,verbose="yes"));
+          var currname = getlevelnode(d.name);
+          if(currname == "root"){ return "#CCC"}
+          return groupScale(currname);
         })
       .attr('cursor',"pointer")
       .style('opacity',0.6)
@@ -353,29 +355,17 @@ function createSunburst(newickJSONstring){
     d3.selectAll('.poly')
         .style("fill",function(d,i){
 
-           return groupScale(getlevelnode(datamappoints[i].name));
-        });
-
-    // update language locations
-    d3.selectAll('.location')
-        .style("fill",function(d,i){
-         currchildren = childrennodes[currlevel];
-         currlevelnode = '';
-                    currchildren.forEach(function(f){
-
-                      var children = get_children(datamappoints[i].name, CFG["newick_dict"], true);
-                      if(children.indexOf(f) > -1){
-                        currlevelnode = f;
-                      }
-                    });
-
-            return groupScale(currlevelnode);
+          var currname = getlevelnode(datamappoints[i].name);
+          if(currname == "root"){ return "#CCC"}
+          return groupScale(currname);
         });
 
     // update sunburst segments
     d3.selectAll('.sunburstarcs')
         .style("fill",function(d,i){
-          return groupScale(getlevelnode(d.name));
+          var currname = getlevelnode(d.name,verbose="yes");
+          if(currname == "root"){ return "#CCC"}
+          return groupScale(currname);
         });
   } // end click function
 
