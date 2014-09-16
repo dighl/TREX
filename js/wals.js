@@ -157,6 +157,7 @@ d3.select('#resetmap').on('click',function(a){
 d3.select("#zoomtofit").on("click",function(d){
     //var bounds = brush.extent();
 
+  /*
   var lats = [];
     datamappoints.forEach(function(a){
       lats.push(a.latitude);
@@ -166,23 +167,43 @@ d3.select("#zoomtofit").on("click",function(d){
       longs.push(a.longitude);
     });
 
+  
   var offset = 10;
-  var minlats = d3.min(lats) - offset;
-  var maxlats = d3.max(lats) + offset;
-  var minlongs = d3.min(longs) - offset;
-  var maxlongs = d3.max(longs) + offset;
+  var minlats = d3.min(lats);
+  var maxlats = d3.max(lats);
+  var minlongs = d3.min(longs);
+  var maxlongs = d3.max(longs);
+  console.log(minlats,minlongs,maxlats,maxlongs);
   var minminxproj = projection([minlongs,minlats])[0];
   var minminyproj = projection([minlongs,minlats])[1];
-  var minmaxxproj = projection([minlongs,maxlats])[0];
-  var minmaxyproj = projection([minlongs,maxlats])[1];
-  var maxminxproj = projection([maxlongs,minlats])[0];
-  var maxminyproj = projection([maxlongs,minlats])[1];
+  //var minmaxxproj = projection([minlongs,maxlats])[0];
+  //var minmaxyproj = projection([minlongs,maxlats])[1];
+  //var maxminxproj = projection([maxlongs,minlats])[0];
+  //var maxminyproj = projection([maxlongs,minlats])[1];
   var maxmaxxproj = projection([maxlongs,maxlats])[0];
   var maxmaxyproj = projection([maxlongs,maxlats])[1];
 
   var bounds = [[minminxproj,minminyproj],
   [maxmaxxproj,maxmaxyproj]
   ];
+  console.log(bounds);
+  */
+  var offset = 10;
+  var xs = [];
+    datamappoints.forEach(function(a){
+      xs.push(projection([a.longitude,a.latitude])[0]);
+    });
+  var  ys = [];
+    datamappoints.forEach(function(a){
+      ys.push(projection([a.longitude,a.latitude])[1]);
+    });
+
+  var x0 = d3.min(xs);
+  var y0 = d3.min(ys);
+  var x1 = d3.max(xs);
+  var y1 = d3.max(ys);
+
+  var bounds = [[x0-offset,y0-offset],[x1+offset,y1+offset]];
 
     //console.log(bounds);
   var dx = bounds[1][0] - bounds[0][0],
