@@ -111,8 +111,10 @@ function parseTree()
     // replace old svg first, make sure nothing remained, same applies to map ?
     document.getElementById('sunburst').innerHTML = '';
     $('.mappoint').remove();
-    createSunburst(newickJSONstring);
-    drawMapPoints(latlon);
+    document.getElementById('map').innerHTML = '';
+    drawmapsunburst(newickJSONstring,latlon);
+    //createSunburst(newickJSONstring);
+    //drawMapPoints(latlon);
 
     $('#tree').draggable();
 

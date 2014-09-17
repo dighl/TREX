@@ -1,3 +1,5 @@
+function drawmapsunburst(newickJSONstring,latlon){
+
 //############### global variables ###############
 var widthbox = parseInt(d3.select('#map').style('width'));
 var width = 580;
@@ -121,7 +123,9 @@ var zoom = d3.behavior.zoom()
 
 
   });
-svg.call(zoom)
+svg.call(zoom);
+createSunburst(newickJSONstring);
+drawMapPoints(latlon);
 
 
 d3.select('#resetmap').on('click',function(a){
@@ -457,9 +461,11 @@ function drawMapPoints(latlon){
 
   datamappoints.forEach(function(a){
     positions.push(projection([a.longitude,a.latitude]));
+    //positions.push([a.longitude,a.latitude]);
   });
 
   polygons = d3.geom.voronoi(positions);
+  console.log(polygons);
 
   // plot the voronoi polygons
 
@@ -517,3 +523,4 @@ function drawMapPoints(latlon){
       ;
 
 } // end drawMapPoints function
+}

@@ -2722,7 +2722,7 @@ Component: timeline
   padding: 0;
   width: 18px;
   height: 18px;
-  background-color: white; //rgba(255, 255, 255, 0.7) url(iCheck/minimal/minimal.png) no-repeat;
+  background-color: white; /*rgba(255, 255, 255, 0.7) url(iCheck/minimal/minimal.png) no-repeat;*/
   border: 3px solid black;
   cursor: pointer;
   border-radius: 10px;
