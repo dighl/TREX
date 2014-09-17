@@ -2,7 +2,7 @@
 
 # Discussing how to represent genetic language relations in historical linguistics
 
-# Our approach: interactive combination of areal and genealogical representation
+# Our idea (what can interactive visualizations contribute to this discussion?): interactive combination of areal and genealogical representation
 
 # Short discussion of earlier approach (WALS visualization from AVML 2012)
 
@@ -12,4 +12,6 @@
   ## Widgets: tree, sunburst, map
   ## interactive functionality
 
-# 
+# Case studies
+
+# Conclusions
