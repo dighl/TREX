@@ -1,9 +1,17 @@
+/* Tree handler for TREX
+ *
+ * author   : Johann-Mattis List, Thomas Mayer
+ * email    : mattis.list@lingulist.de
+ * created  : 2014-09-16 14:36
+ * modified : 2014-09-16 14:36
+ *
+ */
+
 /* set up a global configuration variable */
 var CFG = {};
 CFG['tree_height'] = 30;
 CFG['tree_width'] = 400;
 CFG['newick'] = false;
-CFG['taxlen'] = false;
 CFG['newick_dict'] = false;
 CFG['tree_layout'] = 'rectangle';
 CFG['tree_node_size'] = 5;
@@ -183,6 +191,15 @@ function getEthnologue()
   var elist = ethnologue.split(/\n|\r\n/);
   var dpoints = [];
 
+  var clsify = '';
+  var clsify = document.getElementsByClassName('classify');
+  if(clsify[0].checked) {
+    clsify = 3;
+  }
+  else {
+    clsify = 4;
+  }
+
   for(var i=1,row;row=elist[i];i++)
   {
     dpoints.push(row.split('\t'));
@@ -237,7 +254,7 @@ function getEthnologue()
     for(var i=0,line;line=dpoints[i];i++)
     {
       var iso = line[isoIdx];
-      var cls = DOCUL[iso][3]; // currently only ethnologue, no further choice!
+      var cls = DOCUL[iso][clsify]; // currently only ethnologue, no further choice!
       dpoints[i].push(cls);
     }
   }
@@ -467,13 +484,25 @@ function getEthnologue()
 
   /* get the root node, forgot whether or where I stored it before ;-) */
   var root_node = '';
+  var current = 1000;
+  var current_key = '';
   for (key in newick) {
-    if (key.split(':')[1] == '1') {
+    var new_count = parseInt(key.split(':')[1]);
+    if (new_count == 1) {
       root_node = key;
       break
     }
+    else if (new_count < current) {
+      current = new_count;
+      current_key = key;
+    }
+  }
+  if(root_node == ''){
+    root_node = current_key;
   }
   
+  console.log('root-node',root_node);
+
   /* make a queue and the classification */
   var queue = [root_node];
   var children = {};
@@ -518,8 +547,9 @@ function getEthnologue()
     tmp.reverse();
     cstrings[l] = tmp.join(',');
   }
-
-  console.log(leaves, cstrings);
+  
+  console.log("newick",newick,"goodnodes",good_nodes);
+  console.log("leaves:",leaves, "cstrings:",cstrings);
   CFG['children'] = children;
   CFG['parents'] = parents;
   CFG['classification_strings'] = cstrings;
@@ -529,20 +559,20 @@ function getEthnologue()
   // newick.js, but it is useful, since we also want to pass the newick
   // data as output, so that people can reuse it for their purpose
 
-  best_key = 1000;
-  root_node = '';
+  var best_key = 1000;
+  var rootNode = '';
   for(key in newick)
   {
     var new_key = parseInt(key.split(':')[1]);
     if(new_key > 0 && new_key < best_key)
     {
       best_key = new_key;
-      root_node = key;
+      rootNode = key;
     }
   }
   
-  var newick_string = root_node+';';
-  var queue = [root_node];
+  var newick_string = rootNode+';';
+  var queue = [rootNode];
   while(queue.length > 0)
   {
     var next_key = queue.shift();
@@ -568,6 +598,10 @@ function getEthnologue()
       }
     }
   }
+  console.log('getEthnologue-End: Newick:',newick);
+
+console.log('geThnologue-End:latlon',latlon);
+
   return [newick_string,latlon,newick];
 }
 

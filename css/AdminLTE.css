@@ -2722,18 +2722,21 @@ Component: timeline
   padding: 0;
   width: 18px;
   height: 18px;
-  background: rgba(255, 255, 255, 0.7) url(iCheck/minimal/minimal.png) no-repeat;
-  border: none;
+  background-color: white; //rgba(255, 255, 255, 0.7) url(iCheck/minimal/minimal.png) no-repeat;
+  border: 3px solid black;
   cursor: pointer;
+  border-radius: 10px;
 }
 .icheckbox_minimal {
   background-position: 0 0;
 }
 .icheckbox_minimal.hover {
   background-position: -20px 0;
+  opacity: 0.5;
 }
 .icheckbox_minimal.checked {
   background-position: -40px 0;
+  background-color: white;
 }
 .icheckbox_minimal.disabled {
   background-position: -60px 0;
@@ -2750,10 +2753,12 @@ Component: timeline
 }
 .iradio_minimal.checked {
   background-position: -140px 0;
+  background-color: Crimson;
 }
 .iradio_minimal.disabled {
   background-position: -160px 0;
   cursor: default;
+  background-color: white;
 }
 .iradio_minimal.checked.disabled {
   background-position: -180px 0;
