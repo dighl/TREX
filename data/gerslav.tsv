@@ -6,7 +6,7 @@ CROATIAN	45.8200	15.9800	Indo-European,Slavic,South,Western
 CZECH	50.0000	15.0000	Indo-European,Slavic,West,Czech-Slovak
 KASHUBIAN	54.0000	18.0000	Indo-European,Slavic,West,Lechitic
 LOWER_SORBIAN	51.7500	14.3300	Indo-European,Slavic,West,Sorbian
-LOWER_SORBIAN_2	51.7500	14.3300	Indo-European,Slavic,West,Sorbian
+LOWER_SORBIAN_2	51.7500	14.3200	Indo-European,Slavic,West,Sorbian
 MACEDONIAN	41.6700	21.7500	Indo-European,Slavic,South,Eastern
 NINILCHIK_RUSSIAN	59.9900	-151.5400	Indo-European,Slavic,East
 POLISH	52.0000	20.0000	Indo-European,Slavic,West,Lechitic
@@ -37,9 +37,9 @@ NORTH_FRISIAN_AMRUM	54.6500	8.3500	Indo-European,Germanic,West,Frisian
 NORTHERN_LOW_SAXON	53.1000	8.7800	Indo-European,Germanic,West,LowSaxon-LowFranconian,LowSaxon
 NORWEGIAN_BOKMAAL	61.0000	8.0000	Indo-European,Germanic,North,EastScandinavian,Danish-Swedish,Danish-Bokmal
 NORWEGIAN_NYNORSK_TOTEN	59.2700	11.1500	Indo-European,Germanic,North,EastScandinavian,Danish-Swedish,Danish-Bokmal
-NORWEGIAN_RIKSMAL	61.0000	8.0000	Indo-European,Germanic,North,EastScandinavian,Danish-Swedish,Danish-Bokmal
+NORWEGIAN_RIKSMAL	61.0000	8.1000	Indo-European,Germanic,North,EastScandinavian,Danish-Swedish,Danish-Bokmal
 PLAUTDIETSCH	53.0000	10.0000	Indo-European,Germanic,West,LowSaxon-LowFranconian,LowSaxon
-SANDNES_NORWEGIAN	61.0000	8.0000	Indo-European,Germanic,North,EastScandinavian,Danish-Swedish,Danish-Bokmal
+SANDNES_NORWEGIAN	61.0000	8.0400	Indo-European,Germanic,North,EastScandinavian,Danish-Swedish,Danish-Bokmal
 SAXON_UPPER	51.3300	12.4800	Indo-European,Germanic,West,HighGerman,German,MiddleGerman,EastMiddleGerman
 SCOTS	55.8600	-4.2600	Indo-European,Germanic,West,English
 STANDARD_GERMAN	52.0000	10.0000	Indo-European,Germanic,West,HighGerman,German,MiddleGerman,EastMiddleGerman
