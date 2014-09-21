@@ -24,6 +24,87 @@ var STORE = ''; // variable needed for file select
 //var DOCUL = {}; // variable stores doculect external data
 
 
+function generateTestData() {
+  var txt = "Name	LAT	LON	CLS\n" + 
+    "Beijing	40.0500	116.4200	Chinese,NorthernChinese,Mandarin-Jin,Guanhua,Northern,Beijing\n" + 
+    "Changsha	28.8503	112.9433	Chinese,CentralChinese,Xiang,Changsha\n" + 
+    "Chengdu	30.6058	103.9709	Chinese,NorthernChinese,Mandarin-Jin,Guanhua,Southwestern,Chengdu\n" + 
+    "Fuzhou	26.0890	119.2942	Chinese,SouthernChinese,Min,Coastal,Fuzhou\n" + 
+    "Guangzhou	23.5000	113.1000	Chinese,SouthernChinese,Cantonese,Yue,Guangzhou\n" + 
+    "Guiyang	26.7169	106.6383	Chinese,NorthernChinese,Mandarin-Jin,Guanhua,Southwestern,Kungui,Guiyang\n" + 
+    "Haerbin	45.8466	126.5511	Chinese,NorthernChinese,Mandarin-Jin,Guanhua,Northern,Haerbin\n" + 
+    "Haikou	20.0439	110.3294	Chinese,SouthernChinese,Min,Southern,Haikou\n" + 
+    "Hangzhou	29.2500	119.8000	Chinese,CentralChinese,Hui-Wu,Wu,Taichao,Hangzhou\n" + 
+    "Hefei	31.8736	117.2237	Chinese,NorthernChinese,Mandarin-Jin,Guanhua,Eastern,Hefei\n" + 
+    "Huhehaote	40.8555	111.7439	Chinese,NorthernChinese,Mandarin-Jin,Jin,Huhehaote\n" + 
+    "Jian’ou	27.0424	118.3074	Chinese,SouthernChinese,Min,Jian’ou\n" + 
+    "Jinan	36.6908	116.9973	Chinese,NorthernChinese,Mandarin-Jin,Guanhua,Northern,Beifang,Jinan\n" + 
+    "Kunming	25.0497	102.7227	Chinese,NorthernChinese,Mandarin-Jin,Guanhua,Southwestern,Kungui,Kunming\n" + 
+    "Lanzhou	36.0805	103.8384	Chinese,NorthernChinese,Mandarin-Jin,Guanhua,Northwestern,Lanyin,Lanzhou\n" + 
+    "Meixian	24.5000	115.9500	Chinese,SouthernChinese,Hakka,Meixian\n" + 
+    "Nanchang	28.7066	115.8575	Chinese,CentralChinese,Gan,Nanchang\n" + 
+    "Nanjing	32.5000	119.0000	Chinese,NorthernChinese,Mandarin-Jin,Guanhua,Eastern,Nanjing\n" + 
+    "Nanning	22.8487	108.3662	Chinese,SouthernChinese,Cantonese,Pinghua,Nanning\n" + 
+    "Pingyao	37.2021	111.7500	Chinese,NorthernChinese,Mandarin-Jin,Jin,Pingyao\n" + 
+    "Qingdao	36.0894	120.3797	Chinese,NorthernChinese,Mandarin-Jin,Guanhua,Northern,Qingdao\n" + 
+    "Shanghai	31.2229	121.4754	Chinese,CentralChinese,Hui-Wu,Wu,Taichao,Suhujia,Shanghai\n" + 
+    "Shantou	23.3500	116.6667	Chinese,SouthernChinese,Min,Coastal,Southern,Shantou\n" + 
+    "Shexian	30.5898	118.4283	Chinese,CentralChinese,Hui-Wu,Hui,Shexian\n" + 
+    "Suzhou	31.5000	120.0000	Chinese,CentralChinese,Hui-Wu,Wu,Taichao,Suhujia,Suzhou\n" + 
+    "Taibei	25.3000	121.9000	Chinese,SouthernChinese,Min,Coastal,Southern,Taibei\n" + 
+    "Taiyuan	37.8842	113.2500	Chinese,NorthernChinese,Mandarin-Jin,Jin,Taiyuan\n" + 
+    "Taoyuan	24.0000	120.5000	Chinese,SouthernChinese,Hakka,Taoyuan\n" + 
+    "Tianjin	39.1861	117.2154	Chinese,NorthernChinese,Mandarin-Jin,Guanhua,Northern,Beifang,Tianjin\n" + 
+    "Tunxi	29.0000	118.0000	Chinese,CentralChinese,Hui-Wu,Hui,Tunxi\n" + 
+    "Wenzhou	28.0055	120.7012	Chinese,CentralChinese,Hui-Wu,Wu,Wenzhou\n" + 
+    "Wuhan	30.6241	114.3056	Chinese,NorthernChinese,Mandarin-Jin,Guanhua,Southwestern,Wuhan\n" + 
+    "Wulumuqi	43.9000	89.0000	Chinese,NorthernChinese,Mandarin-Jin,Guanhua,Northwestern,Lanyin,Wulumuqi\n" + 
+    "Xiamen	24.4942	118.0892	Chinese,SouthernChinese,Min,Coastal,Southern,Xiamen\n" + 
+    "Xianggang	22.4226	114.0984	Chinese,SouthernChinese,Cantonese,Yue,Xianggang\n" + 
+    "Xiangtan	27.0000	112.9455	Chinese,CentralChinese,Xiang,Xiangtan\n" + 
+    "Xining	36.6713	101.7769	Chinese,NorthernChinese,Mandarin-Jin,Guanhua,Northwestern,Zhongyuan,Xining\n" + 
+    "Xi’an	34.2282	108.9606	Chinese,NorthernChinese,Mandarin-Jin,Guanhua,Northwestern,Zhongyuan,Xi’an\n" + 
+    "Yinchuan	38.5467	106.2401	Chinese,NorthernChinese,Mandarin-Jin,Guanhua,Northwestern,Lanyin,Yinchuan\n" + 
+    "Zhengzhou	34.8077	113.6394	Chinese,NorthernChinese,Mandarin-Jin,Guanhua,Northwestern,Zhongyuan,Zhengzhou\n"  
+  document.getElementById('ethnologue').value = txt; 
+}
+function generateRandomData() {
+  var fams = {};
+  for (key in DOCUL) {
+    var fam = DOCUL[key][4].split(',')[1];
+    try {
+      fams[fam].push(key);
+    }
+    catch (e) {
+      fams[fam] = [key];
+    }
+  }
+  /* select random family */
+  var randint = parseInt(Object.keys(fams).length * Math.random() + 0.5);
+  var count = 0;
+  for(fam in fams) {
+    if (randint == count) {
+      families = fams[fam];
+      break;
+    }
+    count += 1
+  }
+  /* create set of random integers */
+  var rands = [];
+  for (var i=0;i<50; i++) {
+    
+    var lang = families[parseInt(families.length * Math.random()+0.5)];
+    if (rands.indexOf(lang) == -1) {
+      rands.push(lang);
+    }
+  }
+  var txt = 'NAME\tISO\n';
+  for (var i=0, rand; rand=rands[i]; i++) {
+    txt +=  DOCUL[rand][0]+'\t'+rand+'\n';
+  }
+  document.getElementById('ethnologue').value = txt;
+}
+
 function fakeAlert(text)
 {
   var falert = document.createElement('div');
