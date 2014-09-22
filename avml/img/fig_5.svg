@@ -43,9 +43,9 @@
      inkscape:window-height="820"
      id="namedview4"
      showgrid="false"
-     inkscape:zoom="2.7751442"
-     inkscape:cx="252.95517"
-     inkscape:cy="101.27705"
+     inkscape:zoom="1.3875721"
+     inkscape:cx="181.01701"
+     inkscape:cy="169.65405"
      inkscape:window-x="222"
      inkscape:window-y="115"
      inkscape:window-maximized="0"
@@ -112,7 +112,7 @@
                style="fill:none;stroke:#000000;stroke-width:7.97010994;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-opacity:1;stroke-dasharray:none"
                d="m 3497.56,1561.66 c 0,441.94 -591.37,800.22 -1320.86,800.22 -729.49,0 -1320.852,-358.28 -1320.852,-800.22 0,-441.95 591.362,-800.215 1320.852,-800.215 729.49,0 1320.86,358.265 1320.86,800.215 z"
                inkscape:connector-curvature="0" /><g
-               transform="scale(10,10)"
+               transform="matrix(11.969252,0,0,11.195491,-428.81,-255.4231)"
                id="g4037"><text
                  id="text4039"
                  transform="matrix(1,0,0,-1,132.63,200.88)"><tspan
@@ -154,14 +154,9 @@
 <text
                  id="text4055"
                  transform="matrix(1,0,0,-1,230.0101,119.58)"><tspan
-                   id="tspan4057"
-                   sodipodi:role="line"
-                   y="0"
-                   x="0 3.6326971 10.909 16.363501 22.167013 31.254211 33.67601 39.741413 45.392208 51.457615 57.523018 63.588421 69.653824"
-                   style="font-size:10.9090004px;font-variant:normal;font-weight:normal;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:FreeSans;-inkscape-font-specification:FreeSans">(Schmidt1872:</tspan><tspan
                    id="tspan4059"
                    sodipodi:role="line"
-                   y="13.55"
-                   x="-97.380096 -91.314697 -85.24929"
-                   style="font-size:10.9090004px;font-variant:normal;font-weight:normal;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:FreeSans;-inkscape-font-specification:FreeSans">17, our translation)</tspan></text>
+                   style="font-size:10.9090004px;font-variant:normal;font-weight:normal;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:FreeSans;-inkscape-font-specification:FreeSans"
+                   x="0"
+                   y="0" /></text>
 </g></g></g></g></g></g></svg>
