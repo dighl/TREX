@@ -1,0 +1,17 @@
+
+
+# Discussing how to represent genetic language relations in historical linguistics
+
+# Our idea (what can interactive visualizations contribute to this discussion?): interactive combination of areal and genealogical representation
+
+# Short discussion of earlier approach (WALS visualization from AVML 2012)
+
+# TREX: Tree Explorer
+  ## Reading in language data
+  ## converting to Newick format
+  ## Widgets: tree, sunburst, map
+  ## interactive functionality
+
+# Case studies
+
+# Conclusions
