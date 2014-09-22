@@ -1,98 +1,337 @@
-<!DOCTYPE html>
+<!DOCTYPEhtml>
 <html>
-  <head>
-    <meta charset='utf-8'>
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <meta name="viewport" content="width=640">
+<head>
+<meta charset="UTF-8">
+<title>TREX - Tree Explorer</title>
+<meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+<!-- bootstrap 3.0.2 -->
+<link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+<!-- font Awesome -->
+<link href="css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+<!-- Ionicons -->
+<link href="css/ionicons.min.css" rel="stylesheet" type="text/css" />
+<!-- Theme style -->
+<link href="css/AdminLTE.css" rel="stylesheet" type="text/css" />
+<link href="css/bootstrap-select.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" type="text/css" href="css/style.css">
 
-    <link rel="stylesheet" href="stylesheets/core.css" media="screen">
-    <link rel="stylesheet" href="stylesheets/mobile.css" media="handheld, only screen and (max-device-width:640px)">
-    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+<link rel="stylesheet" type="text/css" href="css/jquery.tipsy.css">
+<link type="image/png" href="img/rex.png" rel="icon"></link>
 
-    <script type="text/javascript" src="javascripts/modernizr.js"></script>
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-    <script type="text/javascript" src="javascripts/headsmart.min.js"></script>
-    <script type="text/javascript">
-      $(document).ready(function () {
-        $('#main_content').headsmart()
-      })
-    </script>
-    <title>Trex by dighl</title>
-  </head>
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+<![endif]-->
+</head>
+<body class="skin-blue">
+  <!-- header logo: style can be found in header.less -->
+  <!-- Right side column. Contains the navbar and content of the page -->
+  <aside class="right-side">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        <img src="img/rex.png" style="height:75px;margin-left:20px;margin-right:20px;" alt="trexi" /> TREX - Tree Explorer
+        <small>Exploring phylogenetic trees from multiple perspectives</small>
+      </h1>
 
-  <body>
-    <a id="forkme_banner" href="https://github.com/dighl/TREX">View on GitHub</a>
-    <div class="shell">
+      <ol class="breadcrumb">
+        <li><i class="fa fa-male"></i> <a href="http://th-mayer.de" class="text-blue">Thomas Mayer</a>,
+          <a href="http://lingulist.de" class="text-blue">Johann-Mattis List</a>
+          <br>
+          <i class="fa fa-github"></i> Code on <a href="https://github.com/tmayer/TREX" class="text-blue">Github</a>
+        </li>
 
-      <header>
-        <span class="ribbon-outer">
-          <span class="ribbon-inner">
-            <h1>Trex</h1>
-            <h2>Tree Explorer</h2>
-          </span>
-          <span class="left-tail"></span>
-          <span class="right-tail"></span>
-        </span>
-      </header>
+      </ol>
+      <hr/>
+    </section>
 
-      <section id="downloads">
-        <span class="inner">
-          <a href="https://github.com/dighl/TREX/zipball/master" class="zip"><em>download</em> .ZIP</a><a href="https://github.com/dighl/TREX/tarball/master" class="tgz"><em>download</em> .TGZ</a>
-        </span>
-      </section>
+    <!-- Main content -->
+    <section class="content">
+      <!-- top row -->
+      <div class="row">
+        <div class="col-xs-12 connectedSortable">
+        </div><!-- /.col -->
+      </div>
+      <!-- /.row -->
+
+      <!-- Main row -->
+      <div class="row">
+        <!-- Left col -->
+        <section class="col-lg-7 connectedSortable">
+
+ <!-- Tree box -->
+          <div class="box box-primary">
+            <div class="box-header">
+              <!-- tools box -->
+              <div class="pull-right box-tools">
+                <button class="btn btn-primary btn-sm pull-right" data-widget='collapse' data-toggle="tooltip" title="Collapse" style="margin-right: 5px;"><i class="fa fa-compress"></i></button>
+                <button class="btn btn-primary btn-sm pull-right" data-toggle="tooltip" title="Explore the tree. Modify the tree with help of the menu buttons on the right. Download with left mouse click." style="margin-right: 5px;"><i class="fa fa-info"></i></button>
+              </div><!-- /. tools -->
+              <i class="fa fa-tree"></i>
+              <h3 class="box-title">
+                TREE
+              </h3>
+            </div>
+            <div class="box-body" style="min-height:50px;height:auto;">
+              <div class="pull-right btn-group btn-xs" style="padding:5px">
+                <!--<button id="movemap" class="btn btn-primary btn-sm">Move map</button>-->
+                <button id="biggerNodes" onclick="resizeNodes('tree_node_size','up');" class="btn btn-primary btn-xs" data-toggle="tooltip" title="Larger nodes"><i class="fa fa-plus"></i> <i class="fa fa-circle"></i></button>
+                <button id="smallerNodes" onclick = "resizeNodes('tree_node_size','down');" class="btn btn-primary btn-xs" data-toggle="tooltip" title="Smaller nodes"><i class="fa fa-minus"></i> <i class="fa fa-circle"></i></button>
+                <button id="biggerText" onclick="resizeNodes('tree_font_size','up');" class="btn btn-primary btn-xs" data-toggle="tooltip" title="Larger font"><i class="fa fa-plus"></i> <i class="fa fa-header"></i></button>
+                <button id="smallerText" onclick = "resizeNodes('tree_font_size','down');" class="btn btn-primary btn-xs" data-toggle="tooltip" title="Smaller font"><i class="fa fa-minus"></i> <i class="fa fa-header"></i></button>
+                <button id="biggerHeight" onclick="resizeTree('width','up');" class="btn btn-primary btn-xs" data-toggle="tooltip" title="Expand tree horizontally"><i class="fa fa-expand"></i> <i class="fa fa-arrows-h"></i></button>
+                <button id="smallerHeight" onclick = "resizeTree('width','down');" class="btn btn-primary btn-xs" data-toggle="tooltip" title="Compress tree horizontally"><i class="fa fa-compress"></i> <i class="fa fa-arrows-h"></i></button>
+                <button id="biggerWidth" onclick="resizeTree('height','up');" class="btn btn-primary btn-xs" data-toggle="tooltip" title="Expand tree vertically"><i class="fa fa-expand"></i> <i class="fa fa-arrows-v"></i></button>
+                <button id="smallerWidth" onclick = "resizeTree('height','down');" class="btn btn-primary btn-xs" data-toggle="tooltip" title="Compress tree vertically"><i class="fa fa-compress"></i> <i class="fa fa-arrows-v"></i></button>
+                <button id="radialLayout" onclick="CFG['tree_layout']='radial';createTree();" class="btn btn-primary btn-xs" data-toggle="tooltip" title="Switch to radial layout"><i class="fa fa-circle-o"></i></button>
+                <button id="rectangleLayout" onclick="CFG['tree_layout']='rectangle';createTree();" class="btn btn-primary btn-xs" data-toggle="tooltip" title="Switch to rectangular layout"><i class="fa fa-square-o"></i></button>
+                <button id="rectangleLayout" onclick="exportSVG('tree');" class="btn btn-primary btn-xs" data-toggle="tooltip" title="Download current view"><i class="fa fa-download"></i></button>
+
+              </div>
+              <br>
+              <div id="treewindow"></div>
+              <div id="treeviewinfo"></div>
+            </div><!-- /.box-body-->
+          </div>
+          <!-- /.box -->
+
+          <!-- Map box -->
+          <div class="box box-primary">
+            <div class="box-header">
+              <!-- tools box -->
+              <div class="pull-right box-tools">
+                <button class="btn btn-primary btn-sm pull-right" data-widget='collapse' data-toggle="tooltip" title="Collapse" style="margin-right: 5px;"><i class="fa fa-compress"></i></button>
+                <button class="btn btn-primary btn-sm pull-right" data-toggle="tooltip"
+                                                                  title="Use mousewheel to zoom in and out. Drag map to desired position." style="margin-right: 5px;"><i class="fa fa-info"></i></button>
+              </div><!-- /. tools -->
+
+              <i class="fa fa-globe"></i>
+              <h3 class="box-title">
+                Map
+              </h3>
+            </div>
+            <div class="box-body" style="height: 460px;" id="mapcontainer">
+
+              <div id="map" style="text-align: center;"></div>
+
+              <div class="pull-right">
+
+                <button id="resetmap" class="btn btn-primary btn-xs">Reset map</button>
+                <!--<button id="movemap" class="btn btn-primary btn-sm">Move map</button>-->
+                <button id="zoomtofit" class="btn btn-primary btn-xs">Zoom to fit</button>
+                <button id="biggerDots" onclick="resizeNodes('mappoint','up')" class="btn btn-primary btn-xs" data-toggle="tooltip" title="Larger dots"><i class="fa fa-plus"></i></button>
+                <button id="smallerDots" onclick="resizeNodes('mappoint','down')" class="btn btn-primary btn-xs" data-toggle="tooltip" title="Smaller dots"><i class="fa fa-minus"></i></button>
 
 
-      <span class="banner-fix"></span>
+
+              </div>
+
+              <div id="mapinfo">&nbsp;</div>
+            </div><!-- /.box-body-->
+
+          </div>
+          <!-- /.box -->
 
 
-      <section id="main_content">
-        <h3>
-<a name="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages"><span class="octicon octicon-link"></span></a>Welcome to GitHub Pages.</h3>
 
-<p>This automatic page generator is the easiest way to create beautiful pages for all of your projects. Author your page content here using GitHub Flavored Markdown, select a template crafted by a designer, and publish. After your page is generated, you can check out the new branch:</p>
 
-<pre><code>$ cd your_repo_root/repo_name
-$ git fetch origin
-$ git checkout gh-pages
-</code></pre>
 
-<p>If you're using the GitHub for Mac, simply sync your repository and you'll see the new branch.</p>
+        </section>
 
-<h3>
-<a name="designer-templates" class="anchor" href="#designer-templates"><span class="octicon octicon-link"></span></a>Designer Templates</h3>
+        <section class="col-lg-5 connectedSortable">
 
-<p>We've crafted some handsome templates for you to use. Go ahead and continue to layouts to browse through them. You can easily go back to edit your page before publishing. After publishing your page, you can revisit the page generator and switch to another theme. Your Page content will be preserved if it remained markdown format.</p>
+          <!-- Input box -->
+          <div class="box box-primary">
+            <div class="box-header">
+              <!-- tools box -->
+              <div class="pull-right box-tools">
+                <button class="btn btn-primary btn-sm pull-right" data-widget='collapse' data-toggle="tooltip" title="Collapse" style="margin-right: 5px;"><i class="fa fa-compress"></i></button>
+                <button class="btn btn-primary btn-sm pull-right" data-toggle="tooltip" title="Insert the language data. Either insert the data manually by double-clicking the text field, or drop your file containing the data directly in the text field." style="margin-right: 5px;"><i class="fa fa-info"></i></button>
+              </div><!-- /. tools -->
+              <i class="fa fa-database"></i>
+              <h3 class="box-title">
+                DATA
+              </h3>
+            </div>
+            <div class="box-body" style="height:auto;min-height:300px;" id="newickinsert">
+              <textarea id="ethnologue" class="form-control" placeholder="Insert data in TSV-Format format here" value="" rows=10 wrap="off" style="overflow:auto;width:100%"></textarea><!--NAME	ISO
+GERMAN	deu
+BELARUSIAN	bel
+BOSNIAN	bos
+BULGARIAN	bul
+CROATIAN	hrv
+CZECH	ces
+KASHUBIAN	csb
+LOWER_SORBIAN	dsb
+MACEDONIAN	mkd
+POLISH	pol
+SERBOCROATIAN	srp
+SLOVAK	slk
+SLOVENIAN	slv
+UKRAINIAN	ukr
+UPPER_SORBIAN	hsb
+AFRIKAANS	afr</textarea>-->
+              <br><br>
+              <div id="newick_string" style="display:none"></div>
+		<input class="classify btn radio" checked style="background-color:black;" type="radio" name="classification" value="3" /> Ethnologue <br>
+    <input class="classify btn radio" style="background-color:black;" type="radio" name="classification" value="4" /> Glottolog <br><br>
+    <button class="btn btn-primary btn-sm pull-left" onclick="generateRandomData();">RANDOM DATA</button>
+    <button style="margin-left:5px;" class="btn btn-primary btn-sm pull-left" onclick="generateTestData();">TEST DATA</button>
+              <button class="btn btn-primary btn-sm pull-right" onclick="parseTree()">SUBMIT</button><br>
 
-<h3>
-<a name="rather-drive-stick" class="anchor" href="#rather-drive-stick"><span class="octicon octicon-link"></span></a>Rather Drive Stick?</h3>
+            <div id="newickinfo">&nbsp;</div>
+            </div><!-- /.box-body-->
 
-<p>If you prefer to not use the automatic generator, push a branch named <code>gh-pages</code> to your repository to create a page manually. In addition to supporting regular HTML content, GitHub Pages support Jekyll, a simple, blog aware static site generator written by our own Tom Preston-Werner. Jekyll makes it easy to create site-wide headers and footers without having to copy them across every page. It also offers intelligent blog support and other advanced templating features.</p>
+          </div>
+          <!-- /.box -->
 
-<h3>
-<a name="authors-and-contributors" class="anchor" href="#authors-and-contributors"><span class="octicon octicon-link"></span></a>Authors and Contributors</h3>
+          <!-- Sunburst box -->
+          <div class="box box-primary">
+            <div class="box-header">
+              <!-- tools box -->
+              <div class="pull-right box-tools">
+                <button class="btn btn-primary btn-sm pull-right" data-widget='collapse' data-toggle="tooltip" title="Collapse" style="margin-right: 5px;"><i class="fa fa-compress"></i></button>
+                <button class="btn btn-primary btn-sm pull-right" data-toggle="tooltip"
+                                                                  title="Click on a segment of the sunburst to zoom in on the subfamily. Click on the center to go back." style="margin-right: 5px;"><i class="fa fa-info"></i></button>
+              </div><!-- /. tools -->
 
-<p>You can <a href="https://github.com/blog/821" class="user-mention">@mention</a> a GitHub username to generate a link to their profile. The resulting <code>&lt;a&gt;</code> element will link to the contributor's GitHub Profile. For example: In 2007, Chris Wanstrath (<a href="https://github.com/defunkt" class="user-mention">@defunkt</a>), PJ Hyett (<a href="https://github.com/pjhyett" class="user-mention">@pjhyett</a>), and Tom Preston-Werner (<a href="https://github.com/mojombo" class="user-mention">@mojombo</a>) founded GitHub.</p>
+              <i class="fa fa-sun-o"></i>
+              <h3 class="box-title">
+                Sunburst
+              </h3>
+            </div>
+            <div class="box-body" style="height: auto;" id="sunburstcontainer">
 
-<h3>
-<a name="support-or-contact" class="anchor" href="#support-or-contact"><span class="octicon octicon-link"></span></a>Support or Contact</h3>
+              <div id="sunburst" style="text-align: center;"></div>
+              <br>
 
-<p>Having trouble with Pages? Check out the documentation at <a href="http://help.github.com/pages">http://help.github.com/pages</a> or contact <a href="mailto:support@github.com">support@github.com</a> and we’ll help you sort it out.</p>
-      </section>
+              <div id="sunburstinfo" style="margin-top: 50px;">&nbsp;</div>
+            </div><!-- /.box-body-->
 
-      <footer>
-        <span class="ribbon-outer">
-          <span class="ribbon-inner">
-            <p>this project by <a href="https://github.com/dighl">dighl</a> can be found on <a href="https://github.com/dighl/TREX">GitHub</a></p>
-          </span>
-          <span class="left-tail"></span>
-          <span class="right-tail"></span>
-        </span>
-        <p>Generated with <a href="http://pages.github.com">GitHub Pages</a> using Merlot</p>
-        <span class="octocat"></span>
-      </footer>
+          </div>
+          <!-- /.box -->
 
-    </div>
 
-    
-  </body>
+
+        </section><!-- /.Left col -->
+        <!-- right col (We are only adding the ID to make the widgets sortable)-->
+
+
+
+        </section><!-- right col -->
+        </div><!-- /.row (main row) -->
+
+    </section><!-- /.content -->
+
+
+
+    <!--Main content -->
+    <section class="content">
+
+
+
+      <!-- top row -->
+      <div class="row">
+        <div class="col-xs-12 connectedSortable">
+
+        </div><!-- /.col -->
+      </div>
+      <!-- /.row -->
+
+      <!-- Main row -->
+      <div class="row">
+        <!-- Left col -->
+        <section class="col-lg-7 connectedSortable">
+          <!-- Box (with bar chart) -->
+
+
+          <!-- Description box -->
+          <div class="box box-success">
+            <div class="box-header">
+              <!-- tools box -->
+              <div class="pull-right box-tools">
+                <button class="btn btn-success btn-sm pull-right" data-widget='collapse' data-toggle="tooltip" title="Collapse" style="margin-right: 5px;"><i class="fa fa-compress"></i></button>
+              </div><!-- /. tools -->
+
+              <i class="fa fa-info-circle"></i>
+              <h3 class="box-title">
+                Description
+              </h3>
+            </div>
+            <div class="box-body">
+
+
+
+
+            </div><!-- /.box-body-->
+
+          </div>
+          <!-- /.box -->
+
+
+
+
+        </section><!-- /.Left col -->
+        <!-- right col (We are only adding the ID to make the widgets sortable)-->
+        <section class="col-lg-5 connectedSortable">
+
+
+
+          <!-- References box -->
+          <div class="box box-success">
+            <div class="box-header">
+              <!-- tools box -->
+              <div class="pull-right box-tools">
+                <button class="btn btn-success btn-sm pull-right" data-widget='collapse' data-toggle="tooltip" title="Collapse" style="margin-right: 5px;"><i class="fa fa-compress"></i></button>
+              </div><!-- /. tools -->
+
+              <i class="fa fa-file-text"></i>
+              <h3 class="box-title">
+                References
+              </h3>
+            </div>
+            <div class="box-body">
+            </div><!-- /.box-body-->
+          </div>
+          <!-- /.box -->
+
+        </section><!-- right col -->
+      </div><!-- /.row (main row) -->
+
+    </section><!-- /.content -->
+  </aside><!-- /.right-side -->
+  </div><!-- ./wrapper -->
+
+
+<!-- jQuery 2.0.2 -->
+<script src="js/jquery.min.js"></script>
+<!-- jQuery UI 1.10.3 -->
+<script src="js/jquery-ui-1.10.3.min.js" type="text/javascript"></script>
+<!-- Bootstrap -->
+<script src="js/bootstrap.min.js" type="text/javascript"></script>
+<script src="js/bootstrap-select.js" type="text/javascript"></script>
+
+<!-- AdminLTE App -->
+<script src="js/AdminLTE/app.js" type="text/javascript"></script>
+
+<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+<script src="js/AdminLTE/dashboard.js" type="text/javascript"></script>
+
+
+
+<script src="d3/d3.min.js"></script>
+<script src="d3/newick.js"></script>
+<script src="d3/d3.phylogram.js"></script>
+<script src="d3/topojson.js"></script>
+<script src="js/FileSaver.js"></script>
+<script src="js/jquery.tipsy.js"></script>
+<script src="js/wals.js"></script>
+<script src="js/doculects.js"></script>
+<script src="js/tree.js"></script>
+
+<div id="db"></div>
+
+</body>
 </html>
