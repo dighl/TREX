@@ -173,53 +173,120 @@
           
         </section><!-- end discussion -->
 
+        <section>
+
+          <h3>What can visual analytics contribute?</h3>
+          <ul style="zoom: 150%; margin-top: 80px;">
+            <li class="fragment roll-in" style="padding: 5px;"><h4>Interaction</h4></li>
+            <li class="fragment roll-in" style="padding: -5px;"><h4>Transition</h4></li>
+          </ul>
+
+        </section>
+
         <!-- explaining the Sunburst visualization -->
         <section>
-          <h2>Sunburst visualization</h2>
+
+          <section>
+            <h2>Sunburst visualization</h2>
+
+            <div class="textbox">
+              <ul>
+                <li>A sunburst visualization (Stasko and Zhang 2000) is a radial space-filling visualization technique for displaying hierarchical structures.</li>
+
+                <li>A sunburst is similar to a treemap, except it uses a radial layout.</li>
+              </ul>
+            <small style="text-align: justify; margin-top: 50px;">
+                                          Stasko, John and Eugene Zhang. 2000. Focus+context display and navigation techniques for
+                                          enhancing radial, space-filling hierarchy visualizations. In <i>Proceedings of the IEEE Symposium on Information Visualization</i>, 57–65. Los Alamitos CA: IEEE Computer Society.
+            </small>
+            </div>
+
+          </section>
+
+
+
+          <section>
+            <h2>Sunburst example</h2>
+
+            <iframe src="examples/TreeSunburst/index.html"
+            style="zoom: 130%;" width="600" height="600">
+            </iframe>
+
+          </section>
+          
+
+          <section data-transition="zoom">
+
+            <h3>The WALS Sunburst Explorer <small><a href="file:///Users/thommy/Dropbox/Projects/WALSvis/index.html" target="_blank">http://th-mayer.de/wals/</a></small></h3>
+
+            <iframe class="frame" src="file:///Users/thommy/Dropbox/Projects/WALSvis/index.html"
+            style="zoom: 130%;" width="600" height="370">
+            </iframe>
+
+          </section>
+
+        </section>
+        <!-- end Sunburst explanation -->
+
+        <!-- Voronoi tesselation -->
+        <section>
+
+          <h3>Voronoi tesselation</h3>
+
+          <iframe src="examples/Voronoi/index.html"
+          style="zoom: 130%;" width="600" height="400">
+          </iframe>
+
+          <div class="source">URL: <a href="http://bl.ocks.org/mbostock/4060366" target="_blank">http://bl.ocks.org/mbostock/4060366</a></div>
+
+        </section>
+        <!-- end Voronoi tesselation -->
+
+        <section>
+          <h3>Implementation</h3>
 
           <div class="textbox">
             <ul>
-              <li>A Sunburst visualization (Stasko and Zhang 2000) is a radial space-filling visualization technique for displaying hierarchical structures.</li>
-
-              <li>A sunburst is similar to the treemap, except it uses a radial layout.</li>
+              <li>The tool is implemented in JavaScript using the 
+                <a href="http://d3js.org" target="_blank">D3.js</a> library (Bostock et al. 2011)</li>
+              <li>The map is generated with <a href="https://github.com/mbostock/topojson" target="_blank">TopoJSON</a></li>
+              <li>The voronoi tesselation is created with the D3.geom.voronoi() method</li>
             </ul>
-          <small style="text-align: justify; margin-top: 50px;">
-                                        Stasko, John and Eugene Zhang. 2000. Focus+context display and navigation techniques for
-                                        enhancing radial, space-filling hierarchy visualizations. In <i>Proceedings of the IEEE Symposium on Information Visualization</i>, 57–65. Los Alamitos CA: IEEE Computer Society.
+            <small>
+            <p style="text-align: left; margin-top: 50px;">
+                Bostock, Michael, Vadim Ogievetsky and Jeffrey Heer. 2011. D3: Data-driven documents. <i>IEEE Transactions on Visualization &amp; Computer Graphics</i> (Proc. InfoVis), 17(12), 2301–2309.
+            </p>
           </small>
           </div>
 
         </section>
 
-        <section>
-          <h2>Sunburst example</h2>
-
-          <iframe src="examples/TreeSunburst/index.html"
-          style="zoom: 130%;" width="600" height="600">
-          </iframe>
-
-        </section>
-        
-
         <section data-transition="zoom">
 
-          <h2>The WALS Sunburst Explorer <small><a href="file:///Users/thommy/Dropbox/Projects/WALSvis/index.html" target="_blank">http://th-mayer.de/wals/</a></small></h2>
+          <h3>TREX - Tree Explorer <br><small><a href="http://dighl.github.io/TREX/" target="_blank">http://dighl.github.io/TREX/</a></small></h3>
 
-          <iframe src="file:///Users/thommy/Dropbox/Projects/WALSvis/index.html"
-          style="zoom: 130%;" width="600" height="600">
+          <iframe class="frame" src="http://dighl.github.io/TREX/"
+          style="zoom: 130%;" width="600" height="370">
           </iframe>
 
         </section>
 
+        <!-- Conclusions -->
         <section data-transition="zoom">
 
-          <h2>TREX - Tree Explorer <small><a href="file:///Users/thommy/Dropbox/Projects/TREX/index.html" target="_blank">http://th-mayer.de/wals/</a></small></h2>
+          <h2>Conclusions</h2>
 
-          <iframe src="file:///Users/thommy/Dropbox/Projects/TREX/index.html"
-          style="zoom: 130%;" width="600" height="600">
-          </iframe>
+          <div class="textbox">
+          <ul>
+            <li>Interactive visualizations can help to detect interesting aspects in the data</li>
+            <li>Transitions in the visualization help the user to track the changes in the visual display</li>
+
+            <li>A proper representation of language change involves interactive visualizations</li>
+          </ul>
+        </div>
 
         </section>
+
        
 
         <section data-transition="zoom">

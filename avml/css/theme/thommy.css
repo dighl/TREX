@@ -214,6 +214,17 @@ iframe.frame {
     background-color: rgba(255,255,255,0.8);
 }
 
+iframe {
+
+  border: none;
+  box-shadow: none;
+  background-color: transparent;
+}
+
 .reveal img {
   border-radius: 8px;
 }
+
+.source a, .source a:visited, .source a:hover, .source a:link {
+  color: white;
+};
