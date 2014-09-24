@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+
+    <title>Collapsible Tree Example</title>
+
+    <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="http://code.jquery.com/ui/1.11.1/jquery-ui.js"></script>
+
+    <style>
+
+  .node circle {
+    fill: #fff;
+    stroke: #000;
+    stroke-width: 1px;
+  }
+
+  .node text { font: 12px sans-serif; }
+
+  .link {
+    fill: none;
+    stroke: #ccc;
+    stroke-width: 2px;
+  }
+
+  #sunburst {
+    position: absolute;
+    left: 10px;
+    top: 10px;
+  }
+
+  #tree {
+    position: absolute;
+    top: 100px;
+    left: 50px;
+  }
+  
+    </style>
+
+  </head>
+
+  <body>
+
+    <div id="tree" class="draggable"></div>
+    <div id="sunburst" class="draggable"></div>
+
+<!-- load the d3.js library --> 
+<script src="http://d3js.org/d3.v3.min.js"></script>
+  
+<script>
+
+  $(function() {
+    $( ".draggable" ).draggable();
+  });
+
+var treeData = [
+  {
+    "name": "Indo-European",
+    "parent": "null",
+    "children": [
+      {
+        "name": "Germanic",
+        "parent": "Indo-European",
+        "children": [
+          {
+            "name": "German",
+            "parent": "Germanic"
+          },
+          {
+            "name": "English",
+            "parent": "Germanic"
+          }
+        ]
+      },
+      {
+        "name": "Romance",
+        "parent": "Indo-European",
+        "children": [
+          {
+            "name": "French",
+            "parent": "Romance"
+          },
+          {
+            "name": "Italian",
+            "parent": "Romance"
+          },
+          {
+            "name": "Spanish",
+            "parent": "Romance"
+          }
+        ]
+      }
+    ]
+  }
+];
+
+var treeData2 = [
+  {
+    "name": "Indo-European",
+    "parent": "null",
+    "children": [
+      {
+        "name": "Germanic",
+        "parent": "Indo-European",
+        "children": [
+          {
+            "name": "German",
+            "parent": "Germanic"
+          },
+          {
+            "name": "English",
+            "parent": "Germanic"
+          }
+        ]
+      },
+      {
+        "name": "Romance",
+        "parent": "Indo-European",
+        "children": [
+          {
+            "name": "French",
+            "parent": "Romance"
+          },
+          {
+            "name": "Italian",
+            "parent": "Romance"
+          },
+          {
+            "name": "Spanish",
+            "parent": "Romance"
+          }
+        ]
+      }
+    ]
+  }
+];
+
+var colorscale = d3.scale.category10();
+var nodes, links;
+
+// ************** Generate the tree diagram  *****************
+var margin = {top: 20, right: 120, bottom: 20, left: 120},
+  width = 560 - margin.right - margin.left,
+  height = 500 - margin.top - margin.bottom;
+  
+var i = 0, duration = 750;
+
+var tree = d3.layout.tree()
+  .size([height, width]);
+
+var diagonal = d3.svg.diagonal()
+  .projection(function(d) { return [d.y, d.x]; });
+
+var svg = d3.select("#tree").append("svg")
+  .attr("width", width + margin.right + margin.left)
+  .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+  .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+root = treeData[0];
+  
+update(root);
+
+function update(source) {
+
+  // Compute the new tree layout.
+  nodes = tree.nodes(root).reverse(),
+    links = tree.links(nodes);
+
+  // Normalize for fixed-depth.
+  nodes.forEach(function(d) { d.y = d.depth * 180; });
+
+  // Declare the nodes…
+  var node = svg.selectAll("g.node")
+    .data(nodes, function(d) { return d.id || (d.id = ++i); });
+
+  // Enter the nodes.
+  var nodeEnter = node.enter().append("g")
+    .attr("class", "node")
+    .attr("transform", function(d) { 
+      return "translate(" + d.y + "," + d.x + ")"; })
+    .on("click", clicktree)
+    ;
+
+  nodeEnter.append("circle")
+    .attr("r", 10)
+    .style("fill", function(d,i){
+      return colorscale(d.name);
+    });
+
+  nodeEnter.append("text")
+    .attr("x", function(d) { 
+      return d.children || d._children ? -13 : 13; })
+    .attr("dy", ".35em")
+    .attr("text-anchor", function(d) { 
+      return d.children || d._children ? "end" : "start"; })
+    .text(function(d) { return d.name; })
+    .style("fill-opacity", 1);
+
+    // Transition nodes to their new position.
+  var nodeUpdate = node.transition()
+      .duration(duration)
+      .attr("transform", function(d) { return "translate(" + d.y + "," + d.x + ")"; });
+
+  nodeUpdate.select("circle")
+      .attr("r", 7.5)
+      .style("fill", function(d) { return colorscale(d.name); });
+
+  nodeUpdate.select("text")
+      .style("fill-opacity", 1);
+
+  // Transition exiting nodes to the parent's new position.
+  var nodeExit = node.exit().transition()
+      .duration(duration)
+      .attr("transform", function(d) { return "translate(" + source.y + "," + source.x + ")"; })
+      .remove();
+
+  nodeExit.select("circle")
+      .attr("r", 1e-6);
+
+  nodeExit.select("text")
+      .style("fill-opacity", 1e-6);
+
+  // Update the links…
+  var link = svg.selectAll("path.link")
+      .data(links, function(d) { return d.target.id; });
+
+  // Enter any new links at the parent's previous position.
+  link.enter().insert("path", "g")
+    .attr("class", "link")
+    .attr("d", diagonal)
+
+  // Transition links to their new position.
+  link.transition()
+      .duration(duration)
+      .attr("d", diagonal);
+
+  // Transition exiting nodes to the parent's new position.
+  link.exit().transition()
+      .duration(duration)
+      .attr("d", function(d) {
+        var o = {x: source.x, y: source.y};
+        return diagonal({source: o, target: o});
+      })
+      .remove();
+
+  // Stash the old positions for transition.
+  nodes.forEach(function(d) {
+    d.x0 = d.x;
+    d.y0 = d.y;
+  });
+}
+
+// Toggle children on click.
+function clicktree(d) {
+  //console.log(d);
+  if (d.children) {
+    d._children = d.children;
+    d.children = null;
+  } else {
+    d.children = d._children;
+    d._children = null;
+  }
+  update(d);
+}
+
+function collapsenode(d){
+  if(d.children){
+    d._children = d.children;
+    d.children = null;
+  }
+  update(d);
+}
+
+function expandnode(d){
+  if(d.children){
+  }
+  else{
+    d.children = d._children;
+    d._children = null;
+  }
+  update(d);
+}
+
+
+// ************** Generate the sunburst  *****************
+
+  var partition = d3.layout.partition()
+      .value(function(d) { return 1; })
+      ;
+
+    hierdata = partition.nodes(treeData2[0]);
+
+    var childrennodes = {};
+
+     hierdata.forEach(function(d){
+      if(d.children){
+          d.children.forEach(function(c){
+              if(childrennodes[d.name]){
+                  childrennodes[d.name].push(c.name);
+              }
+              else{
+                  childrennodes[d.name] = [c.name];
+              }});
+      }
+  });
+
+
+var swidth = 250,
+      sheight = 250,
+      radius = Math.min(swidth-30, sheight-30) / 2;
+
+  var x = d3.scale.linear()
+      .range([0, 2 * Math.PI]);
+
+  var y = d3.scale.sqrt()
+      .range([0, radius]);
+
+  var svgsun = d3.select("#sunburst").append("svg")
+      .attr("width", swidth)
+      .attr("height", sheight)
+      .append("g")
+      .attr("transform", "translate(" + swidth / 2 + "," + (sheight / 2 + 10) + ")");
+
+  var arc = d3.svg.arc()
+      .startAngle(function(d) { return Math.max(0, Math.min(2 * Math.PI, x(d.x))); })
+      .endAngle(function(d) { return Math.max(0, Math.min(2 * Math.PI, x(d.x + d.dx))); })
+      .innerRadius(function(d) { return Math.max(0, y(d.y)); })
+      .outerRadius(function(d) { return Math.max(0, y(d.y + d.dy)); });
+
+  var pathsun = svgsun.selectAll("path")
+      .data(hierdata)
+      .enter().append("path")
+      .attr("class",function(d){
+          return "sunburstarcs";// + 'sun_' + d.name;
+      })
+      .attr('id',function(d){return 'sun_'+d.name;})
+      .attr("d", arc)
+      .style("fill", function(d){
+          return colorscale(d.name);;
+        })
+      .attr('cursor',"pointer")
+      .style("stroke","black")      
+      .on("click", function(d){
+        console.log(d);
+        click(d);
+      })
+      ;
+
+click = function (e) {
+    pathsun.transition()
+      .duration(750)
+      .attrTween("d", arcTween(e));
+
+    // update sunburst segments
+    d3.selectAll('.sunburstarcs')
+        .style("fill",function(d,i){
+          return colorscale(d.name);
+        });
+
+
+      var siblings = childrennodes[e.parent.name];
+      //if(parent == undefined){ parent = "root";}
+      if(siblings == undefined){
+        nodes.forEach(function(node){
+          expandnode(node);
+        })
+      }
+
+      //var sibs = siblings.filter(function(a){ return a != e.name; })
+      //console.log(e.name,siblings,sibs);
+
+      siblings.forEach(function(sib){
+        var relnode = nodes.filter(function(a){ return a.name == sib; })
+        console.log("collapse",relnode[0],sib);
+        collapsenode(relnode[0]);
+      });
+      currnode = nodes.filter(function(a){ return a.name == e.name; });
+      console.log("expand", currnode);
+      expandnode(currnode[0]);
+    
+  } // end click function
+
+
+  // Interpolate the scales!
+  function arcTween(d) {
+    var xd = d3.interpolate(x.domain(), [d.x, d.x + d.dx]),
+        yd = d3.interpolate(y.domain(), [d.y, 1]),
+        yr = d3.interpolate(y.range(), [d.y ? 20 : 0, radius]);
+    return function(d, i) {
+      return i
+          ? function(t) { return arc(d); }
+          : function(t) { x.domain(xd(t)); y.domain(yd(t)).range(yr(t)); return arc(d); };
+    };
+  }
+
+</script>
+  
+  </body>
+</html>

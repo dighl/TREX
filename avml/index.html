@@ -1,0 +1,379 @@
+<!doctype html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+
+    <title>List &amp; Mayer - Visualizing Genetic Language Relations in Geographic Space</title>
+
+    <meta name="description" content="A framework for easily creating beautiful presentations 
+    using HTML">
+    <meta name="author" content="Hakim El Hattab">
+
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, 
+    user-scalable=no">
+
+    <link rel="stylesheet" href="css/reveal.css">
+    <link rel="stylesheet" href="css/theme/default.css" id="theme">
+
+    <!-- For syntax highlighting -->
+    <link rel="stylesheet" href="lib/css/zenburn.css">
+
+    <!-- If the query includes 'print-pdf', use the PDF print sheet -->
+    <script>
+      document.write( '<link rel="stylesheet" href="css/print/' + 
+      ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + 
+      '.css" type="text/css" media="print">' );
+    </script>
+
+    <!--[if lt IE 9]>
+    <script src="lib/js/html5shiv.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+        
+        <div class="slide-number"></div>
+        <div class="footer-uni">
+            <center>
+            <table border="0">
+            <tr>
+            <td valign="center"><img src="img/PhUniMa_Logo_w.png" height="40"></td>
+                <td width="20px">&nbsp;</td>
+                <td width="450px" align="center"><p style="font-family:Helvetica,
+                sans-serif;font-size: 11pt; font-weight:lighter;">
+                List &amp; Mayer - Visualizing Genetic Language Relations in Geographic Space </p></td>
+                <td width="20px">&nbsp;</td>
+            <td valign="center"><img src="img/dfg_logo_schriftzug_weiss.png" height="20"></td>
+            <td valign="center"><img src="img/logo_erc.png" height="60"></td>
+            </tr>
+            </table>
+            </center>
+        </div>
+
+    <div class="reveal">
+
+      <!-- Any section element inside of this container is displayed as a slide -->
+      <div class="slides">
+                
+                
+
+        <section>
+                    
+                    
+          <h1 style='font-size:1.5em;'>Visualizing Genetic Language Relations in Geographic Space
+                    <br><br><small>
+                    AVML - Advances in Visual Methods for Linguistics <br>
+                    24-26 September 2014, Tübingen</small></p>
+          <p>
+            <small style="font-size: 50%;">
+      
+            <a href="http://lingulist.de">Johann-Mattis List</a> / 
+        <a href="mailto:mattis.list@uni-marburg.de">mattis.list@uni-marburg.de</a>
+        <br>
+            <a href="http://th-mayer.de">Thomas Mayer</a> / 
+        <a href="mailto:thomas.mayer@uni-marburg.de">thomas.mayer@uni-marburg.de</a>
+        
+        
+            </small>
+          </p>
+                    
+        </section>
+        
+        <section>
+                    <h2>Overview</h2>
+                    
+                    <div class="textbox">
+                    <ol style="zoom: 100%;">
+                    <li><a href="#/introduction/">How to represent language history?</a></li>
+                    <li><a href="#/contribute/">What can visual analytics contribute?</a></li>
+                    <ul>
+                    <li><a href="#/sunburst/">Sunburst visualization</a></li>
+                    <li><a href="#/voronoi/">Voronoi tesselation</a></li>
+                    <li><a href="#/wals/">WALS Sunburst Explorer</a></li>
+                    </ul>
+                    <li><a href="#/trex/">TREX - Tree Explorer</a></li>
+                    <li><a href="#/conclusions/">Conclusions</a></li>
+                    </ol>
+                    </div>
+                
+        </section>
+
+        <!-- Discussion about the tree/wave representation -->
+        <section id="introduction">
+
+          <section data-transition="none">
+            <img src="img/fig_1.jpg" width="600" style="zoom: 130%;">
+
+          </section>
+
+          <section data-transition="none">
+            <img src="img/fig_2.jpg" width="600" style="zoom: 130%;">
+
+          </section>
+
+          <section>
+            <img src="img/fig_3.png" width="600" style="zoom: 130%;">
+
+          </section>
+
+          <section data-transition="none">
+            <img src="img/fig_4.jpg" width="600" style="zoom: 130%;">
+
+          </section>
+
+          <section data-transition="none">
+            <img src="img/fig_5.jpg" width="600" style="zoom: 130%;">
+
+          </section>
+
+          <section data-transition="none">
+            <img src="img/fig_5a.jpg" width="600" style="zoom: 130%;">
+
+          </section>
+
+          <section>
+            <img src="img/fig_6.jpg" width="600" style="zoom: 130%;">
+
+          </section>
+
+          <section>
+            <img src="img/fig_7.jpg" width="600" style="zoom: 130%;">
+
+          </section>
+
+          <section>
+            <img src="img/fig_8.jpg" width="600" style="zoom: 130%;">
+
+          </section>
+
+          <section>
+            <img src="img/fig_9.jpg" width="600" style="zoom: 130%;">
+
+          </section>
+
+          <section data-transition="none">
+            <img src="img/fig_10.jpg" width="600" style="zoom: 130%;">
+
+          </section>
+          <section data-transition="none">
+            <img src="img/fig_10a.jpg" width="600" style="zoom: 130%;">
+
+          </section>
+          <section data-transition="none">
+            <img src="img/fig_10b.jpg" width="600" style="zoom: 130%;">
+
+          </section>
+          <section data-transition="none">
+            <img src="img/fig_11.jpg" width="600" style="zoom: 130%;">
+
+          </section>
+           <section data-transition="none">
+            <img src="img/fig_12.jpg" width="600" style="zoom: 130%;">
+
+          </section>         
+          
+        </section><!-- end discussion -->
+
+        <section id="contribute">
+
+          <h3>What can visual analytics contribute?</h3>
+          <ul style="zoom: 150%; margin-top: 80px;">
+            <li class="fragment roll-in" style="padding: 5px;"><h4>Interaction</h4></li>
+            <li class="fragment roll-in" style="padding: -5px;"><h4>Transition</h4></li>
+          </ul>
+
+        </section>
+
+        <section>
+
+          <h3>Towards an interactive representation of language history</h3>
+          <ul style="zoom: 150%; margin-top: 80px;">
+            <li><h4>Combining an areal representation with</h4></li>
+            <li><h4>a genealogical representaion</h4></li>
+          </ul>
+
+        </section>
+
+        <!-- explaining the Sunburst visualization -->
+        <section>
+
+          <section>
+            <h2>Sunburst visualization</h2>
+
+            <div class="textbox">
+              <ul>
+                <li>A sunburst visualization (Stasko and Zhang 2000) is a radial space-filling visualization technique for displaying hierarchical structures.</li>
+
+                <li>A sunburst is similar to a treemap, except it uses a radial layout.</li>
+              </ul>
+            <small style="text-align: justify; margin-top: 50px;">
+                                          Stasko, John and Eugene Zhang. 2000. Focus+context display and navigation techniques for
+                                          enhancing radial, space-filling hierarchy visualizations. In <i>Proceedings of the IEEE Symposium on Information Visualization</i>, 57–65. Los Alamitos CA: IEEE Computer Society.
+            </small>
+            </div>
+
+          </section>
+
+
+
+          <section>
+            <h2>Sunburst example</h2>
+
+            <iframe src="examples/TreeSunburst/index.html"
+            style="zoom: 130%;" width="600" height="600">
+            </iframe>
+
+          </section>
+          
+
+          <section data-transition="zoom">
+
+            <h3>The WALS Sunburst Explorer <small><a href="http://th-mayer.de/wals/" target="_blank">http://th-mayer.de/wals/</a></small></h3>
+
+            <iframe class="frame" src="http://th-mayer.de/wals/"
+            style="zoom: 130%;" width="600" height="320">
+            </iframe>
+
+            <div class="source"><p style="text-align: justify; font-size: 12pt; margin-top: 30px;">
+                                    Mayer, Thomas, Bernhard Wälchli, Christian Rohrdantz and Michael Hund. 2014. From the extraction of continuous features in parallel texts to visual analytics of heterogeneous areal-typological datasets. In Nolan, Brian and Carlos Pascual-Periñán (eds.),&nbsp;<em>Language processing and grammars: The role of functionally oriented computational models</em> (SLCS) (Serie: Studies in Language). Amsterdam: John Benjamins, 13-38.</p></div>
+
+          </section>
+
+        </section>
+        <!-- end Sunburst explanation -->
+
+        <!-- Voronoi tesselation -->
+        <section>
+
+          <h3>Voronoi tesselation</h3>
+
+          <iframe src="examples/Voronoi/index.html"
+          style="zoom: 130%;" width="600" height="400">
+          </iframe>
+
+          <div class="source">URL: <a href="http://bl.ocks.org/mbostock/4060366" target="_blank">http://bl.ocks.org/mbostock/4060366</a></div>
+
+        </section>
+        <!-- end Voronoi tesselation -->
+
+        <section>
+          <h3>Implementation</h3>
+
+          <div class="textbox">
+            <ul>
+              <li>The tool is implemented in JavaScript using the 
+                <a href="http://d3js.org" target="_blank">D3.js</a> library (Bostock et al. 2011)</li>
+              <li>The map is generated with <a href="https://github.com/mbostock/topojson" target="_blank">TopoJSON</a></li>
+              <li>The voronoi tesselation is created with the D3.geom.voronoi() method</li>
+            </ul>
+            <small>
+            <p style="text-align: left; margin-top: 50px;">
+                Bostock, Michael, Vadim Ogievetsky and Jeffrey Heer. 2011. D3: Data-driven documents. <i>IEEE Transactions on Visualization &amp; Computer Graphics</i> (Proc. InfoVis), 17(12), 2301–2309.
+            </p>
+          </small>
+          </div>
+
+        </section>
+
+        <section data-transition="zoom">
+
+          <h3>TREX - Tree Explorer <br><small><a href="http://dighl.github.io/TREX/" target="_blank">http://dighl.github.io/TREX/</a></small></h3>
+
+          <iframe class="frame" src="http://dighl.github.io/TREX/"
+          style="zoom: 130%;" width="600" height="370">
+          </iframe>
+
+        </section>
+
+        <!-- Conclusions -->
+        <section data-transition="zoom">
+
+          <h2>Conclusions</h2>
+
+          <div class="textbox">
+          <ul>
+            <li>Interactive visualizations can help to detect interesting aspects in the data</li>
+            <li>Transitions in the visualization help the user to track the changes in the visual display</li>
+
+            <li>A proper representation of language change involves interactive visualizations</li>
+          </ul>
+        </div>
+
+        </section>
+
+       
+
+        <section data-transition="zoom">
+          <h2>Thank you for your attention!</h2>
+          <div class="textbox" style="margin-top: 90px;">
+          <p>
+          <table border="0">
+        <tr><td>
+            <a href="http://lingulist.de">Johann-Mattis List</a></td><td>
+        <a href="mailto:mattis.list@uni-marburg.de">mattis.list@uni-marburg.de</a>
+        </td></tr>
+          <tr><td width="350"><a href="http://th-mayer.de">Thomas Mayer</a> </td><td>
+        <a href="mailto:thomas.mayer@uni-marburg.de">thomas.mayer@uni-marburg.de</a>
+        </td></tr>
+        </table>
+        </p>
+          </div>
+        </section>
+
+      </div>
+
+    </div>
+
+    <script src="lib/js/head.min.js"></script>
+    <script src="js/reveal.min.js"></script>
+
+    <script>
+
+      // Full list of configuration options available here:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+
+        theme: 'thommy',//Reveal.getQueryHash().theme, // available themes are in /css/theme
+        transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+        // Optional libraries used to extend on reveal.js
+        dependencies: [
+          { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+          { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+          { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+          { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+        ]
+      });
+
+    </script>
+        
+        <!-- From https://github.com/hakimel/reveal.js/pull/56#issuecomment-17470394 -->
+        <script>
+            var slideNumber = document.querySelector('.slide-number');
+            var updateSlideNumber = function(event) {
+                var textContent = event.indexh;
+                if (event.indexv > 0) {
+                    textContent += '-' + event.indexv;
+                }
+                if (event.indexh > 0) {
+                    slideNumber.textContent = textContent;
+                }
+            }
+
+            Reveal.addEventListener('ready', updateSlideNumber);
+            Reveal.addEventListener('slidechanged', updateSlideNumber);
+        </script>
+        
+
+  </body>
+</html>
